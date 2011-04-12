@@ -3,38 +3,49 @@
  */
 package com.tenline.pinecone.model;
 
-import java.io.Serializable;
+import java.util.List;
 
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.datastore.Key;
+
 /**
  * @author Bill
  *
  */
-@PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class Command implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3873418531954353885L;
+@PersistenceCapable(identityType=IdentityType.APPLICATION, detachable="true")
+public class Command {
 
 	/**
 	 * 
 	 */
 	@PrimaryKey
-    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-    private Long id;    
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	private Key key;
 	
 	/**
 	 * 
 	 */
     @Persistent
 	private String name;
+    
+    /**
+     * 
+     */
+    @Persistent
+    private Device device;
+    
+    /**
+     * 
+     */
+    @Persistent(mappedBy = "command", defaultFetchGroup = "true")
+    @Element(dependent = "true")
+    private List<Variable> variables;
     
 	/**
 	 * 
@@ -44,17 +55,17 @@ public class Command implements Serializable {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param key the key to set
 	 */
-	public void setId(Long id) {
-		this.id = id;
+	public void setKey(Key key) {
+		this.key = key;
 	}
 
 	/**
-	 * @return the id
+	 * @return the key
 	 */
-	public Long getId() {
-		return id;
+	public Key getKey() {
+		return key;
 	}
 
 	/**
@@ -69,6 +80,34 @@ public class Command implements Serializable {
 	 */
 	public String getName() {
 		return name;
+	}
+
+	/**
+	 * @param device the device to set
+	 */
+	public void setDevice(Device device) {
+		this.device = device;
+	}
+
+	/**
+	 * @return the device
+	 */
+	public Device getDevice() {
+		return device;
+	}
+
+	/**
+	 * @param variables the variables to set
+	 */
+	public void setVariables(List<Variable> variables) {
+		this.variables = variables;
+	}
+
+	/**
+	 * @return the variables
+	 */
+	public List<Variable> getVariables() {
+		return variables;
 	}
 
 }

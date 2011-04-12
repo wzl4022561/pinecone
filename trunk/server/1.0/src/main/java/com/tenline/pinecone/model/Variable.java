@@ -3,38 +3,39 @@
  */
 package com.tenline.pinecone.model;
 
-import java.io.Serializable;
-
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.datastore.Key;
+
 /**
  * @author Bill
  *
  */
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class Variable implements Serializable {
+public class Variable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 4561006326490794087L;
-	
-	/**
-	 * 
-	 */
 	@PrimaryKey
-    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-    private Long id;    
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	private Key key;  
 	
 	/**
 	 * 
 	 */
     @Persistent
 	private String name;
+    
+    /**
+	 * 
+	 */
+    @Persistent
+	private Command command;
 
 	/**
 	 * 
@@ -44,17 +45,17 @@ public class Variable implements Serializable {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param key the key to set
 	 */
-	public void setId(Long id) {
-		this.id = id;
+	public void setKey(Key key) {
+		this.key = key;
 	}
 
 	/**
-	 * @return the id
+	 * @return the key
 	 */
-	public Long getId() {
-		return id;
+	public Key getKey() {
+		return key;
 	}
 
 	/**
@@ -69,6 +70,20 @@ public class Variable implements Serializable {
 	 */
 	public String getName() {
 		return name;
+	}
+
+	/**
+	 * @param command the command to set
+	 */
+	public void setCommand(Command command) {
+		this.command = command;
+	}
+
+	/**
+	 * @return the command
+	 */
+	public Command getCommand() {
+		return command;
 	}
 
 }
