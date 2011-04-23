@@ -20,16 +20,23 @@ public class UserDaoImpl extends AbstractDaoSupport implements UserDao {
 	 * 
 	 */
 	public UserDaoImpl() {
-		// TODO Auto-generated constructor stub	
+		// TODO Auto-generated constructor stub
 	}
-	
-	public Long save(User newInstance) {
+
+	/* (non-Javadoc)
+	 * @see com.tenline.pinecone.persistence.UserDao#save(com.tenline.pinecone.model.User)
+	 */
+	@Override
+	public String save(User newInstance) {
 		// TODO Auto-generated method stub
-		User user = (User) getJdoTemplate().save(newInstance);
-		return user.getId();
+		return ((User) getJdoTemplate().save(newInstance)).getPrimaryKey();
 	}
-	
-	public User find(Long primaryKey) {
+
+	/* (non-Javadoc)
+	 * @see com.tenline.pinecone.persistence.UserDao#find(java.lang.String)
+	 */
+	@Override
+	public User find(String primaryKey) {
 		// TODO Auto-generated method stub
 		return (User) getJdoTemplate().find(User.class, primaryKey);
 	}
