@@ -44,7 +44,7 @@ public class UserDaoIntegrationTest {
 	public void testSaveAndFind() {
 		User newUser = new User();
 		newUser.setName("bill");	
-		long userId = userDao.save(newUser);
+		String userId = userDao.save(newUser);
 		assertNotNull(userId);	
 		User user = userDao.find(userId);
 		assertEquals("bill", user.getName());
