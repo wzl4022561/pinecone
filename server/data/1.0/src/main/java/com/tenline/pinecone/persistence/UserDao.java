@@ -3,6 +3,8 @@
  */
 package com.tenline.pinecone.persistence;
 
+import java.util.Collection;
+
 import com.tenline.pinecone.model.User;
 
 /**
@@ -24,5 +26,18 @@ public interface UserDao {
 	 * @return
 	 */
 	User find(String primaryKey);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	Collection<User> findAll();
+	
+	/**
+	 * 
+	 * @param filter
+	 * @return
+	 */
+	Collection<User> findAllByFilter(String filter);
 	
 }
