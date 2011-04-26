@@ -3,6 +3,8 @@
  */
 package com.tenline.pinecone.rest;
 
+import java.util.Collection;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -39,5 +41,23 @@ public interface UserService {
 	@Path("/{primaryKey}")
 	@Produces(MediaType.APPLICATION_JSON)
 	User show(@PathParam("primaryKey") String primaryKey);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	Collection<User> showAll();
+	
+	/**
+	 * 
+	 * @param filter
+	 * @return
+	 */
+	@GET
+	@Path("/filter/{filter}")
+	@Produces(MediaType.APPLICATION_JSON)
+	Collection<User> showAllByFilter(@PathParam("filter") String filter);
 	
 }

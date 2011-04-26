@@ -3,6 +3,8 @@
  */
 package com.tenline.pinecone.rest.impl;
 
+import java.util.Collection;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -48,6 +50,24 @@ public class UserServiceImpl implements UserService {
 	public User show(String primaryKey) {
 		// TODO Auto-generated method stub
 		return userDao.find(primaryKey);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.tenline.pinecone.rest.UserService#showAll()
+	 */
+	@Override
+	public Collection<User> showAll() {
+		// TODO Auto-generated method stub
+		return userDao.findAll();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.tenline.pinecone.rest.UserService#showAllByFilter(java.lang.String)
+	 */
+	@Override
+	public Collection<User> showAllByFilter(String filter) {
+		// TODO Auto-generated method stub
+		return userDao.findAllByFilter(filter);
 	}
 
 }
