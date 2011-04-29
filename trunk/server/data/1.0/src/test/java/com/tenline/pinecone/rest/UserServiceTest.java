@@ -7,6 +7,10 @@ import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import javax.ws.rs.core.Response;
 
 import org.junit.After;
@@ -25,10 +29,13 @@ import com.tenline.pinecone.rest.impl.UserServiceImpl;
  * @author Bill
  *
  */
+@SuppressWarnings({"rawtypes", "unchecked"})
 @RunWith(MockitoJUnitRunner.class)  
 public class UserServiceTest {
 
 	private User user;
+	
+	private List users;
 	
 	private UserServiceImpl userService; 	
 	
@@ -39,15 +46,19 @@ public class UserServiceTest {
 	public void testSetup() {
 		userService = new UserServiceImpl(userDao);
 		user = new User();
-		user.setPrimaryKey("asa");
+		user.setId("asa");
 		user.setName("bill");		
+		users = new ArrayList();
+		users.add(user);
 	}
 	
 	@After
 	public void testShutdown() {	
 		userService = null;
 		userDao = null;
+		users.remove(user);
 		user = null;
+		users = null;
 	}
 
 	@Test
@@ -61,10 +72,27 @@ public class UserServiceTest {
 	
 	@Test
 	public void testShow() {
-		when(userDao.find(user.getPrimaryKey())).thenReturn(user);
-		User result = userService.show(user.getPrimaryKey());
-		verify(userDao).find(user.getPrimaryKey());
+		when(userDao.find(user.getId())).thenReturn(user);
+		User result = userService.show(user.getId());
+		verify(userDao).find(user.getId());
 		assertEquals("bill", result.getName());
+	}
+	
+	@Test 
+	public void testShowAll() {
+		when(userDao.findAll()).thenReturn(users);
+		Collection<User> result = userService.showAll();
+		verify(userDao).findAll();
+		assertEquals(1, result.size());
+	}
+	
+	@Test
+	public void testShowAllByFilter() {
+		String filter = "name=='bill'";
+		when(userDao.findAllByFilter(filter)).thenReturn(users);
+		Collection<User> result = userService.showAllByFilter(filter);
+		verify(userDao).findAllByFilter(filter);
+		assertEquals(1, result.size());
 	}
 
 }

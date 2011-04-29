@@ -31,16 +31,16 @@ public class UserDaoImpl extends AbstractDaoSupport implements UserDao {
 	@Override
 	public String save(User newInstance) {
 		// TODO Auto-generated method stub
-		return ((User) getJdoTemplate().save(newInstance)).getPrimaryKey();
+		return ((User) getJdoTemplate().save(newInstance)).getId();
 	}
 
 	/* (non-Javadoc)
 	 * @see com.tenline.pinecone.persistence.UserDao#find(java.lang.String)
 	 */
 	@Override
-	public User find(String primaryKey) {
+	public User find(String id) {
 		// TODO Auto-generated method stub
-		return (User) getJdoTemplate().find(User.class, primaryKey);
+		return (User) getJdoTemplate().find(User.class, id);
 	}
 
 	/* (non-Javadoc)
