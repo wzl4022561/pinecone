@@ -47,9 +47,9 @@ public class UserServiceImpl implements UserService {
 	 * @see com.tenline.pinecone.rest.UserService#show(java.lang.String)
 	 */
 	@Override
-	public User show(String primaryKey) {
+	public User show(String id) {
 		// TODO Auto-generated method stub
-		return userDao.find(primaryKey);
+		return userDao.find(id);
 	}
 
 	/* (non-Javadoc)

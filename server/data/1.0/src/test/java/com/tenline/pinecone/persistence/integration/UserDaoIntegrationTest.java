@@ -50,5 +50,15 @@ public class UserDaoIntegrationTest {
 		assertEquals("bill", user.getName());
 	}
 	
+	@Test
+	public void testFindAll() {
+		assertNotNull(userDao.findAll());
+	}
+	
+	@Test
+	public void testFindAllByFilter() {
+		assertNotNull(userDao.findAllByFilter("name=='bill'"));
+	}
+	
 }
 

@@ -7,6 +7,10 @@ import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,10 +26,13 @@ import com.tenline.pinecone.utils.JdoTemplate;
  * @author Bill
  *
  */
+@SuppressWarnings({"rawtypes", "unchecked"})
 @RunWith(MockitoJUnitRunner.class)  
 public class UserDaoTest {
 		
 	private User user;
+	
+	private List users;
 	
 	private UserDaoImpl userDao; 	
 	
@@ -37,14 +44,18 @@ public class UserDaoTest {
 		userDao = new UserDaoImpl();
 		userDao.setJdoTemplate(jdoTemplate);
 		user = new User();
-		user.setPrimaryKey("asa");
-		user.setName("bill");						
+		user.setId("asa");
+		user.setName("bill");		
+		users = new ArrayList();
+		users.add(user);
 	}
 	
 	@After
 	public void testShutdown() {	
 		userDao = null;
+		users.remove(user);
 		user = null;
+		users = null;
 	}
 
 	@Test
@@ -57,10 +68,27 @@ public class UserDaoTest {
 	
 	@Test
 	public void testFind() {
-		when(jdoTemplate.find(User.class, user.getPrimaryKey())).thenReturn(user);
-		User result = userDao.find(user.getPrimaryKey());
-		verify(jdoTemplate).find(User.class, user.getPrimaryKey());
+		when(jdoTemplate.find(User.class, user.getId())).thenReturn(user);
+		User result = userDao.find(user.getId());
+		verify(jdoTemplate).find(User.class, user.getId());
 		assertEquals("bill", result.getName());
+	}
+	
+	@Test
+	public void testFindAll() {
+		when(jdoTemplate.findAll(User.class)).thenReturn(users);
+		Collection<User> result = userDao.findAll();
+		verify(jdoTemplate).findAll(User.class);
+		assertEquals(1, result.size());
+	}
+	
+	@Test
+	public void testFindAllByFilter() {
+		String filter = "name=='bill'";
+		when(jdoTemplate.findAllByFilter(User.class, filter)).thenReturn(users);
+		Collection<User> result = userDao.findAllByFilter(filter);
+		verify(jdoTemplate).findAllByFilter(User.class, filter);
+		assertEquals(1, result.size());
 	}
 
 }

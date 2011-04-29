@@ -25,7 +25,7 @@ public class User {
 	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     @Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true")
-    private String primaryKey;
+    private String id;
 	
     @Persistent
 	private String name;
@@ -36,19 +36,19 @@ public class User {
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
-	 * @param primaryKey the primaryKey to set
+	 * @param id the id to set
 	 */
-	public void setPrimaryKey(String primaryKey) {
-		this.primaryKey = primaryKey;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	/**
-	 * @return the primaryKey
+	 * @return the id
 	 */
-	public String getPrimaryKey() {
-		return primaryKey;
+	public String getId() {
+		return id;
 	}
 
 	/**

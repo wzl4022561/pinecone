@@ -11,6 +11,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -34,13 +35,13 @@ public interface UserService {
 	
 	/**
 	 * 
-	 * @param primaryKey
+	 * @param id
 	 * @return
 	 */
 	@GET
-	@Path("/{primaryKey}")
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	User show(@PathParam("primaryKey") String primaryKey);
+	User show(@PathParam("id") String id);
 	
 	/**
 	 * 
@@ -56,8 +57,8 @@ public interface UserService {
 	 * @return
 	 */
 	@GET
-	@Path("/filter/{filter}")
+	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
-	Collection<User> showAllByFilter(@PathParam("filter") String filter);
+	Collection<User> showAllByFilter(@QueryParam("filter") String filter);
 	
 }
