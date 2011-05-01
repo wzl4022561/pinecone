@@ -14,30 +14,22 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import com.tenline.pinecone.model.User;
 import com.tenline.pinecone.persistence.impl.UserDaoImpl;
-import com.tenline.pinecone.utils.JdoTemplate;
 
 /**
  * @author Bill
  *
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
-@RunWith(MockitoJUnitRunner.class)  
-public class UserDaoTest {
+@SuppressWarnings({"rawtypes", "unchecked"}) 
+public class UserDaoTest extends AbstractDaoTest {
 		
 	private User user;
 	
 	private List users;
 	
 	private UserDaoImpl userDao; 	
-	
-	@Mock
-	private JdoTemplate jdoTemplate;
 		
 	@Before
 	public void testSetup() {
