@@ -10,9 +10,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
-import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
-
 import com.tenline.pinecone.model.User;
 import com.tenline.pinecone.persistence.UserDao;
 import com.tenline.pinecone.persistence.impl.UserDaoImpl;
@@ -21,23 +18,20 @@ import com.tenline.pinecone.persistence.impl.UserDaoImpl;
  * @author Bill
  *
  */
-public class UserDaoIntegrationTest {
+public class UserDaoIntegrationTest extends AbstractDaoIntegrationTest {
 	
 	private UserDao userDao;
 	
-	private LocalServiceTestHelper helper = new LocalServiceTestHelper(
-			new LocalDatastoreServiceTestConfig());
-	
 	@Before
 	public void testSetup() {
+		super.testSetup();
 		userDao = new UserDaoImpl();
-		helper.setUp();
 	}
 	
 	@After
 	public void testShutdown() {
+		super.testShutdown();
 		userDao = null;
-		helper.tearDown();
 	}
 		
 	@Test
