@@ -3,6 +3,7 @@
  */
 package com.tenline.pinecone.utils;
 
+import java.lang.reflect.Field;
 import java.util.Collection;
 
 import javax.jdo.JDOHelper;
@@ -17,7 +18,7 @@ import javax.jdo.Transaction;
  */
 public class JdoTemplate {
 
-	private static final PersistenceManagerFactory persistenceManagerFactory = 
+	private static final PersistenceManagerFactory pmf = 
 		JDOHelper.getPersistenceManagerFactory("transactions-optional");
 		
 	/**
@@ -29,22 +30,80 @@ public class JdoTemplate {
 	
 	/**
 	 * 
+	 * @param objClass
+	 * @param id
+	 */
+	public void delete(Class<?> objClass, String id) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+            tx.begin();     
+            pm.deletePersistent(pm.getObjectById(objClass, id));
+            tx.commit();
+        } catch (Exception e) {
+        	e.printStackTrace();
+        } finally {
+            if (tx.isActive()) {
+            	tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	/**
+	 * 
 	 * @param newInstance
 	 * @return
 	 */
 	public Object save(Object newInstance) {
-		PersistenceManager persistenceManager = persistenceManagerFactory.getPersistenceManager();
-		Transaction transaction = persistenceManager.currentTransaction();
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
 		Object obj = null;
 		try {
-            transaction.begin();      
-            obj = persistenceManager.makePersistent(newInstance);
-            transaction.commit();
+            tx.begin();      
+            obj = pm.makePersistent(newInstance);
+            tx.commit();
         } finally {
-            if (transaction.isActive()) {
-            	transaction.rollback();
+            if (tx.isActive()) {
+            	tx.rollback();
             }
-            persistenceManager.close();
+            pm.close();
+        }
+        return obj;
+	}
+	
+	/**
+	 * 
+	 * @param instance
+	 * @return
+	 */
+	public Object update(Object instance) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		Object obj = null;
+		try {
+            tx.begin();      
+            Class<?> cls = instance.getClass();
+            Field[] fields = cls.getDeclaredFields();
+            for (int i=0; i<fields.length; i++) {
+            	Field field = fields[i];
+            	field.setAccessible(true);
+            	if (field.getName().equals("id")) {
+            		System.out.println(field.get(instance));
+            		obj = pm.getObjectById(cls, field.get(instance));
+            	} else {
+            		obj.getClass().getDeclaredField(field.getName()).set(obj, field.get(instance));
+            	}
+            }
+            pm.makePersistent(obj);
+            tx.commit();
+        } catch (Exception e) {
+        	e.printStackTrace();
+        } finally {
+            if (tx.isActive()) {
+            	tx.rollback();
+            }
+            pm.close();
         }
 		return obj;
 	}
@@ -56,18 +115,18 @@ public class JdoTemplate {
 	 * @return
 	 */
 	public Object find(Class<?> objClass, String id) {
-		PersistenceManager persistenceManager = persistenceManagerFactory.getPersistenceManager();
-		Transaction transaction = persistenceManager.currentTransaction();
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
 		Object obj = null;
 		try {
-            transaction.begin();      
-            obj = persistenceManager.getObjectById(objClass, id);
-            transaction.commit();
+			tx.begin();
+            obj = pm.getObjectById(objClass, id);
+            tx.commit();
         } finally {  
-        	if (transaction.isActive()) {
-            	transaction.rollback();
+        	if (tx.isActive()) {
+            	tx.rollback();
             }
-            persistenceManager.close();
+            pm.close();
         }
 		return obj;
 	}
@@ -78,19 +137,19 @@ public class JdoTemplate {
 	 * @return
 	 */
 	public Collection<?> findAll(Class<?> objClass) {
-		PersistenceManager persistenceManager = persistenceManagerFactory.getPersistenceManager();
-		Transaction transaction = persistenceManager.currentTransaction();
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
 		Collection<?> objs = null;
-		try {
-            transaction.begin();      
-            Query query = persistenceManager.newQuery(objClass);
+		try {    
+			tx.begin();
+            Query query = pm.newQuery(objClass);
             objs = (Collection<?>) query.execute();
-            transaction.commit();
-        } finally {  
-        	if (transaction.isActive()) {
-            	transaction.rollback();
+            tx.commit();
+        } finally {
+        	if (tx.isActive()) {
+            	tx.rollback();
             }
-            persistenceManager.close();
+            pm.close();
         }
 		return objs;
 	}
@@ -102,20 +161,20 @@ public class JdoTemplate {
 	 * @return
 	 */
 	public Collection<?> findAllByFilter(Class<?> objClass, String filter) {
-		PersistenceManager persistenceManager = persistenceManagerFactory.getPersistenceManager();
-		Transaction transaction = persistenceManager.currentTransaction();
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
 		Collection<?> objs = null;
-		try {
-            transaction.begin();      
-            Query query = persistenceManager.newQuery(objClass);
+		try {    
+			tx.begin();
+            Query query = pm.newQuery(objClass);
             query.setFilter(filter);
             objs = (Collection<?>) query.execute();
-            transaction.commit();
+            tx.commit();
         } finally {  
-        	if (transaction.isActive()) {
-            	transaction.rollback();
+        	if (tx.isActive()) {
+            	tx.rollback();
             }
-            persistenceManager.close();
+            pm.close();
         }
 		return objs;
 	}

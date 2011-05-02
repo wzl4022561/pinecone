@@ -70,4 +70,24 @@ public class UserServiceImpl implements UserService {
 		return userDao.findAllByFilter(filter);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.tenline.pinecone.rest.UserService#update(com.tenline.pinecone.model.User)
+	 */
+	@Override
+	public Response update(User user) {
+		// TODO Auto-generated method stub
+		userDao.update(user);
+		return Response.status(Status.OK).build();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.tenline.pinecone.rest.AbstractService#delete(java.lang.String)
+	 */
+	@Override
+	public Response delete(String id) {
+		// TODO Auto-generated method stub
+		userDao.delete(id);
+		return Response.status(Status.OK).build();
+	}
+
 }

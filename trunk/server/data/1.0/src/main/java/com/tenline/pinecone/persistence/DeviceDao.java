@@ -11,7 +11,7 @@ import com.tenline.pinecone.model.Device;
  * @author Bill
  *
  */
-public interface DeviceDao {
+public interface DeviceDao extends AbstractDao {
 	
 	/**
 	 * 
@@ -19,6 +19,13 @@ public interface DeviceDao {
 	 * @return
 	 */
 	String save(Device newInstance);
+	
+	/**
+	 * 
+	 * @param instance
+	 * @return
+	 */
+	String update(Device instance);
 	
 	/**
 	 * 
