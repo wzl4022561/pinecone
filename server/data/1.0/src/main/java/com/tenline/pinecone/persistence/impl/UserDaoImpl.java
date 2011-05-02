@@ -63,4 +63,22 @@ public class UserDaoImpl extends AbstractDaoSupport implements UserDao {
 		return (Collection<User>) getJdoTemplate().findAllByFilter(User.class, filter);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.tenline.pinecone.persistence.UserDao#update(com.tenline.pinecone.model.User)
+	 */
+	@Override
+	public String update(User instance) {
+		// TODO Auto-generated method stub
+		return ((User) getJdoTemplate().update(instance)).getId();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.tenline.pinecone.persistence.UserDao#delete(java.lang.String)
+	 */
+	@Override
+	public void delete(String id) {
+		// TODO Auto-generated method stub
+		getJdoTemplate().delete(User.class, id);
+	}
+
 }

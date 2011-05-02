@@ -63,4 +63,22 @@ public class VariableDaoImpl extends AbstractDaoSupport implements VariableDao {
 		return (Collection<Variable>) getJdoTemplate().findAllByFilter(Variable.class, filter);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.tenline.pinecone.persistence.AbstractDao#delete(java.lang.String)
+	 */
+	@Override
+	public void delete(String id) {
+		// TODO Auto-generated method stub
+		getJdoTemplate().delete(Variable.class, id);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.tenline.pinecone.persistence.VariableDao#update(com.tenline.pinecone.model.Variable)
+	 */
+	@Override
+	public String update(Variable instance) {
+		// TODO Auto-generated method stub
+		return ((Variable) getJdoTemplate().update(instance)).getId();
+	}
+
 }

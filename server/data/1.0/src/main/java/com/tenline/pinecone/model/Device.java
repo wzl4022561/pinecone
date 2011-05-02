@@ -5,6 +5,7 @@ package com.tenline.pinecone.model;
 
 import java.util.Collection;
 
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
@@ -22,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@PersistenceCapable(identityType = IdentityType.APPLICATION)
+@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 public class Device {
 
 	@PrimaryKey
@@ -34,7 +35,8 @@ public class Device {
 	private String name;
     
     @Persistent(mappedBy = "device")
-    @Order(column = "name")
+    @Element(dependent = "true")
+    @Order(extensions = @Extension(vendorName="datanucleus", key="list-ordering", value="name asc"))
     private Collection<Variable> variables;
     
 	/**

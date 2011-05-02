@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@PersistenceCapable(identityType = IdentityType.APPLICATION)
+@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 public class Variable {
 	
 	/**
@@ -39,6 +39,9 @@ public class Variable {
     
     @Persistent
     private Integer type;
+    
+    @Persistent
+    private String unit;
     
     @Persistent
     private Device device;
@@ -90,6 +93,20 @@ public class Variable {
 	 */
 	public Integer getType() {
 		return type;
+	}
+
+	/**
+	 * @param unit the unit to set
+	 */
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
+	/**
+	 * @return the unit
+	 */
+	public String getUnit() {
+		return unit;
 	}
 
 	/**

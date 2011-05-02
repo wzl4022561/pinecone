@@ -63,4 +63,22 @@ public class DeviceDaoImpl extends AbstractDaoSupport implements DeviceDao {
 		return (Collection<Device>) getJdoTemplate().findAllByFilter(Device.class, filter);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.tenline.pinecone.persistence.AbstractDao#delete(java.lang.String)
+	 */
+	@Override
+	public void delete(String id) {
+		// TODO Auto-generated method stub
+		getJdoTemplate().delete(Device.class, id);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.tenline.pinecone.persistence.DeviceDao#update(com.tenline.pinecone.model.Device)
+	 */
+	@Override
+	public String update(Device instance) {
+		// TODO Auto-generated method stub
+		return ((Device) getJdoTemplate().update(instance)).getId();
+	}
+
 }

@@ -70,4 +70,24 @@ public class DeviceServiceImpl implements DeviceService {
 		return deviceDao.findAllByFilter(filter);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.tenline.pinecone.rest.AbstractService#delete(java.lang.String)
+	 */
+	@Override
+	public Response delete(String id) {
+		// TODO Auto-generated method stub
+		deviceDao.delete(id);
+		return Response.status(Status.OK).build();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.tenline.pinecone.rest.DeviceService#update(com.tenline.pinecone.model.Device)
+	 */
+	@Override
+	public Response update(Device device) {
+		// TODO Auto-generated method stub
+		deviceDao.update(device);
+		return Response.status(Status.OK).build();
+	}
+
 }

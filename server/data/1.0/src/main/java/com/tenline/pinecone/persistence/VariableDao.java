@@ -11,7 +11,7 @@ import com.tenline.pinecone.model.Variable;
  * @author Bill
  *
  */
-public interface VariableDao {
+public interface VariableDao extends AbstractDao {
 	
 	/**
 	 * 
@@ -19,6 +19,13 @@ public interface VariableDao {
 	 * @return
 	 */
 	String save(Variable newInstance);
+	
+	/**
+	 * 
+	 * @param instance
+	 * @return
+	 */
+	String update(Variable instance);
 	
 	/**
 	 * 

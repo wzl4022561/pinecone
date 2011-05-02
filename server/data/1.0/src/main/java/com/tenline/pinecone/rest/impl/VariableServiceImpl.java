@@ -70,4 +70,24 @@ public class VariableServiceImpl implements VariableService {
 		return variableDao.findAllByFilter(filter);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.tenline.pinecone.rest.AbstractService#delete(java.lang.String)
+	 */
+	@Override
+	public Response delete(String id) {
+		// TODO Auto-generated method stub
+		variableDao.delete(id);
+		return Response.status(Status.OK).build();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.tenline.pinecone.rest.VariableService#update(com.tenline.pinecone.model.Variable)
+	 */
+	@Override
+	public Response update(Variable variable) {
+		// TODO Auto-generated method stub
+		variableDao.update(variable);
+		return Response.status(Status.OK).build();
+	}
+
 }
