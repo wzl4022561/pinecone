@@ -68,18 +68,18 @@ public class DeviceDaoTest extends AbstractDaoTest {
 	
 	@Test
 	public void testFindAll() {
-		when(jdoTemplate.findAll(Device.class)).thenReturn(devices);
+		when(jdoTemplate.findAll(Device.class, null)).thenReturn(devices);
 		Collection<Device> result = deviceDao.findAll();
-		verify(jdoTemplate).findAll(Device.class);
+		verify(jdoTemplate).findAll(Device.class, null);
 		assertEquals(1, result.size());
 	}
 	
 	@Test
 	public void testFindAllByFilter() {
 		String filter = "name=='ACU'";
-		when(jdoTemplate.findAllByFilter(Device.class, filter)).thenReturn(devices);
+		when(jdoTemplate.findAll(Device.class, filter)).thenReturn(devices);
 		Collection<Device> result = deviceDao.findAll(filter);
-		verify(jdoTemplate).findAllByFilter(Device.class, filter);
+		verify(jdoTemplate).findAll(Device.class, filter);
 		assertEquals(1, result.size());
 	}
 

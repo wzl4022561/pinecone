@@ -68,18 +68,18 @@ public class UserDaoTest extends AbstractDaoTest {
 	
 	@Test
 	public void testFindAll() {
-		when(jdoTemplate.findAll(User.class)).thenReturn(users);
+		when(jdoTemplate.findAll(User.class, null)).thenReturn(users);
 		Collection<User> result = userDao.findAll();
-		verify(jdoTemplate).findAll(User.class);
+		verify(jdoTemplate).findAll(User.class, null);
 		assertEquals(1, result.size());
 	}
 	
 	@Test
 	public void testFindAllByFilter() {
 		String filter = "name=='bill'";
-		when(jdoTemplate.findAllByFilter(User.class, filter)).thenReturn(users);
+		when(jdoTemplate.findAll(User.class, filter)).thenReturn(users);
 		Collection<User> result = userDao.findAll(filter);
-		verify(jdoTemplate).findAllByFilter(User.class, filter);
+		verify(jdoTemplate).findAll(User.class, filter);
 		assertEquals(1, result.size());
 	}
 

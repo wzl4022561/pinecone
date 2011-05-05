@@ -50,7 +50,7 @@ public class DeviceDaoImpl extends AbstractDaoSupport implements DeviceDao {
 	@SuppressWarnings("unchecked")
 	public Collection<Device> findAll() {
 		// TODO Auto-generated method stub
-		return (Collection<Device>) getJdoTemplate().findAll(Device.class);
+		return (Collection<Device>) getJdoTemplate().findAll(Device.class, null);
 	}
 
 	/* (non-Javadoc)
@@ -60,7 +60,7 @@ public class DeviceDaoImpl extends AbstractDaoSupport implements DeviceDao {
 	@SuppressWarnings("unchecked")
 	public Collection<Device> findAll(String filter) {
 		// TODO Auto-generated method stub
-		return (Collection<Device>) getJdoTemplate().findAllByFilter(Device.class, filter);
+		return (Collection<Device>) getJdoTemplate().findAll(Device.class, filter);
 	}
 
 	/* (non-Javadoc)
