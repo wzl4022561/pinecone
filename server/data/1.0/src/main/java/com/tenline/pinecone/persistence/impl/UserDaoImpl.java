@@ -50,7 +50,7 @@ public class UserDaoImpl extends AbstractDaoSupport implements UserDao {
 	@SuppressWarnings("unchecked")
 	public Collection<User> findAll() {
 		// TODO Auto-generated method stub
-		return (Collection<User>) getJdoTemplate().findAll(User.class);
+		return (Collection<User>) getJdoTemplate().findAll(User.class, null);
 	}
 
 	/* (non-Javadoc)
@@ -60,7 +60,7 @@ public class UserDaoImpl extends AbstractDaoSupport implements UserDao {
 	@SuppressWarnings("unchecked")
 	public Collection<User> findAll(String filter) {
 		// TODO Auto-generated method stub
-		return (Collection<User>) getJdoTemplate().findAllByFilter(User.class, filter);
+		return (Collection<User>) getJdoTemplate().findAll(User.class, filter);
 	}
 
 	/* (non-Javadoc)

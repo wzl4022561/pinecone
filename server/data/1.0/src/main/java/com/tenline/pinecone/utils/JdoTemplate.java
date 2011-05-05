@@ -9,7 +9,6 @@ import java.util.Collection;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 /**
@@ -134,41 +133,18 @@ public class JdoTemplate {
 	/**
 	 * 
 	 * @param objClass
-	 * @return
-	 */
-	public Collection<?> findAll(Class<?> objClass) {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		Collection<?> objs = null;
-		try {    
-			tx.begin();
-            Query query = pm.newQuery(objClass);
-            objs = (Collection<?>) query.execute();
-            tx.commit();
-        } finally {
-        	if (tx.isActive()) {
-            	tx.rollback();
-            }
-            pm.close();
-        }
-		return objs;
-	}
-	
-	/**
-	 * 
-	 * @param objClass
 	 * @param filter
 	 * @return
 	 */
-	public Collection<?> findAllByFilter(Class<?> objClass, String filter) {
+	public Collection<?> findAll(Class<?> objClass, String filter) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		Collection<?> objs = null;
 		try {    
 			tx.begin();
-            Query query = pm.newQuery(objClass);
-            query.setFilter(filter);
-            objs = (Collection<?>) query.execute();
+			String queryString = "select from " + objClass.getName();
+			if (filter != null) queryString += " where " + filter;
+            objs = (Collection<?>) pm.newQuery(queryString).execute();
             tx.commit();
         } finally {  
         	if (tx.isActive()) {

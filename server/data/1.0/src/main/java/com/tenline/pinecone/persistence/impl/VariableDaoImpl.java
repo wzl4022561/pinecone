@@ -50,7 +50,7 @@ public class VariableDaoImpl extends AbstractDaoSupport implements VariableDao {
 	@SuppressWarnings("unchecked")
 	public Collection<Variable> findAll() {
 		// TODO Auto-generated method stub
-		return (Collection<Variable>) getJdoTemplate().findAll(Variable.class);
+		return (Collection<Variable>) getJdoTemplate().findAll(Variable.class, null);
 	}
 
 	/* (non-Javadoc)
@@ -60,7 +60,7 @@ public class VariableDaoImpl extends AbstractDaoSupport implements VariableDao {
 	@SuppressWarnings("unchecked")
 	public Collection<Variable> findAll(String filter) {
 		// TODO Auto-generated method stub
-		return (Collection<Variable>) getJdoTemplate().findAllByFilter(Variable.class, filter);
+		return (Collection<Variable>) getJdoTemplate().findAll(Variable.class, filter);
 	}
 
 	/* (non-Javadoc)
