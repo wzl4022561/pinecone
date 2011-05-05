@@ -45,6 +45,6 @@ public interface VariableDao extends AbstractDao {
 	 * @param filter
 	 * @return
 	 */
-	Collection<Variable> findAllByFilter(String filter);
+	Collection<Variable> findAll(String filter);
 
 }

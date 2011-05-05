@@ -30,6 +30,7 @@ public interface DeviceService extends AbstractService {
 	 * @return
 	 */
 	@POST
+	@Path("/create")
 	@Consumes(MediaType.APPLICATION_JSON)
 	Response create(Device device);
 	
@@ -39,6 +40,7 @@ public interface DeviceService extends AbstractService {
 	 * @return
 	 */
 	@PUT
+	@Path("/update")
 	@Consumes(MediaType.APPLICATION_JSON)
 	Response update(Device device);
 	
@@ -48,7 +50,7 @@ public interface DeviceService extends AbstractService {
 	 * @return
 	 */
 	@GET
-	@Path("/{id}")
+	@Path("/show/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	Device show(@PathParam("id") String id);
 	
@@ -57,6 +59,7 @@ public interface DeviceService extends AbstractService {
 	 * @return
 	 */
 	@GET
+	@Path("/show/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	Collection<Device> showAll();
 	
@@ -65,8 +68,8 @@ public interface DeviceService extends AbstractService {
 	 * @return
 	 */
 	@GET
-	@Path("/show/{filter}")
+	@Path("/show/all/{filter}")
 	@Produces(MediaType.APPLICATION_JSON)
-	Collection<Device> showAllByFilter(@PathParam("filter") String filter);
+	Collection<Device> showAll(@PathParam("filter") String filter);
 
 }

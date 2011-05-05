@@ -45,6 +45,6 @@ public interface DeviceDao extends AbstractDao {
 	 * @param filter
 	 * @return
 	 */
-	Collection<Device> findAllByFilter(String filter);
+	Collection<Device> findAll(String filter);
 
 }

@@ -89,9 +89,9 @@ public class DeviceServiceTest {
 	@Test
 	public void testShowAllByFilter() {
 		String filter = "name=='ACU'";
-		when(deviceDao.findAllByFilter(filter)).thenReturn(devices);
-		Collection<Device> result = deviceService.showAllByFilter(filter);
-		verify(deviceDao).findAllByFilter(filter);
+		when(deviceDao.findAll(filter)).thenReturn(devices);
+		Collection<Device> result = deviceService.showAll(filter);
+		verify(deviceDao).findAll(filter);
 		assertEquals(1, result.size());
 	}
 

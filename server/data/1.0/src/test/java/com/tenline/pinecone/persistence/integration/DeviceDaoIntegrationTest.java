@@ -51,7 +51,7 @@ public class DeviceDaoIntegrationTest extends AbstractDaoIntegrationTest {
 	
 	@Test
 	public void testFindAllByFilter() {
-		assertNotNull(deviceDao.findAllByFilter("name=='ACU'"));
+		assertNotNull(deviceDao.findAll("name=='ACU'"));
 	}
 
 }

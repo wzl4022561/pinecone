@@ -3,13 +3,9 @@
  */
 package com.tenline.pinecone.model;
 
-import java.util.Collection;
-
-import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.Order;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -24,25 +20,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class User {
+public class Item {
 	
 	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     @Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true")
     private String id;
 	
-    @Persistent
-	private String name;
-    
-    @Persistent(mappedBy = "user")
-    @Element(dependent = "true")
-    @Order(extensions = @Extension(vendorName="datanucleus", key="list-ordering", value="name asc"))
-    private Collection<Device> devices;
+	@Persistent
+	private String value;
+	
+	@Persistent
+	private Variable variable;
 
 	/**
 	 * 
 	 */
-	public User() {
+	public Item() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -61,31 +55,31 @@ public class User {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param value the value to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	/**
-	 * @return the name
+	 * @return the value
 	 */
-	public String getName() {
-		return name;
+	public String getValue() {
+		return value;
 	}
 
 	/**
-	 * @param devices the devices to set
+	 * @param variable the variable to set
 	 */
-	public void setDevices(Collection<Device> devices) {
-		this.devices = devices;
+	public void setVariable(Variable variable) {
+		this.variable = variable;
 	}
 
 	/**
-	 * @return the devices
+	 * @return the variable
 	 */
-	public Collection<Device> getDevices() {
-		return devices;
+	public Variable getVariable() {
+		return variable;
 	}
 
 }

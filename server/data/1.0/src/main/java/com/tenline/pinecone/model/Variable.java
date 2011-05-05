@@ -3,9 +3,13 @@
  */
 package com.tenline.pinecone.model;
 
+import java.util.Collection;
+
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Order;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -19,33 +23,33 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
+@PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class Variable {
-	
-	/**
-	 * Type Constants
-	 */
-	public static final int READ_ONLY = 0;
-	public static final int READ_WRITE = 1;
-	public static final int WRITE_ONLY = 2;
 
 	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     @Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true")
     private String id;
 	
-    @Persistent
+	@Persistent
 	private String name;
-    
-    @Persistent
-    private Integer type;
-    
-    @Persistent
-    private String unit;
-    
-    @Persistent
-    private Device device;
-    
+	
+	@Persistent
+	private String type;
+	
+	@Persistent
+	private Device device;
+	
+	@Persistent(mappedBy = "variable")
+    @Element(dependent = "true")
+    @Order(extensions = @Extension(vendorName="datanucleus", key="list-ordering", value="value asc, timestamp asc"))
+	private Collection<Record> records;
+	
+	@Persistent(mappedBy = "variable")
+    @Element(dependent = "true")
+    @Order(extensions = @Extension(vendorName="datanucleus", key="list-ordering", value="value asc"))
+	private Collection<Item> items;
+	
 	/**
 	 * 
 	 */
@@ -84,29 +88,15 @@ public class Variable {
 	/**
 	 * @param type the type to set
 	 */
-	public void setType(Integer type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
 	/**
 	 * @return the type
 	 */
-	public Integer getType() {
+	public String getType() {
 		return type;
-	}
-
-	/**
-	 * @param unit the unit to set
-	 */
-	public void setUnit(String unit) {
-		this.unit = unit;
-	}
-
-	/**
-	 * @return the unit
-	 */
-	public String getUnit() {
-		return unit;
 	}
 
 	/**
@@ -121,6 +111,34 @@ public class Variable {
 	 */
 	public Device getDevice() {
 		return device;
+	}
+
+	/**
+	 * @param records the records to set
+	 */
+	public void setRecords(Collection<Record> records) {
+		this.records = records;
+	}
+
+	/**
+	 * @return the records
+	 */
+	public Collection<Record> getRecords() {
+		return records;
+	}
+
+	/**
+	 * @param items the items to set
+	 */
+	public void setItems(Collection<Item> items) {
+		this.items = items;
+	}
+
+	/**
+	 * @return the items
+	 */
+	public Collection<Item> getItems() {
+		return items;
 	}
 
 }

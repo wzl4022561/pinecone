@@ -89,9 +89,9 @@ public class UserServiceTest {
 	@Test
 	public void testShowAllByFilter() {
 		String filter = "name=='bill'";
-		when(userDao.findAllByFilter(filter)).thenReturn(users);
-		Collection<User> result = userService.showAllByFilter(filter);
-		verify(userDao).findAllByFilter(filter);
+		when(userDao.findAll(filter)).thenReturn(users);
+		Collection<User> result = userService.showAll(filter);
+		verify(userDao).findAll(filter);
 		assertEquals(1, result.size());
 	}
 

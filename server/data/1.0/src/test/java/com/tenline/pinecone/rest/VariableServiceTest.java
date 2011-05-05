@@ -89,9 +89,9 @@ public class VariableServiceTest {
 	@Test
 	public void testShowAllByFilter() {
 		String filter = "name=='IF Output'";
-		when(variableDao.findAllByFilter(filter)).thenReturn(variables);
-		Collection<Variable> result = variableService.showAllByFilter(filter);
-		verify(variableDao).findAllByFilter(filter);
+		when(variableDao.findAll(filter)).thenReturn(variables);
+		Collection<Variable> result = variableService.showAll(filter);
+		verify(variableDao).findAll(filter);
 		assertEquals(1, result.size());
 	}
 

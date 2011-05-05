@@ -3,13 +3,11 @@
  */
 package com.tenline.pinecone.model;
 
-import java.util.Collection;
+import java.util.Date;
 
-import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.Order;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -24,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class Device {
+public class Record {
 
 	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
@@ -32,23 +30,18 @@ public class Device {
     private String id;
 	
 	@Persistent
-	private String name;
+	private String value;
 	
 	@Persistent
-	private String protocol;
+	private Date timestamp;
 	
 	@Persistent
-	private User user;
-	
-	@Persistent(mappedBy = "device")
-    @Element(dependent = "true")
-    @Order(extensions = @Extension(vendorName="datanucleus", key="list-ordering", value="name asc"))
-	private Collection<Variable> variables;
+	private Variable variable;
 	
 	/**
 	 * 
 	 */
-	public Device() {
+	public Record() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -67,59 +60,45 @@ public class Device {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param value the value to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	/**
-	 * @return the name
+	 * @return the value
 	 */
-	public String getName() {
-		return name;
-	}
-	
-	/**
-	 * @param protocol the protocol to set
-	 */
-	public void setProtocol(String protocol) {
-		this.protocol = protocol;
+	public String getValue() {
+		return value;
 	}
 
 	/**
-	 * @return the protocol
+	 * @param timestamp the timestamp to set
 	 */
-	public String getProtocol() {
-		return protocol;
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	/**
-	 * @param user the user to set
+	 * @return the timestamp
 	 */
-	public void setUser(User user) {
-		this.user = user;
+	public Date getTimestamp() {
+		return timestamp;
 	}
 
 	/**
-	 * @return the user
+	 * @param variable the variable to set
 	 */
-	public User getUser() {
-		return user;
+	public void setVariable(Variable variable) {
+		this.variable = variable;
 	}
 
 	/**
-	 * @param variables the variables to set
+	 * @return the variable
 	 */
-	public void setVariables(Collection<Variable> variables) {
-		this.variables = variables;
-	}
-
-	/**
-	 * @return the variables
-	 */
-	public Collection<Variable> getVariables() {
-		return variables;
+	public Variable getVariable() {
+		return variable;
 	}
 
 }

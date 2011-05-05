@@ -54,11 +54,11 @@ public class VariableDaoImpl extends AbstractDaoSupport implements VariableDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.persistence.VariableDao#findAllByFilter(java.lang.String)
+	 * @see com.tenline.pinecone.persistence.VariableDao#findAll(java.lang.String)
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public Collection<Variable> findAllByFilter(String filter) {
+	public Collection<Variable> findAll(String filter) {
 		// TODO Auto-generated method stub
 		return (Collection<Variable>) getJdoTemplate().findAllByFilter(Variable.class, filter);
 	}

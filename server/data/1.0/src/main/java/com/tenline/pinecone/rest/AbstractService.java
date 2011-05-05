@@ -20,7 +20,7 @@ public interface AbstractService {
 	 * @return
 	 */
 	@DELETE
-	@Path("/{id}")
+	@Path("/delete/{id}")
 	Response delete(@PathParam("id") String id);
 	
 }

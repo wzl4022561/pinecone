@@ -51,7 +51,7 @@ public class VariableDaoIntegrationTest extends AbstractDaoIntegrationTest {
 	
 	@Test
 	public void testFindAllByFilter() {
-		assertNotNull(variableDao.findAllByFilter("name=='Output'"));
+		assertNotNull(variableDao.findAll("name=='Output'"));
 	}
 
 }
