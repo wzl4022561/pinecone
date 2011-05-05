@@ -62,12 +62,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.rest.UserService#showAllByFilter(java.lang.String)
+	 * @see com.tenline.pinecone.rest.UserService#showAll(java.lang.String)
 	 */
 	@Override
-	public Collection<User> showAllByFilter(String filter) {
+	public Collection<User> showAll(String filter) {
 		// TODO Auto-generated method stub
-		return userDao.findAllByFilter(filter);
+		return userDao.findAll(filter);
 	}
 
 	/* (non-Javadoc)

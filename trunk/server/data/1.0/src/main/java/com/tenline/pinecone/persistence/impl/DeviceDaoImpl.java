@@ -54,11 +54,11 @@ public class DeviceDaoImpl extends AbstractDaoSupport implements DeviceDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.persistence.DeviceDao#findAllByFilter(java.lang.String)
+	 * @see com.tenline.pinecone.persistence.DeviceDao#findAll(java.lang.String)
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public Collection<Device> findAllByFilter(String filter) {
+	public Collection<Device> findAll(String filter) {
 		// TODO Auto-generated method stub
 		return (Collection<Device>) getJdoTemplate().findAllByFilter(Device.class, filter);
 	}

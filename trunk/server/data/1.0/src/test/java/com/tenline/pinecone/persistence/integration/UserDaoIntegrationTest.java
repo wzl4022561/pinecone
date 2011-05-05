@@ -51,7 +51,7 @@ public class UserDaoIntegrationTest extends AbstractDaoIntegrationTest {
 	
 	@Test
 	public void testFindAllByFilter() {
-		assertNotNull(userDao.findAllByFilter("name=='bill'"));
+		assertNotNull(userDao.findAll("name=='bill'"));
 	}
 	
 }

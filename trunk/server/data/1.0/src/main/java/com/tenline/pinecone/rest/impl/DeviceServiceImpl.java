@@ -62,12 +62,12 @@ public class DeviceServiceImpl implements DeviceService {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.rest.DeviceService#showAllByFilter(java.lang.String)
+	 * @see com.tenline.pinecone.rest.DeviceService#showAll(java.lang.String)
 	 */
 	@Override
-	public Collection<Device> showAllByFilter(String filter) {
+	public Collection<Device> showAll(String filter) {
 		// TODO Auto-generated method stub
-		return deviceDao.findAllByFilter(filter);
+		return deviceDao.findAll(filter);
 	}
 
 	/* (non-Javadoc)

@@ -30,6 +30,7 @@ public interface VariableService extends AbstractService {
 	 * @return
 	 */
 	@POST
+	@Path("/create")
 	@Consumes(MediaType.APPLICATION_JSON)
 	Response create(Variable variable);
 	
@@ -39,6 +40,7 @@ public interface VariableService extends AbstractService {
 	 * @return
 	 */
 	@PUT
+	@Path("/update")
 	@Consumes(MediaType.APPLICATION_JSON)
 	Response update(Variable variable);
 	
@@ -48,7 +50,7 @@ public interface VariableService extends AbstractService {
 	 * @return
 	 */
 	@GET
-	@Path("/{id}")
+	@Path("/show/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	Variable show(@PathParam("id") String id);
 
@@ -57,6 +59,7 @@ public interface VariableService extends AbstractService {
 	 * @return
 	 */
 	@GET
+	@Path("/show/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	Collection<Variable> showAll();
 	
@@ -66,8 +69,8 @@ public interface VariableService extends AbstractService {
 	 * @return
 	 */
 	@GET
-	@Path("/show/{filter}")
+	@Path("/show/all/{filter}")
 	@Produces(MediaType.APPLICATION_JSON)
-	Collection<Variable> showAllByFilter(@PathParam("filter") String filter);
+	Collection<Variable> showAll(@PathParam("filter") String filter);
 	
 }

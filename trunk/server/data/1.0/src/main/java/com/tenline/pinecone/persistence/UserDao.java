@@ -45,6 +45,6 @@ public interface UserDao extends AbstractDao {
 	 * @param filter
 	 * @return
 	 */
-	Collection<User> findAllByFilter(String filter);
+	Collection<User> findAll(String filter);
 	
 }

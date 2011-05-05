@@ -78,7 +78,7 @@ public class UserDaoTest extends AbstractDaoTest {
 	public void testFindAllByFilter() {
 		String filter = "name=='bill'";
 		when(jdoTemplate.findAllByFilter(User.class, filter)).thenReturn(users);
-		Collection<User> result = userDao.findAllByFilter(filter);
+		Collection<User> result = userDao.findAll(filter);
 		verify(jdoTemplate).findAllByFilter(User.class, filter);
 		assertEquals(1, result.size());
 	}
