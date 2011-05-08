@@ -78,7 +78,10 @@ public class VariableDaoImpl extends AbstractDaoSupport implements VariableDao {
 	@Override
 	public String update(Variable instance) {
 		// TODO Auto-generated method stub
-		return ((Variable) getJdoTemplate().update(instance)).getId();
+		Variable detachedVariable = (Variable) getJdoTemplate().getDetachedObject(Variable.class, instance.getId());
+		if (instance.getName() != null) detachedVariable.setName(instance.getName());
+		if (instance.getType() != null) detachedVariable.setType(instance.getType());
+		return ((Variable) getJdoTemplate().save(detachedVariable)).getId();
 	}
 
 }
