@@ -69,7 +69,9 @@ public class UserDaoImpl extends AbstractDaoSupport implements UserDao {
 	@Override
 	public String update(User instance) {
 		// TODO Auto-generated method stub
-		return ((User) getJdoTemplate().update(instance)).getId();
+		User detachedUser = (User) getJdoTemplate().getDetachedObject(User.class, instance.getId());
+		if (instance.getName() != null) detachedUser.setName(instance.getName());
+		return ((User) getJdoTemplate().save(detachedUser)).getId();
 	}
 
 	/* (non-Javadoc)

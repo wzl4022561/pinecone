@@ -3,7 +3,6 @@
  */
 package com.tenline.pinecone.utils;
 
-import java.lang.reflect.Field;
 import java.util.Collection;
 
 import javax.jdo.JDOHelper;
@@ -73,33 +72,20 @@ public class JdoTemplate {
 	
 	/**
 	 * 
-	 * @param instance
+	 * @param objClass
+	 * @param id
 	 * @return
 	 */
-	public Object update(Object instance) {
+	public Object getDetachedObject(Class<?> objClass, String id) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		Object obj = null;
 		try {
-            tx.begin();      
-            Class<?> cls = instance.getClass();
-            Field[] fields = cls.getDeclaredFields();
-            for (int i=0; i<fields.length; i++) {
-            	Field field = fields[i];
-            	field.setAccessible(true);
-            	if (field.getName().equals("id")) {
-            		System.out.println(field.get(instance));
-            		obj = pm.getObjectById(cls, field.get(instance));
-            	} else {
-            		obj.getClass().getDeclaredField(field.getName()).set(obj, field.get(instance));
-            	}
-            }
-            pm.makePersistent(obj);
+			tx.begin();
+            obj = pm.detachCopy(pm.getObjectById(objClass, id));
             tx.commit();
-        } catch (Exception e) {
-        	e.printStackTrace();
         } finally {
-            if (tx.isActive()) {
+        	if (tx.isActive()) {
             	tx.rollback();
             }
             pm.close();

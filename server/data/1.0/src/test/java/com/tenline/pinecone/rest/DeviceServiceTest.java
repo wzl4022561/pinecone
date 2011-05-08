@@ -71,6 +71,24 @@ public class DeviceServiceTest {
 	}
 	
 	@Test
+	public void testDelete() {
+		Response result = deviceService.delete(device.getId());
+		ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);  
+		verify(deviceDao).delete(argument.capture());
+		assertEquals("asa", argument.getValue());
+		assertEquals(200, result.getStatus());
+	}
+	
+	@Test
+	public void testUpdate() {
+		Response result = deviceService.update(device);
+		ArgumentCaptor<Device> argument = ArgumentCaptor.forClass(Device.class);  
+		verify(deviceDao).update(argument.capture());
+		assertEquals("ACU", argument.getValue().getName());
+		assertEquals(200, result.getStatus());
+	}
+	
+	@Test
 	public void testShow() {
 		when(deviceDao.find(device.getId())).thenReturn(device);
 		Device result = deviceService.show(device.getId());

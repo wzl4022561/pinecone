@@ -78,7 +78,10 @@ public class DeviceDaoImpl extends AbstractDaoSupport implements DeviceDao {
 	@Override
 	public String update(Device instance) {
 		// TODO Auto-generated method stub
-		return ((Device) getJdoTemplate().update(instance)).getId();
+		Device detachedDevice = (Device) getJdoTemplate().getDetachedObject(Device.class, instance.getId());
+		if (instance.getName() != null) detachedDevice.setName(instance.getName());
+		if (instance.getProtocol() != null) detachedDevice.setProtocol(instance.getProtocol());
+		return ((Device) getJdoTemplate().save(detachedDevice)).getId();
 	}
 
 }

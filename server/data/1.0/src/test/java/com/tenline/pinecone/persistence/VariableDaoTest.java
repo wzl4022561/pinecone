@@ -4,6 +4,8 @@
 package com.tenline.pinecone.persistence;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -14,6 +16,8 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import com.tenline.pinecone.model.Variable;
 import com.tenline.pinecone.persistence.impl.VariableDaoImpl;
@@ -56,6 +60,30 @@ public class VariableDaoTest extends AbstractDaoTest {
 		String result = variableDao.save(variable);
 		verify(jdoTemplate).save(variable);
 		assertEquals("asa", result);
+	}
+	
+	@Test
+	public void testDelete() {
+		doAnswer(new Answer<Object>() {
+	        public Object answer(InvocationOnMock invocation) {
+	            Object[] args = invocation.getArguments();
+	            assertEquals(args[0], Variable.class);
+	            assertEquals(args[1], variable.getId());
+	            return args;
+	        }
+	    }).when(jdoTemplate).delete(Variable.class, variable.getId());
+		variableDao.delete(variable.getId());
+		verify(jdoTemplate).delete(Variable.class, variable.getId());
+	}
+	
+	@Test
+	public void testUpdate() {
+		when(jdoTemplate.getDetachedObject(Variable.class, variable.getId())).thenReturn(variable);
+		when(jdoTemplate.save(variable)).thenReturn(variable);
+		String variableId = variableDao.update(variable);
+		verify(jdoTemplate).save(variable);
+		verify(jdoTemplate).getDetachedObject(Variable.class, variable.getId());
+		assertNotNull(variableId);
 	}
 	
 	@Test

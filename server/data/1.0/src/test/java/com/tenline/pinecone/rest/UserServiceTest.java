@@ -71,6 +71,24 @@ public class UserServiceTest {
 	}
 	
 	@Test
+	public void testDelete() {
+		Response result = userService.delete(user.getId());
+		ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);  
+		verify(userDao).delete(argument.capture());
+		assertEquals("asa", argument.getValue());
+		assertEquals(200, result.getStatus());
+	}
+	
+	@Test
+	public void testUpdate() {
+		Response result = userService.update(user);
+		ArgumentCaptor<User> argument = ArgumentCaptor.forClass(User.class);  
+		verify(userDao).update(argument.capture());
+		assertEquals("bill", argument.getValue().getName());
+		assertEquals(200, result.getStatus());
+	}
+	
+	@Test
 	public void testShow() {
 		when(userDao.find(user.getId())).thenReturn(user);
 		User result = userService.show(user.getId());

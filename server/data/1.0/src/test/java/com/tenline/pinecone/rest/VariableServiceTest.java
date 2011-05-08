@@ -71,6 +71,24 @@ public class VariableServiceTest {
 	}
 	
 	@Test
+	public void testDelete() {
+		Response result = variableService.delete(variable.getId());
+		ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);  
+		verify(variableDao).delete(argument.capture());
+		assertEquals("asa", argument.getValue());
+		assertEquals(200, result.getStatus());
+	}
+	
+	@Test
+	public void testUpdate() {
+		Response result = variableService.update(variable);
+		ArgumentCaptor<Variable> argument = ArgumentCaptor.forClass(Variable.class);  
+		verify(variableDao).update(argument.capture());
+		assertEquals("IF Output", argument.getValue().getName());
+		assertEquals(200, result.getStatus());
+	}
+	
+	@Test
 	public void testShow() {
 		when(variableDao.find(variable.getId())).thenReturn(variable);
 		Variable result = variableService.show(variable.getId());
