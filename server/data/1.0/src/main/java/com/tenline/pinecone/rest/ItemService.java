@@ -46,30 +46,11 @@ public interface ItemService extends AbstractService {
 	
 	/**
 	 * 
-	 * @param id
 	 * @return
 	 */
 	@GET
-	@Path("/show/{id}")
+	@Path("/show/{filter}")
 	@Produces(MediaType.APPLICATION_JSON)
-	Item show(@PathParam("id") String id);
-	
-	/**
-	 * 
-	 * @return
-	 */
-	@GET
-	@Path("/show/all")
-	@Produces(MediaType.APPLICATION_JSON)
-	Collection<Item> showAll();
-	
-	/**
-	 * 
-	 * @return
-	 */
-	@GET
-	@Path("/show/all/{filter}")
-	@Produces(MediaType.APPLICATION_JSON)
-	Collection<Item> showAll(@PathParam("filter") String filter);
+	Collection<Item> show(@PathParam("filter") String filter);
 
 }

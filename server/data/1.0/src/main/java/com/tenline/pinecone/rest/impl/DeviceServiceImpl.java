@@ -47,27 +47,9 @@ public class DeviceServiceImpl implements DeviceService {
 	 * @see com.tenline.pinecone.rest.DeviceService#show(java.lang.String)
 	 */
 	@Override
-	public Device show(String id) {
+	public Collection<Device> show(String filter) {
 		// TODO Auto-generated method stub
-		return deviceDao.find(id);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.rest.DeviceService#showAll()
-	 */
-	@Override
-	public Collection<Device> showAll() {
-		// TODO Auto-generated method stub
-		return deviceDao.findAll();
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.rest.DeviceService#showAll(java.lang.String)
-	 */
-	@Override
-	public Collection<Device> showAll(String filter) {
-		// TODO Auto-generated method stub
-		return deviceDao.findAll(filter);
+		return deviceDao.find(filter);
 	}
 
 	/* (non-Javadoc)

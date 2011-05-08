@@ -29,22 +29,9 @@ public interface DeviceDao extends AbstractDao {
 	
 	/**
 	 * 
-	 * @param id
-	 * @return
-	 */
-	Device find(String id);
-	
-	/**
-	 * 
-	 * @return
-	 */
-	Collection<Device> findAll();
-	
-	/**
-	 * 
 	 * @param filter
 	 * @return
 	 */
-	Collection<Device> findAll(String filter);
+	Collection<Device> find(String filter);
 
 }

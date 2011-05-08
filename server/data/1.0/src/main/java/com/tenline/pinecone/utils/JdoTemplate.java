@@ -3,11 +3,15 @@
  */
 package com.tenline.pinecone.utils;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
+import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 /**
@@ -92,29 +96,6 @@ public class JdoTemplate {
         }
 		return obj;
 	}
-
-	/**
-	 * 
-	 * @param objClass
-	 * @param id
-	 * @return
-	 */
-	public Object find(Class<?> objClass, String id) {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		Object obj = null;
-		try {
-			tx.begin();
-            obj = pm.getObjectById(objClass, id);
-            tx.commit();
-        } finally {  
-        	if (tx.isActive()) {
-            	tx.rollback();
-            }
-            pm.close();
-        }
-		return obj;
-	}
 	
 	/**
 	 * 
@@ -122,17 +103,30 @@ public class JdoTemplate {
 	 * @param filter
 	 * @return
 	 */
-	public Collection<?> findAll(Class<?> objClass, String filter) {
+	public Collection<?> find(Class<?> objClass, String filter) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-		Collection<?> objs = null;
+		Collection<Object> objs = new ArrayList<Object>();
 		try {    
 			tx.begin();
-			String queryString = "select from " + objClass.getName();
-			if (filter != null) queryString += " where " + filter;
-            objs = (Collection<?>) pm.newQuery(queryString).execute();
+			if (filter.equals("all")) {
+				Extent<?> extent = pm.getExtent(objClass);			
+				for (Iterator<?> i = extent.iterator(); i.hasNext();) {
+					objs.add(i.next());
+			    }
+			    extent.closeAll();
+			} else {
+				String queryString = "select from " + objClass.getName();
+				if (filter != null) queryString += " where " + filter;
+	            Query query = pm.newQuery(queryString);
+	            Collection<?> result = (Collection<?>) query.execute();
+	            for (Iterator<?> i = result.iterator(); i.hasNext();) {
+	            	objs.add(i.next());
+	            }
+	        	query.closeAll();
+			}			
             tx.commit();
-        } finally {  
+        } finally { 
         	if (tx.isActive()) {
             	tx.rollback();
             }

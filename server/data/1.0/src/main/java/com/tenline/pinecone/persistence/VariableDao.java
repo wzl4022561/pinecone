@@ -29,22 +29,9 @@ public interface VariableDao extends AbstractDao {
 	
 	/**
 	 * 
-	 * @param id
-	 * @return
-	 */
-	Variable find(String id);
-	
-	/**
-	 * 
-	 * @return
-	 */
-	Collection<Variable> findAll();
-	
-	/**
-	 * 
 	 * @param filter
 	 * @return
 	 */
-	Collection<Variable> findAll(String filter);
+	Collection<Variable> find(String filter);
 
 }

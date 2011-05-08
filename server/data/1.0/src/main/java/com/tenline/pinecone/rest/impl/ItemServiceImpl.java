@@ -67,27 +67,9 @@ public class ItemServiceImpl implements ItemService {
 	 * @see com.tenline.pinecone.rest.ItemService#show(java.lang.String)
 	 */
 	@Override
-	public Item show(String id) {
+	public Collection<Item> show(String filter) {
 		// TODO Auto-generated method stub
-		return itemDao.find(id);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.rest.ItemService#showAll()
-	 */
-	@Override
-	public Collection<Item> showAll() {
-		// TODO Auto-generated method stub
-		return itemDao.findAll();
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.rest.ItemService#showAll(java.lang.String)
-	 */
-	@Override
-	public Collection<Item> showAll(String filter) {
-		// TODO Auto-generated method stub
-		return itemDao.findAll(filter);
+		return itemDao.find(filter);
 	}
 
 }

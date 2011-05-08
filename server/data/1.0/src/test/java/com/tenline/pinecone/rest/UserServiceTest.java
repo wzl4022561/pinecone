@@ -90,26 +90,10 @@ public class UserServiceTest {
 	
 	@Test
 	public void testShow() {
-		when(userDao.find(user.getId())).thenReturn(user);
-		User result = userService.show(user.getId());
-		verify(userDao).find(user.getId());
-		assertEquals("bill", result.getName());
-	}
-	
-	@Test 
-	public void testShowAll() {
-		when(userDao.findAll()).thenReturn(users);
-		Collection<User> result = userService.showAll();
-		verify(userDao).findAll();
-		assertEquals(1, result.size());
-	}
-	
-	@Test
-	public void testShowAllByFilter() {
 		String filter = "name=='bill'";
-		when(userDao.findAll(filter)).thenReturn(users);
-		Collection<User> result = userService.showAll(filter);
-		verify(userDao).findAll(filter);
+		when(userDao.find(filter)).thenReturn(users);
+		Collection<User> result = userService.show(filter);
+		verify(userDao).find(filter);
 		assertEquals(1, result.size());
 	}
 

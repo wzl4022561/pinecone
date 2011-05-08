@@ -3,7 +3,6 @@
  */
 package com.tenline.pinecone.persistence.integration;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.After;
@@ -35,23 +34,16 @@ public class VariableDaoIntegrationTest extends AbstractDaoIntegrationTest {
 	}
 	
 	@Test
-	public void testSaveAndFind() {
+	public void testSave() {
 		Variable newVariable = new Variable();
 		newVariable.setName("Output");
 		String variableId = variableDao.save(newVariable);
 		assertNotNull(variableId);	
-		Variable variable = variableDao.find(variableId);
-		assertEquals("Output", variable.getName());
 	}
 	
 	@Test
-	public void testFindAll() {
-		assertNotNull(variableDao.findAll());
-	}
-	
-	@Test
-	public void testFindAllByFilter() {
-		assertNotNull(variableDao.findAll("name=='Output'"));
+	public void testFind() {
+		assertNotNull(variableDao.find("name=='Output'"));
 	}
 
 }

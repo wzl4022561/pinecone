@@ -67,27 +67,9 @@ public class RecordServiceImpl implements RecordService {
 	 * @see com.tenline.pinecone.rest.RecordService#show(java.lang.String)
 	 */
 	@Override
-	public Record show(String id) {
+	public Collection<Record> show(String filter) {
 		// TODO Auto-generated method stub
-		return recordDao.find(id);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.rest.RecordService#showAll()
-	 */
-	@Override
-	public Collection<Record> showAll() {
-		// TODO Auto-generated method stub
-		return recordDao.findAll();
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.rest.RecordService#showAll(java.lang.String)
-	 */
-	@Override
-	public Collection<Record> showAll(String filter) {
-		// TODO Auto-generated method stub
-		return recordDao.findAll(filter);
+		return recordDao.find(filter);
 	}
 
 }

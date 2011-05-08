@@ -90,26 +90,10 @@ public class DeviceServiceTest {
 	
 	@Test
 	public void testShow() {
-		when(deviceDao.find(device.getId())).thenReturn(device);
-		Device result = deviceService.show(device.getId());
-		verify(deviceDao).find(device.getId());
-		assertEquals("ACU", result.getName());
-	}
-	
-	@Test 
-	public void testShowAll() {
-		when(deviceDao.findAll()).thenReturn(devices);
-		Collection<Device> result = deviceService.showAll();
-		verify(deviceDao).findAll();
-		assertEquals(1, result.size());
-	}
-	
-	@Test
-	public void testShowAllByFilter() {
 		String filter = "name=='ACU'";
-		when(deviceDao.findAll(filter)).thenReturn(devices);
-		Collection<Device> result = deviceService.showAll(filter);
-		verify(deviceDao).findAll(filter);
+		when(deviceDao.find(filter)).thenReturn(devices);
+		Collection<Device> result = deviceService.show(filter);
+		verify(deviceDao).find(filter);
 		assertEquals(1, result.size());
 	}
 

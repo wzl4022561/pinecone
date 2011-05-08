@@ -90,26 +90,10 @@ public class VariableServiceTest {
 	
 	@Test
 	public void testShow() {
-		when(variableDao.find(variable.getId())).thenReturn(variable);
-		Variable result = variableService.show(variable.getId());
-		verify(variableDao).find(variable.getId());
-		assertEquals("IF Output", result.getName());
-	}
-	
-	@Test 
-	public void testShowAll() {
-		when(variableDao.findAll()).thenReturn(variables);
-		Collection<Variable> result = variableService.showAll();
-		verify(variableDao).findAll();
-		assertEquals(1, result.size());
-	}
-	
-	@Test
-	public void testShowAllByFilter() {
 		String filter = "name=='IF Output'";
-		when(variableDao.findAll(filter)).thenReturn(variables);
-		Collection<Variable> result = variableService.showAll(filter);
-		verify(variableDao).findAll(filter);
+		when(variableDao.find(filter)).thenReturn(variables);
+		Collection<Variable> result = variableService.show(filter);
+		verify(variableDao).find(filter);
 		assertEquals(1, result.size());
 	}
 

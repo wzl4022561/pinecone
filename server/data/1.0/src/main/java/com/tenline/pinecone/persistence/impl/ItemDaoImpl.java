@@ -58,29 +58,10 @@ public class ItemDaoImpl extends AbstractDaoSupport implements ItemDao {
 	 * @see com.tenline.pinecone.persistence.ItemDao#find(java.lang.String)
 	 */
 	@Override
-	public Item find(String id) {
-		// TODO Auto-generated method stub
-		return (Item) getJdoTemplate().find(Item.class, id);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.persistence.ItemDao#findAll()
-	 */
-	@Override
 	@SuppressWarnings("unchecked")
-	public Collection<Item> findAll() {
+	public Collection<Item> find(String filter) {
 		// TODO Auto-generated method stub
-		return (Collection<Item>) getJdoTemplate().findAll(Item.class, null);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.persistence.ItemDao#findAll(java.lang.String)
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Collection<Item> findAll(String filter) {
-		// TODO Auto-generated method stub
-		return (Collection<Item>) getJdoTemplate().findAll(Item.class, filter);
+		return (Collection<Item>) getJdoTemplate().find(Item.class, filter);
 	}
 
 }

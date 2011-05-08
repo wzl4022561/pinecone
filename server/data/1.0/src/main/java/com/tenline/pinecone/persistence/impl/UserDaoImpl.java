@@ -38,29 +38,10 @@ public class UserDaoImpl extends AbstractDaoSupport implements UserDao {
 	 * @see com.tenline.pinecone.persistence.UserDao#find(java.lang.String)
 	 */
 	@Override
-	public User find(String id) {
-		// TODO Auto-generated method stub
-		return (User) getJdoTemplate().find(User.class, id);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.persistence.UserDao#findAll()
-	 */
-	@Override
 	@SuppressWarnings("unchecked")
-	public Collection<User> findAll() {
+	public Collection<User> find(String filter) {
 		// TODO Auto-generated method stub
-		return (Collection<User>) getJdoTemplate().findAll(User.class, null);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.persistence.UserDao#findAll(java.lang.String)
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Collection<User> findAll(String filter) {
-		// TODO Auto-generated method stub
-		return (Collection<User>) getJdoTemplate().findAll(User.class, filter);
+		return (Collection<User>) getJdoTemplate().find(User.class, filter);
 	}
 
 	/* (non-Javadoc)

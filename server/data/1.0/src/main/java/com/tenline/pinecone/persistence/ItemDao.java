@@ -29,22 +29,9 @@ public interface ItemDao extends AbstractDao {
 	
 	/**
 	 * 
-	 * @param id
-	 * @return
-	 */
-	Item find(String id);
-	
-	/**
-	 * 
-	 * @return
-	 */
-	Collection<Item> findAll();
-	
-	/**
-	 * 
 	 * @param filter
 	 * @return
 	 */
-	Collection<Item> findAll(String filter);
+	Collection<Item> find(String filter);
 	
 }

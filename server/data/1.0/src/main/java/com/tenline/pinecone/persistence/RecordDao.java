@@ -27,24 +27,10 @@ public interface RecordDao extends AbstractDao {
 	 */
 	String update(Record instance);
 	
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 */
-	Record find(String id);
-	
-	/**
-	 * 
-	 * @return
-	 */
-	Collection<Record> findAll();
-	
-	/**
-	 * 
+	/** 
 	 * @param filter
 	 * @return
 	 */
-	Collection<Record> findAll(String filter);
+	Collection<Record> find(String filter);
 
 }
