@@ -47,27 +47,9 @@ public class VariableServiceImpl implements VariableService {
 	 * @see com.tenline.pinecone.rest.VariableService#show(java.lang.String)
 	 */
 	@Override
-	public Variable show(String id) {
+	public Collection<Variable> show(String filter) {
 		// TODO Auto-generated method stub
-		return variableDao.find(id);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.rest.VariableService#showAll()
-	 */
-	@Override
-	public Collection<Variable> showAll() {
-		// TODO Auto-generated method stub
-		return variableDao.findAll();
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.rest.VariableService#showAll(java.lang.String)
-	 */
-	@Override
-	public Collection<Variable> showAll(String filter) {
-		// TODO Auto-generated method stub
-		return variableDao.findAll(filter);
+		return variableDao.find(filter);
 	}
 
 	/* (non-Javadoc)

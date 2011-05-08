@@ -5,6 +5,9 @@ package com.tenline.pinecone.persistence.integration;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertNull;
+
+import java.util.Collection;
 
 import org.junit.After;
 import org.junit.Before;
@@ -35,23 +38,20 @@ public class DeviceDaoIntegrationTest extends AbstractDaoIntegrationTest {
 	}
 	
 	@Test
-	public void testSaveAndFind() {
+	public void testCURD() {
 		Device newDevice = new Device();
 		newDevice.setName("ACU");
 		String deviceId = deviceDao.save(newDevice);
 		assertNotNull(deviceId);	
-		Device device = deviceDao.find(deviceId);
-		assertEquals("ACU", device.getName());
-	}
-	
-	@Test
-	public void testFindAll() {
-		assertNotNull(deviceDao.findAll());
-	}
-	
-	@Test
-	public void testFindAllByFilter() {
-		assertNotNull(deviceDao.findAll("name=='ACU'"));
+		Collection<Device> devices = deviceDao.find("id=='"+deviceId+"'");
+		assertEquals(1, devices.size());
+		Device device = (Device) devices.toArray()[0];
+		device.setName("LNB");
+		deviceId = deviceDao.update(device);
+		devices = deviceDao.find("id=='"+deviceId+"'");
+		assertEquals("LNB", ((Device) devices.toArray()[0]).getName());
+//		deviceDao.delete(deviceId);
+//		assertNull(deviceDao.find("id=='"+deviceId+"'"));
 	}
 
 }

@@ -46,31 +46,12 @@ public interface VariableService extends AbstractService {
 	
 	/**
 	 * 
-	 * @param id
-	 * @return
-	 */
-	@GET
-	@Path("/show/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	Variable show(@PathParam("id") String id);
-
-	/**
-	 * 
-	 * @return
-	 */
-	@GET
-	@Path("/show/all")
-	@Produces(MediaType.APPLICATION_JSON)
-	Collection<Variable> showAll();
-	
-	/**
-	 * 
 	 * @param filter
 	 * @return
 	 */
 	@GET
-	@Path("/show/all/{filter}")
+	@Path("/show/{filter}")
 	@Produces(MediaType.APPLICATION_JSON)
-	Collection<Variable> showAll(@PathParam("filter") String filter);
+	Collection<Variable> show(@PathParam("filter") String filter);
 	
 }

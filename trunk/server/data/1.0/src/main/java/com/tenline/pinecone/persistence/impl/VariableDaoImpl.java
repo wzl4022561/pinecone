@@ -38,29 +38,10 @@ public class VariableDaoImpl extends AbstractDaoSupport implements VariableDao {
 	 * @see com.tenline.pinecone.persistence.VariableDao#find(java.lang.String)
 	 */
 	@Override
-	public Variable find(String id) {
-		// TODO Auto-generated method stub
-		return (Variable) getJdoTemplate().find(Variable.class, id);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.persistence.VariableDao#findAll()
-	 */
-	@Override
 	@SuppressWarnings("unchecked")
-	public Collection<Variable> findAll() {
+	public Collection<Variable> find(String filter) {
 		// TODO Auto-generated method stub
-		return (Collection<Variable>) getJdoTemplate().findAll(Variable.class, null);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.persistence.VariableDao#findAll(java.lang.String)
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Collection<Variable> findAll(String filter) {
-		// TODO Auto-generated method stub
-		return (Collection<Variable>) getJdoTemplate().findAll(Variable.class, filter);
+		return (Collection<Variable>) getJdoTemplate().find(Variable.class, filter);
 	}
 
 	/* (non-Javadoc)

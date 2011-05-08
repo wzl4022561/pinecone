@@ -3,7 +3,6 @@
  */
 package com.tenline.pinecone.persistence.integration;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.After;
@@ -35,23 +34,16 @@ public class UserDaoIntegrationTest extends AbstractDaoIntegrationTest {
 	}
 		
 	@Test
-	public void testSaveAndFind() {
+	public void testSave() {
 		User newUser = new User();
 		newUser.setName("bill");	
 		String userId = userDao.save(newUser);
-		assertNotNull(userId);	
-		User user = userDao.find(userId);
-		assertEquals("bill", user.getName());
+		assertNotNull(userId);
 	}
 	
 	@Test
-	public void testFindAll() {
-		assertNotNull(userDao.findAll());
-	}
-	
-	@Test
-	public void testFindAllByFilter() {
-		assertNotNull(userDao.findAll("name=='bill'"));
+	public void testFind() {
+		assertNotNull(userDao.find("name=='bill'"));
 	}
 	
 }

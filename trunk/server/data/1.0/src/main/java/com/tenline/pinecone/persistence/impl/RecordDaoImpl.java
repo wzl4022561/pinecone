@@ -61,29 +61,10 @@ public class RecordDaoImpl extends AbstractDaoSupport implements RecordDao {
 	 * @see com.tenline.pinecone.persistence.RecordDao#find(java.lang.String)
 	 */
 	@Override
-	public Record find(String id) {
-		// TODO Auto-generated method stub
-		return (Record) getJdoTemplate().find(Record.class, id);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.persistence.RecordDao#findAll()
-	 */
-	@Override
 	@SuppressWarnings("unchecked")
-	public Collection<Record> findAll() {
+	public Collection<Record> find(String filter) {
 		// TODO Auto-generated method stub
-		return (Collection<Record>) getJdoTemplate().findAll(Record.class, null);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.persistence.RecordDao#findAll(java.lang.String)
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Collection<Record> findAll(String filter) {
-		// TODO Auto-generated method stub
-		return (Collection<Record>) getJdoTemplate().findAll(Record.class, filter);
+		return (Collection<Record>) getJdoTemplate().find(Record.class, filter);
 	}
 
 }

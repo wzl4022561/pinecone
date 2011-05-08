@@ -88,26 +88,10 @@ public class VariableDaoTest extends AbstractDaoTest {
 	
 	@Test
 	public void testFind() {
-		when(jdoTemplate.find(Variable.class, variable.getId())).thenReturn(variable);
-		Variable result = variableDao.find(variable.getId());
-		verify(jdoTemplate).find(Variable.class, variable.getId());
-		assertEquals("IF Output", result.getName());
-	}
-	
-	@Test
-	public void testFindAll() {
-		when(jdoTemplate.findAll(Variable.class, null)).thenReturn(variables);
-		Collection<Variable> result = variableDao.findAll();
-		verify(jdoTemplate).findAll(Variable.class, null);
-		assertEquals(1, result.size());
-	}
-	
-	@Test
-	public void testFindAllByFilter() {
 		String filter = "name=='IF Output'";
-		when(jdoTemplate.findAll(Variable.class, filter)).thenReturn(variables);
-		Collection<Variable> result = variableDao.findAll(filter);
-		verify(jdoTemplate).findAll(Variable.class, filter);
+		when(jdoTemplate.find(Variable.class, filter)).thenReturn(variables);
+		Collection<Variable> result = variableDao.find(filter);
+		verify(jdoTemplate).find(Variable.class, filter);
 		assertEquals(1, result.size());
 	}
 	

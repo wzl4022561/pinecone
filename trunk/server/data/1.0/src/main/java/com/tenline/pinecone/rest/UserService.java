@@ -46,31 +46,12 @@ public interface UserService extends AbstractService {
 	
 	/**
 	 * 
-	 * @param id
-	 * @return
-	 */
-	@GET
-	@Path("/show/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	User show(@PathParam("id") String id);
-	
-	/**
-	 * 
-	 * @return
-	 */
-	@GET
-	@Path("/show/all")
-	@Produces(MediaType.APPLICATION_JSON)
-	Collection<User> showAll();
-	
-	/**
-	 * 
 	 * @param filter
 	 * @return
 	 */
 	@GET
-	@Path("/show/all/{filter}")
+	@Path("/show/{filter}")
 	@Produces(MediaType.APPLICATION_JSON)
-	Collection<User> showAll(@PathParam("filter") String filter);
+	Collection<User> show(@PathParam("filter") String filter);
 	
 }

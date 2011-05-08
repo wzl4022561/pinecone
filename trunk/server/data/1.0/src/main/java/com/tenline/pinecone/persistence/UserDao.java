@@ -29,22 +29,9 @@ public interface UserDao extends AbstractDao {
 	
 	/**
 	 * 
-	 * @param id
-	 * @return
-	 */
-	User find(String id);
-	
-	/**
-	 * 
-	 * @return
-	 */
-	Collection<User> findAll();
-	
-	/**
-	 * 
 	 * @param filter
 	 * @return
 	 */
-	Collection<User> findAll(String filter);
+	Collection<User> find(String filter);
 	
 }

@@ -47,27 +47,9 @@ public class UserServiceImpl implements UserService {
 	 * @see com.tenline.pinecone.rest.UserService#show(java.lang.String)
 	 */
 	@Override
-	public User show(String id) {
+	public Collection<User> show(String filter) {
 		// TODO Auto-generated method stub
-		return userDao.find(id);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.rest.UserService#showAll()
-	 */
-	@Override
-	public Collection<User> showAll() {
-		// TODO Auto-generated method stub
-		return userDao.findAll();
-	}
-
-	/* (non-Javadoc)
-	 * @see com.tenline.pinecone.rest.UserService#showAll(java.lang.String)
-	 */
-	@Override
-	public Collection<User> showAll(String filter) {
-		// TODO Auto-generated method stub
-		return userDao.findAll(filter);
+		return userDao.find(filter);
 	}
 
 	/* (non-Javadoc)
