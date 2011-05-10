@@ -3,16 +3,14 @@
  */
 package com.tenline.pinecone.utils;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
-import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Query;
 import javax.jdo.Transaction;
+
+import com.google.appengine.api.datastore.KeyFactory;
 
 /**
  * @author Bill
@@ -32,18 +30,15 @@ public class JdoTemplate {
 	
 	/**
 	 * 
-	 * @param objClass
-	 * @param id
+	 * @param attachedObject
 	 */
-	public void delete(Class<?> objClass, String id) {
+	public void delete(Object attachedObject) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
             tx.begin();     
-            pm.deletePersistent(pm.getObjectById(objClass, id));
+            pm.deletePersistent(attachedObject);
             tx.commit();
-        } catch (Exception e) {
-        	e.printStackTrace();
         } finally {
             if (tx.isActive()) {
             	tx.rollback();
@@ -54,16 +49,16 @@ public class JdoTemplate {
 	
 	/**
 	 * 
-	 * @param newInstance
+	 * @param dirtyObject
 	 * @return
 	 */
-	public Object save(Object newInstance) {
+	public Object persist(Object dirtyObject) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-		Object obj = null;
+		Object detachedObject = null;
 		try {
             tx.begin();      
-            obj = pm.makePersistent(newInstance);
+            detachedObject = pm.makePersistent(dirtyObject);
             tx.commit();
         } finally {
             if (tx.isActive()) {
@@ -71,60 +66,22 @@ public class JdoTemplate {
             }
             pm.close();
         }
-        return obj;
+        return detachedObject;
 	}
 	
 	/**
 	 * 
-	 * @param objClass
+	 * @param objectClass
 	 * @param id
 	 * @return
 	 */
-	public Object getDetachedObject(Class<?> objClass, String id) {
+	public Object find(Class<?> objectClass, String id) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-		Object obj = null;
-		try {
-			tx.begin();
-            obj = pm.detachCopy(pm.getObjectById(objClass, id));
-            tx.commit();
-        } finally {
-        	if (tx.isActive()) {
-            	tx.rollback();
-            }
-            pm.close();
-        }
-		return obj;
-	}
-	
-	/**
-	 * 
-	 * @param objClass
-	 * @param filter
-	 * @return
-	 */
-	public Collection<?> find(Class<?> objClass, String filter) {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		Collection<Object> objs = new ArrayList<Object>();
+		Object detachedObject = null;
 		try {    
 			tx.begin();
-			if (filter.equals("all")) {
-				Extent<?> extent = pm.getExtent(objClass);			
-				for (Iterator<?> i = extent.iterator(); i.hasNext();) {
-					objs.add(i.next());
-			    }
-			    extent.closeAll();
-			} else {
-				String queryString = "select from " + objClass.getName();
-				if (filter != null) queryString += " where " + filter;
-	            Query query = pm.newQuery(queryString);
-	            Collection<?> result = (Collection<?>) query.execute();
-	            for (Iterator<?> i = result.iterator(); i.hasNext();) {
-	            	objs.add(i.next());
-	            }
-	        	query.closeAll();
-			}			
+			detachedObject = pm.getObjectById(objectClass, KeyFactory.stringToKey(id));
             tx.commit();
         } finally { 
         	if (tx.isActive()) {
@@ -132,7 +89,29 @@ public class JdoTemplate {
             }
             pm.close();
         }
-		return objs;
+		return detachedObject;
+	}
+	
+	/**
+	 * 
+	 * @param queryString
+	 * @return
+	 */
+	public Collection<?> get(String queryString) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		Collection<?> detachedObjects = null;
+		try {    
+			tx.begin();
+            detachedObjects = (Collection<?>) pm.newQuery(queryString).execute();	
+            tx.commit();
+        } finally { 
+        	if (tx.isActive()) {
+            	tx.rollback();
+            }
+            pm.close();
+        }
+		return detachedObjects;
 	}
 
 }

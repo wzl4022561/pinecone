@@ -9,6 +9,7 @@ import java.util.Date;
 import org.springframework.stereotype.Repository;
 
 import com.tenline.pinecone.model.Record;
+import com.tenline.pinecone.model.Variable;
 import com.tenline.pinecone.persistence.RecordDao;
 import com.tenline.pinecone.utils.AbstractDaoSupport;
 
@@ -32,7 +33,7 @@ public class RecordDaoImpl extends AbstractDaoSupport implements RecordDao {
 	@Override
 	public void delete(String id) {
 		// TODO Auto-generated method stub
-		getJdoTemplate().delete(Record.class, id);
+		getJdoTemplate().delete(getJdoTemplate().find(Record.class, id));
 	}
 
 	/* (non-Javadoc)
@@ -42,7 +43,8 @@ public class RecordDaoImpl extends AbstractDaoSupport implements RecordDao {
 	public String save(Record newInstance) {
 		// TODO Auto-generated method stub
 		newInstance.setTimestamp(new Date());
-		return ((Record) getJdoTemplate().save(newInstance)).getId();
+		newInstance.setVariable((Variable) getJdoTemplate().find(Variable.class, newInstance.getVariable().getId()));
+		return ((Record) getJdoTemplate().persist(newInstance)).getId();
 	}
 
 	/* (non-Javadoc)
@@ -51,10 +53,10 @@ public class RecordDaoImpl extends AbstractDaoSupport implements RecordDao {
 	@Override
 	public String update(Record instance) {
 		// TODO Auto-generated method stub
-		Record detachedRecord = (Record) getJdoTemplate().getDetachedObject(Record.class, instance.getId());
+		Record detachedRecord = (Record) getJdoTemplate().find(Record.class, instance.getId());
 		detachedRecord.setTimestamp(new Date());
 		if (instance.getValue() != null) detachedRecord.setValue(instance.getValue());
-		return ((Record) getJdoTemplate().save(detachedRecord)).getId();
+		return ((Record) getJdoTemplate().persist(detachedRecord)).getId();
 	}
 
 	/* (non-Javadoc)
@@ -64,7 +66,9 @@ public class RecordDaoImpl extends AbstractDaoSupport implements RecordDao {
 	@SuppressWarnings("unchecked")
 	public Collection<Record> find(String filter) {
 		// TODO Auto-generated method stub
-		return (Collection<Record>) getJdoTemplate().find(Record.class, filter);
+		String queryString = "select from " + Record.class.getName();
+		if (!filter.equals("all")) queryString += " where " + filter;
+		return (Collection<Record>) getJdoTemplate().get(queryString);
 	}
 
 }
