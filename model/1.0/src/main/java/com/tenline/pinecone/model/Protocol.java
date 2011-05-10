@@ -15,65 +15,65 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @XmlRootElement
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
-public class Item extends Entity {
+public class Protocol extends Entity {
 	
 	@Persistent
-	private String value;
+	private String name;
 	
 	@Persistent
-	private String text;
+	private String version;
 	
 	@Persistent(defaultFetchGroup = "true")
-	private Variable variable;
+	private Device device;
 
 	/**
 	 * 
 	 */
-	public Item() {
+	public Protocol() {
 		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @param value the value to set
+	 * @param name the name to set
 	 */
-	public void setValue(String value) {
-		this.value = value;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
-	 * @return the value
+	 * @return the name
 	 */
-	public String getValue() {
-		return value;
+	public String getName() {
+		return name;
 	}
 
 	/**
-	 * @param text the text to set
+	 * @param version the version to set
 	 */
-	public void setText(String text) {
-		this.text = text;
+	public void setVersion(String version) {
+		this.version = version;
 	}
 
 	/**
-	 * @return the text
+	 * @return the version
 	 */
-	public String getText() {
-		return text;
+	public String getVersion() {
+		return version;
 	}
 
 	/**
-	 * @param variable the variable to set
+	 * @param device the device to set
 	 */
-	public void setVariable(Variable variable) {
-		this.variable = variable;
+	public void setDevice(Device device) {
+		this.device = device;
 	}
 
 	/**
-	 * @return the variable
+	 * @return the device
 	 */
 	@XmlTransient
-	public Variable getVariable() {
-		return variable;
+	public Device getDevice() {
+		return device;
 	}
 
 }
