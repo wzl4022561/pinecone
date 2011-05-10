@@ -7,14 +7,10 @@ import java.util.Collection;
 
 import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Extension;
-import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Order;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -23,24 +19,20 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  */
 @XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
-public class Device {
+public class Device extends Entity {
 
-	@PrimaryKey
-    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-    @Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true")
-    private String id;
-	
 	@Persistent
 	private String name;
 	
 	@Persistent
-	private String protocol;
+	private String type;
 	
-	@XmlTransient
 	@Persistent(defaultFetchGroup = "true")
 	private User user;
+	
+	@Persistent(defaultFetchGroup = "true")
+	private Protocol protocol;
 	
 	@Persistent(mappedBy = "device", defaultFetchGroup = "true")
     @Element(dependent = "true")
@@ -52,20 +44,6 @@ public class Device {
 	 */
 	public Device() {
 		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
 	}
 
 	/**
@@ -83,17 +61,17 @@ public class Device {
 	}
 	
 	/**
-	 * @param protocol the protocol to set
+	 * @param type the type to set
 	 */
-	public void setProtocol(String protocol) {
-		this.protocol = protocol;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	/**
-	 * @return the protocol
+	 * @return the type
 	 */
-	public String getProtocol() {
-		return protocol;
+	public String getType() {
+		return type;
 	}
 
 	/**
@@ -106,8 +84,23 @@ public class Device {
 	/**
 	 * @return the user
 	 */
+	@XmlTransient
 	public User getUser() {
 		return user;
+	}
+
+	/**
+	 * @param protocol the protocol to set
+	 */
+	public void setProtocol(Protocol protocol) {
+		this.protocol = protocol;
+	}
+
+	/**
+	 * @return the protocol
+	 */
+	public Protocol getProtocol() {
+		return protocol;
 	}
 
 	/**
