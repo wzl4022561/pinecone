@@ -8,6 +8,7 @@ import java.util.Collection;
 import org.springframework.stereotype.Repository;
 
 import com.tenline.pinecone.model.Item;
+import com.tenline.pinecone.model.Variable;
 import com.tenline.pinecone.persistence.ItemDao;
 import com.tenline.pinecone.utils.AbstractDaoSupport;
 
@@ -31,7 +32,7 @@ public class ItemDaoImpl extends AbstractDaoSupport implements ItemDao {
 	@Override
 	public void delete(String id) {
 		// TODO Auto-generated method stub
-		getJdoTemplate().delete(Item.class, id);
+		getJdoTemplate().delete(getJdoTemplate().find(Item.class, id));
 	}
 
 	/* (non-Javadoc)
@@ -40,7 +41,8 @@ public class ItemDaoImpl extends AbstractDaoSupport implements ItemDao {
 	@Override
 	public String save(Item newInstance) {
 		// TODO Auto-generated method stub
-		return ((Item) getJdoTemplate().save(newInstance)).getId();
+		newInstance.setVariable((Variable) getJdoTemplate().find(Variable.class, newInstance.getVariable().getId()));
+		return ((Item) getJdoTemplate().persist(newInstance)).getId();
 	}
 
 	/* (non-Javadoc)
@@ -49,9 +51,10 @@ public class ItemDaoImpl extends AbstractDaoSupport implements ItemDao {
 	@Override
 	public String update(Item instance) {
 		// TODO Auto-generated method stub
-		Item detachedItem = (Item) getJdoTemplate().getDetachedObject(Item.class, instance.getId());
+		Item detachedItem = (Item) getJdoTemplate().find(Item.class, instance.getId());
 		if (instance.getValue() != null) detachedItem.setValue(instance.getValue());
-		return ((Item) getJdoTemplate().save(detachedItem)).getId();
+		if (instance.getText() != null) detachedItem.setText(instance.getText());
+		return ((Item) getJdoTemplate().persist(detachedItem)).getId();
 	}
 
 	/* (non-Javadoc)
@@ -61,7 +64,9 @@ public class ItemDaoImpl extends AbstractDaoSupport implements ItemDao {
 	@SuppressWarnings("unchecked")
 	public Collection<Item> find(String filter) {
 		// TODO Auto-generated method stub
-		return (Collection<Item>) getJdoTemplate().find(Item.class, filter);
+		String queryString = "select from " + Item.class.getName();
+		if (!filter.equals("all")) queryString += " where " + filter;
+		return (Collection<Item>) getJdoTemplate().get(queryString);
 	}
 
 }
