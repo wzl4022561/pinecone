@@ -20,6 +20,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import com.tenline.pinecone.model.Device;
+import com.tenline.pinecone.model.User;
 import com.tenline.pinecone.persistence.impl.DeviceDaoImpl;
 
 /**
@@ -30,6 +31,8 @@ import com.tenline.pinecone.persistence.impl.DeviceDaoImpl;
 public class DeviceDaoTest extends AbstractDaoTest {
 	
 	private Device device;
+	
+	private User user;
 	
 	private List devices;
 	
@@ -42,6 +45,9 @@ public class DeviceDaoTest extends AbstractDaoTest {
 		device = new Device();
 		device.setId("asa");
 		device.setName("ACU");
+		user = new User();
+		user.setId("ddd");
+		device.setUser(user);
 		devices = new ArrayList();
 		devices.add(device);
 	}
@@ -52,13 +58,16 @@ public class DeviceDaoTest extends AbstractDaoTest {
 		devices.remove(device);
 		device = null;
 		devices = null;
+		user = null;
 	}
 	
 	@Test
 	public void testSave() {
-		when(jdoTemplate.save(device)).thenReturn(device);
+		when(jdoTemplate.persist(device)).thenReturn(device);
+		when(jdoTemplate.find(User.class, user.getId())).thenReturn(user);
 		String result = deviceDao.save(device);
-		verify(jdoTemplate).save(device);
+		verify(jdoTemplate).find(User.class, user.getId());
+		verify(jdoTemplate).persist(device);
 		assertEquals("asa", result);
 	}
 	
@@ -67,31 +76,33 @@ public class DeviceDaoTest extends AbstractDaoTest {
 		doAnswer(new Answer<Object>() {
 	        public Object answer(InvocationOnMock invocation) {
 	            Object[] args = invocation.getArguments();
-	            assertEquals(args[0], Device.class);
-	            assertEquals(args[1], device.getId());
+	            assertNotNull(args[0]);
 	            return args;
 	        }
-	    }).when(jdoTemplate).delete(Device.class, device.getId());
+	    }).when(jdoTemplate).delete(device);
+		when(jdoTemplate.find(Device.class, device.getId())).thenReturn(device);
 		deviceDao.delete(device.getId());
-		verify(jdoTemplate).delete(Device.class, device.getId());
+		verify(jdoTemplate).find(Device.class, device.getId());
+		verify(jdoTemplate).delete(device);
 	}
 	
 	@Test
 	public void testUpdate() {
-		when(jdoTemplate.getDetachedObject(Device.class, device.getId())).thenReturn(device);
-		when(jdoTemplate.save(device)).thenReturn(device);
+		when(jdoTemplate.find(Device.class, device.getId())).thenReturn(device);
+		when(jdoTemplate.persist(device)).thenReturn(device);
 		String deviceId = deviceDao.update(device);
-		verify(jdoTemplate).save(device);
-		verify(jdoTemplate).getDetachedObject(Device.class, device.getId());
+		verify(jdoTemplate).persist(device);
+		verify(jdoTemplate).find(Device.class, device.getId());
 		assertNotNull(deviceId);
 	}
 	
 	@Test
 	public void testFind() {
 		String filter = "name=='ACU'";
-		when(jdoTemplate.find(Device.class, filter)).thenReturn(devices);
+		String queryString = "select from " + Device.class.getName() + " where " + filter;
+		when(jdoTemplate.get(queryString)).thenReturn(devices);
 		Collection<Device> result = deviceDao.find(filter);
-		verify(jdoTemplate).find(Device.class, filter);
+		verify(jdoTemplate).get(queryString);
 		assertEquals(1, result.size());
 	}
 
