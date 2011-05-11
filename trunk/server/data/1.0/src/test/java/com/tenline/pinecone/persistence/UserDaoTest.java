@@ -41,7 +41,7 @@ public class UserDaoTest extends AbstractDaoTest {
 		userDao.setJdoTemplate(jdoTemplate);
 		user = new User();
 		user.setId("asa");
-		user.setName("bill");		
+		user.setSnsId("12");		
 		users = new ArrayList();
 		users.add(user);
 	}
@@ -56,9 +56,9 @@ public class UserDaoTest extends AbstractDaoTest {
 
 	@Test
 	public void testSave() {
-		when(jdoTemplate.save(user)).thenReturn(user);
+		when(jdoTemplate.persist(user)).thenReturn(user);
 		String result = userDao.save(user);
-		verify(jdoTemplate).save(user);
+		verify(jdoTemplate).persist(user);
 		assertEquals("asa", result);
 	}
 	
@@ -67,31 +67,33 @@ public class UserDaoTest extends AbstractDaoTest {
 		doAnswer(new Answer<Object>() {
 	        public Object answer(InvocationOnMock invocation) {
 	            Object[] args = invocation.getArguments();
-	            assertEquals(args[0], User.class);
-	            assertEquals(args[1], user.getId());
+	            assertNotNull(args[0]);
 	            return args;
 	        }
-	    }).when(jdoTemplate).delete(User.class, user.getId());
+	    }).when(jdoTemplate).delete(user);
+		when(jdoTemplate.find(User.class, user.getId())).thenReturn(user);
 		userDao.delete(user.getId());
-		verify(jdoTemplate).delete(User.class, user.getId());
+		verify(jdoTemplate).find(User.class, user.getId());
+		verify(jdoTemplate).delete(user);
 	}
 	
 	@Test
 	public void testUpdate() {
-		when(jdoTemplate.getDetachedObject(User.class, user.getId())).thenReturn(user);
-		when(jdoTemplate.save(user)).thenReturn(user);
+		when(jdoTemplate.find(User.class, user.getId())).thenReturn(user);
+		when(jdoTemplate.persist(user)).thenReturn(user);
 		String userId = userDao.update(user);
-		verify(jdoTemplate).save(user);
-		verify(jdoTemplate).getDetachedObject(User.class, user.getId());
+		verify(jdoTemplate).persist(user);
+		verify(jdoTemplate).find(User.class, user.getId());
 		assertNotNull(userId);
 	}
 	
 	@Test
 	public void testFind() {
-		String filter = "name=='bill'";
-		when(jdoTemplate.find(User.class, filter)).thenReturn(users);
+		String filter = "id=='asa'";
+		String queryString = "select from " + User.class.getName() + " where " + filter;
+		when(jdoTemplate.get(queryString)).thenReturn(users);
 		Collection<User> result = userDao.find(filter);
-		verify(jdoTemplate).find(User.class, filter);
+		verify(jdoTemplate).get(queryString);
 		assertEquals(1, result.size());
 	}
 

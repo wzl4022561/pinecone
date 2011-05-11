@@ -47,7 +47,7 @@ public class UserServiceTest {
 		userService = new UserServiceImpl(userDao);
 		user = new User();
 		user.setId("asa");
-		user.setName("bill");		
+		user.setSnsId("23");		
 		users = new ArrayList();
 		users.add(user);
 	}
@@ -66,7 +66,7 @@ public class UserServiceTest {
 		Response result = userService.create(user);
 		ArgumentCaptor<User> argument = ArgumentCaptor.forClass(User.class);  
 		verify(userDao).save(argument.capture()); 
-		assertEquals("bill", argument.getValue().getName());
+		assertEquals("23", argument.getValue().getSnsId());
 		assertEquals(200, result.getStatus());
 	}
 	
@@ -84,13 +84,13 @@ public class UserServiceTest {
 		Response result = userService.update(user);
 		ArgumentCaptor<User> argument = ArgumentCaptor.forClass(User.class);  
 		verify(userDao).update(argument.capture());
-		assertEquals("bill", argument.getValue().getName());
+		assertEquals("23", argument.getValue().getSnsId());
 		assertEquals(200, result.getStatus());
 	}
 	
 	@Test
 	public void testShow() {
-		String filter = "name=='bill'";
+		String filter = "id=='asa'";
 		when(userDao.find(filter)).thenReturn(users);
 		Collection<User> result = userService.show(filter);
 		verify(userDao).find(filter);
