@@ -31,7 +31,7 @@ public class Device extends Entity {
 	@Persistent(defaultFetchGroup = "true")
 	private User user;
 	
-	@Persistent(defaultFetchGroup = "true")
+	@Persistent(defaultFetchGroup = "true", dependent = "true")
 	private Protocol protocol;
 	
 	@Persistent(mappedBy = "device", defaultFetchGroup = "true")
