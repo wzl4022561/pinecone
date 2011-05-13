@@ -30,9 +30,11 @@ public class Device extends Entity {
 	
 	@Persistent(defaultFetchGroup = "true")
 	private User user;
-	
-	@Persistent(defaultFetchGroup = "true", dependent = "true")
-	private Protocol protocol;
+
+	@Persistent(mappedBy = "device", defaultFetchGroup = "true")
+    @Element(dependent = "true")
+    @Order(extensions = @Extension(vendorName="datanucleus", key="list-ordering", value="name asc"))
+	private Collection<Protocol> protocols;
 	
 	@Persistent(mappedBy = "device", defaultFetchGroup = "true")
     @Element(dependent = "true")
@@ -90,17 +92,17 @@ public class Device extends Entity {
 	}
 
 	/**
-	 * @param protocol the protocol to set
+	 * @param protocols the protocols to set
 	 */
-	public void setProtocol(Protocol protocol) {
-		this.protocol = protocol;
+	public void setProtocols(Collection<Protocol> protocols) {
+		this.protocols = protocols;
 	}
 
 	/**
-	 * @return the protocol
+	 * @return the protocols
 	 */
-	public Protocol getProtocol() {
-		return protocol;
+	public Collection<Protocol> getProtocols() {
+		return protocols;
 	}
 
 	/**

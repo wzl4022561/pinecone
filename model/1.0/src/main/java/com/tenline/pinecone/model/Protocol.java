@@ -23,7 +23,7 @@ public class Protocol extends Entity {
 	@Persistent
 	private String version;
 	
-	@Persistent(mappedBy = "protocol", defaultFetchGroup = "true")
+	@Persistent(defaultFetchGroup = "true")
 	private Device device;
 
 	/**
