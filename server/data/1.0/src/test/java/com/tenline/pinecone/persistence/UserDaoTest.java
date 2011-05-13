@@ -37,7 +37,7 @@ public class UserDaoTest extends AbstractDaoTest {
 		
 	@Before
 	public void testSetup() {
-		userDao = new UserDaoImpl();
+		userDao = new UserDaoImpl(persistenceManagerFactory);
 		userDao.setJdoTemplate(jdoTemplate);
 		user = new User();
 		user.setId("asa");
@@ -56,9 +56,9 @@ public class UserDaoTest extends AbstractDaoTest {
 
 	@Test
 	public void testSave() {
-		when(jdoTemplate.persist(user)).thenReturn(user);
+		when(jdoTemplate.makePersistent(user)).thenReturn(user);
 		String result = userDao.save(user);
-		verify(jdoTemplate).persist(user);
+		verify(jdoTemplate).makePersistent(user);
 		assertEquals("asa", result);
 	}
 	
@@ -70,20 +70,20 @@ public class UserDaoTest extends AbstractDaoTest {
 	            assertNotNull(args[0]);
 	            return args;
 	        }
-	    }).when(jdoTemplate).delete(user);
-		when(jdoTemplate.find(User.class, user.getId())).thenReturn(user);
+	    }).when(jdoTemplate).deletePersistent(user);
+		when(jdoTemplate.getObjectById(User.class, user.getId())).thenReturn(user);
 		userDao.delete(user.getId());
-		verify(jdoTemplate).find(User.class, user.getId());
-		verify(jdoTemplate).delete(user);
+		verify(jdoTemplate).getObjectById(User.class, user.getId());
+		verify(jdoTemplate).deletePersistent(user);
 	}
 	
 	@Test
 	public void testUpdate() {
-		when(jdoTemplate.find(User.class, user.getId())).thenReturn(user);
-		when(jdoTemplate.persist(user)).thenReturn(user);
+		when(jdoTemplate.getObjectById(User.class, user.getId())).thenReturn(user);
+		when(jdoTemplate.makePersistent(user)).thenReturn(user);
 		String userId = userDao.update(user);
-		verify(jdoTemplate).persist(user);
-		verify(jdoTemplate).find(User.class, user.getId());
+		verify(jdoTemplate).makePersistent(user);
+		verify(jdoTemplate).getObjectById(User.class, user.getId());
 		assertNotNull(userId);
 	}
 	
@@ -91,9 +91,9 @@ public class UserDaoTest extends AbstractDaoTest {
 	public void testFind() {
 		String filter = "id=='asa'";
 		String queryString = "select from " + User.class.getName() + " where " + filter;
-		when(jdoTemplate.get(queryString)).thenReturn(users);
+		when(jdoTemplate.find(queryString)).thenReturn(users);
 		Collection<User> result = userDao.find(filter);
-		verify(jdoTemplate).get(queryString);
+		verify(jdoTemplate).find(queryString);
 		assertEquals(1, result.size());
 	}
 

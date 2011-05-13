@@ -3,11 +3,12 @@
  */
 package com.tenline.pinecone.persistence;
 
+import javax.jdo.PersistenceManagerFactory;
+
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import com.tenline.pinecone.utils.JdoTemplate;
+import org.springframework.orm.jdo.JdoTemplate;
 
 /**
  * @author Bill
@@ -18,5 +19,8 @@ public abstract class AbstractDaoTest {
 
 	@Mock
 	protected JdoTemplate jdoTemplate;
-
+	
+	@Mock
+	protected PersistenceManagerFactory persistenceManagerFactory;
+	
 }

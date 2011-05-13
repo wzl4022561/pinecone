@@ -40,7 +40,7 @@ public class ProtocolDaoTest extends AbstractDaoTest {
 
 	@Before
 	public void testSetup() {
-		protocolDao = new ProtocolDaoImpl();
+		protocolDao = new ProtocolDaoImpl(persistenceManagerFactory);
 		protocolDao.setJdoTemplate(jdoTemplate);
 		protocol = new Protocol();
 		protocol.setId("asa");
@@ -64,9 +64,9 @@ public class ProtocolDaoTest extends AbstractDaoTest {
 	
 	@Test
 	public void testSave() {
-		when(jdoTemplate.persist(protocol)).thenReturn(protocol);
+		when(jdoTemplate.makePersistent(protocol)).thenReturn(protocol);
 		String result = protocolDao.save(protocol);
-		verify(jdoTemplate).persist(protocol);
+		verify(jdoTemplate).makePersistent(protocol);
 		assertEquals("asa", result);
 	}
 	
@@ -78,20 +78,20 @@ public class ProtocolDaoTest extends AbstractDaoTest {
 	            assertNotNull(args[0]);
 	            return args;
 	        }
-	    }).when(jdoTemplate).delete(protocol);
-		when(jdoTemplate.find(Protocol.class, protocol.getId())).thenReturn(protocol);
+	    }).when(jdoTemplate).deletePersistent(protocol);
+		when(jdoTemplate.getObjectById(Protocol.class, protocol.getId())).thenReturn(protocol);
 		protocolDao.delete(protocol.getId());
-		verify(jdoTemplate).find(Protocol.class, protocol.getId());
-		verify(jdoTemplate).delete(protocol);
+		verify(jdoTemplate).getObjectById(Protocol.class, protocol.getId());
+		verify(jdoTemplate).deletePersistent(protocol);
 	}
 	
 	@Test
 	public void testUpdate() {
-		when(jdoTemplate.find(Protocol.class, protocol.getId())).thenReturn(protocol);
-		when(jdoTemplate.persist(protocol)).thenReturn(protocol);
+		when(jdoTemplate.getObjectById(Protocol.class, protocol.getId())).thenReturn(protocol);
+		when(jdoTemplate.makePersistent(protocol)).thenReturn(protocol);
 		String protocolId = protocolDao.update(protocol);
-		verify(jdoTemplate).persist(protocol);
-		verify(jdoTemplate).find(Protocol.class, protocol.getId());
+		verify(jdoTemplate).makePersistent(protocol);
+		verify(jdoTemplate).getObjectById(Protocol.class, protocol.getId());
 		assertNotNull(protocolId);
 	}
 	
@@ -99,9 +99,9 @@ public class ProtocolDaoTest extends AbstractDaoTest {
 	public void testFind() {
 		String filter = "name=='modbus'";
 		String queryString = "select from " + Protocol.class.getName() + " where " + filter;
-		when(jdoTemplate.get(queryString)).thenReturn(protocols);
+		when(jdoTemplate.find(queryString)).thenReturn(protocols);
 		Collection<Protocol> result = protocolDao.find(filter);
-		verify(jdoTemplate).get(queryString);
+		verify(jdoTemplate).find(queryString);
 		assertEquals(1, result.size());
 	}
 

@@ -40,7 +40,7 @@ public class ItemDaoTest extends AbstractDaoTest {
 
 	@Before
 	public void testSetup() {
-		itemDao = new ItemDaoImpl();
+		itemDao = new ItemDaoImpl(persistenceManagerFactory);
 		itemDao.setJdoTemplate(jdoTemplate);
 		item = new Item();
 		item.setId("asa");
@@ -63,9 +63,9 @@ public class ItemDaoTest extends AbstractDaoTest {
 	
 	@Test
 	public void testSave() {
-		when(jdoTemplate.persist(item)).thenReturn(item);
+		when(jdoTemplate.makePersistent(item)).thenReturn(item);
 		String result = itemDao.save(item);
-		verify(jdoTemplate).persist(item);
+		verify(jdoTemplate).makePersistent(item);
 		assertEquals("asa", result);
 	}
 	
@@ -77,20 +77,20 @@ public class ItemDaoTest extends AbstractDaoTest {
 	            assertNotNull(args[0]);
 	            return args;
 	        }
-	    }).when(jdoTemplate).delete(item);
-		when(jdoTemplate.find(Item.class, item.getId())).thenReturn(item);
+	    }).when(jdoTemplate).deletePersistent(item);
+		when(jdoTemplate.getObjectById(Item.class, item.getId())).thenReturn(item);
 		itemDao.delete(item.getId());
-		verify(jdoTemplate).find(Item.class, item.getId());
-		verify(jdoTemplate).delete(item);
+		verify(jdoTemplate).getObjectById(Item.class, item.getId());
+		verify(jdoTemplate).deletePersistent(item);
 	}
 	
 	@Test
 	public void testUpdate() {
-		when(jdoTemplate.find(Item.class, item.getId())).thenReturn(item);
-		when(jdoTemplate.persist(item)).thenReturn(item);
+		when(jdoTemplate.getObjectById(Item.class, item.getId())).thenReturn(item);
+		when(jdoTemplate.makePersistent(item)).thenReturn(item);
 		String userId = itemDao.update(item);
-		verify(jdoTemplate).persist(item);
-		verify(jdoTemplate).find(Item.class, item.getId());
+		verify(jdoTemplate).makePersistent(item);
+		verify(jdoTemplate).getObjectById(Item.class, item.getId());
 		assertNotNull(userId);
 	}
 	
@@ -98,9 +98,9 @@ public class ItemDaoTest extends AbstractDaoTest {
 	public void testFind() {
 		String filter = "value=='1'";
 		String queryString = "select from " + Item.class.getName() + " where " + filter;
-		when(jdoTemplate.get(queryString)).thenReturn(items);
+		when(jdoTemplate.find(queryString)).thenReturn(items);
 		Collection<Item> result = itemDao.find(filter);
-		verify(jdoTemplate).get(queryString);
+		verify(jdoTemplate).find(queryString);
 		assertEquals(1, result.size());
 	}
 

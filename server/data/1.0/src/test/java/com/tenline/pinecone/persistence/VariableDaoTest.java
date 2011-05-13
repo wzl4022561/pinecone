@@ -40,7 +40,7 @@ public class VariableDaoTest extends AbstractDaoTest {
 	
 	@Before
 	public void testSetup() {
-		variableDao = new VariableDaoImpl();
+		variableDao = new VariableDaoImpl(persistenceManagerFactory);
 		variableDao.setJdoTemplate(jdoTemplate);
 		variable = new Variable();
 		variable.setId("asa");
@@ -63,11 +63,11 @@ public class VariableDaoTest extends AbstractDaoTest {
 	
 	@Test
 	public void testSave() {
-		when(jdoTemplate.persist(variable)).thenReturn(variable);
-		when(jdoTemplate.find(Device.class, device.getId())).thenReturn(device);
+		when(jdoTemplate.makePersistent(variable)).thenReturn(variable);
+		when(jdoTemplate.getObjectById(Device.class, device.getId())).thenReturn(device);
 		String result = variableDao.save(variable);
-		verify(jdoTemplate).find(Device.class, device.getId());
-		verify(jdoTemplate).persist(variable);
+		verify(jdoTemplate).getObjectById(Device.class, device.getId());
+		verify(jdoTemplate).makePersistent(variable);
 		assertEquals("asa", result);
 	}
 	
@@ -79,20 +79,20 @@ public class VariableDaoTest extends AbstractDaoTest {
 	            assertNotNull(args[0]);
 	            return args;
 	        }
-	    }).when(jdoTemplate).delete(variable);
-		when(jdoTemplate.find(Variable.class, variable.getId())).thenReturn(variable);
+	    }).when(jdoTemplate).deletePersistent(variable);
+		when(jdoTemplate.getObjectById(Variable.class, variable.getId())).thenReturn(variable);
 		variableDao.delete(variable.getId());
-		verify(jdoTemplate).find(Variable.class, variable.getId());
-		verify(jdoTemplate).delete(variable);
+		verify(jdoTemplate).getObjectById(Variable.class, variable.getId());
+		verify(jdoTemplate).deletePersistent(variable);
 	}
 	
 	@Test
 	public void testUpdate() {
-		when(jdoTemplate.find(Variable.class, variable.getId())).thenReturn(variable);
-		when(jdoTemplate.persist(variable)).thenReturn(variable);
+		when(jdoTemplate.getObjectById(Variable.class, variable.getId())).thenReturn(variable);
+		when(jdoTemplate.makePersistent(variable)).thenReturn(variable);
 		String variableId = variableDao.update(variable);
-		verify(jdoTemplate).persist(variable);
-		verify(jdoTemplate).find(Variable.class, variable.getId());
+		verify(jdoTemplate).makePersistent(variable);
+		verify(jdoTemplate).getObjectById(Variable.class, variable.getId());
 		assertNotNull(variableId);
 	}
 	
@@ -100,9 +100,9 @@ public class VariableDaoTest extends AbstractDaoTest {
 	public void testFind() {
 		String filter = "name=='IF Output'";
 		String queryString = "select from " + Variable.class.getName()+ " where " + filter;
-		when(jdoTemplate.get(queryString)).thenReturn(variables);
+		when(jdoTemplate.find(queryString)).thenReturn(variables);
 		Collection<Variable> result = variableDao.find(filter);
-		verify(jdoTemplate).get(queryString);
+		verify(jdoTemplate).find(queryString);
 		assertEquals(1, result.size());
 	}
 	

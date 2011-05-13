@@ -7,9 +7,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tenline.pinecone.model.Device;
 import com.tenline.pinecone.model.Item;
@@ -21,11 +20,6 @@ import com.tenline.pinecone.persistence.ItemDao;
 import com.tenline.pinecone.persistence.RecordDao;
 import com.tenline.pinecone.persistence.UserDao;
 import com.tenline.pinecone.persistence.VariableDao;
-import com.tenline.pinecone.persistence.impl.DeviceDaoImpl;
-import com.tenline.pinecone.persistence.impl.ItemDaoImpl;
-import com.tenline.pinecone.persistence.impl.RecordDaoImpl;
-import com.tenline.pinecone.persistence.impl.UserDaoImpl;
-import com.tenline.pinecone.persistence.impl.VariableDaoImpl;
 
 /**
  * @author Bill
@@ -33,35 +27,20 @@ import com.tenline.pinecone.persistence.impl.VariableDaoImpl;
  */
 public class VariableDaoIntegrationTest extends AbstractDaoIntegrationTest {
 	
+	@Autowired
 	private UserDao userDao;
 	
+	@Autowired
 	private DeviceDao deviceDao;
 	
+	@Autowired
 	private VariableDao variableDao;
 	
+	@Autowired
 	private ItemDao itemDao;
 	
+	@Autowired
 	private RecordDao recordDao;
-
-	@Before
-	public void testSetup() {
-		super.testSetup();
-		userDao = new UserDaoImpl();
-		deviceDao = new DeviceDaoImpl();
-		variableDao = new VariableDaoImpl();
-		itemDao = new ItemDaoImpl();
-		recordDao = new RecordDaoImpl();
-	}
-	
-	@After
-	public void testShutdown() {
-		super.testShutdown();
-		userDao = null;
-		deviceDao = null;
-		variableDao = null;
-		itemDao = null;
-		recordDao = null;
-	}
 	
 	@Test
 	public void testCURD() {
@@ -97,19 +76,10 @@ public class VariableDaoIntegrationTest extends AbstractDaoIntegrationTest {
 		Variable variable = new Variable();
 		variable.setId(variableId);
 		variable.setName("MUT");
-		variable.setItems(new ArrayList<Item>());
-		Item item = new Item();
-		item.setText("A");
-		item.setValue("1");
-		variable.getItems().add(item);
-		Record record = new Record();
-		record.setValue("1");
-		variable.setRecords(new ArrayList<Record>());
-		variable.getRecords().add(record);
+		variable.setType("WRITE_ONLY");
 		variableId = variableDao.update(variable);
 		assertEquals("MUT", ((Variable) variableDao.find("id=='"+variableId+"'").toArray()[0]).getName());
-//		assertEquals(2, itemDao.find("all").size());
-//		assertEquals(2, recordDao.find("all").size());
+		assertEquals("WRITE_ONLY", ((Variable) variableDao.find("id=='"+variableId+"'").toArray()[0]).getType());
 		variableDao.delete(variableId);
 		assertEquals(0, variableDao.find("id=='"+variableId+"'").size());
 		assertEquals(0, itemDao.find("all").size());

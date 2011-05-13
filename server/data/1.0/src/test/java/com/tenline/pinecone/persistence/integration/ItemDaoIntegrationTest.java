@@ -5,9 +5,8 @@ package com.tenline.pinecone.persistence.integration;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tenline.pinecone.model.Device;
 import com.tenline.pinecone.model.Item;
@@ -17,10 +16,6 @@ import com.tenline.pinecone.persistence.DeviceDao;
 import com.tenline.pinecone.persistence.ItemDao;
 import com.tenline.pinecone.persistence.UserDao;
 import com.tenline.pinecone.persistence.VariableDao;
-import com.tenline.pinecone.persistence.impl.DeviceDaoImpl;
-import com.tenline.pinecone.persistence.impl.ItemDaoImpl;
-import com.tenline.pinecone.persistence.impl.UserDaoImpl;
-import com.tenline.pinecone.persistence.impl.VariableDaoImpl;
 
 /**
  * @author Bill
@@ -28,31 +23,17 @@ import com.tenline.pinecone.persistence.impl.VariableDaoImpl;
  */
 public class ItemDaoIntegrationTest extends AbstractDaoIntegrationTest {
 	
+	@Autowired
 	private UserDao userDao;
 	
+	@Autowired
 	private DeviceDao deviceDao;
 	
+	@Autowired
 	private VariableDao variableDao;
 	
+	@Autowired
 	private ItemDao itemDao;
-
-	@Before
-	public void testSetup() {
-		super.testSetup();
-		userDao = new UserDaoImpl();
-		deviceDao = new DeviceDaoImpl();
-		variableDao = new VariableDaoImpl();
-		itemDao = new ItemDaoImpl();
-	}
-	
-	@After
-	public void testShutdown() {
-		super.testShutdown();
-		userDao = null;
-		deviceDao = null;
-		variableDao = null;
-		itemDao = null;
-	}
 	
 	@Test
 	public void testCURD() {
@@ -74,6 +55,7 @@ public class ItemDaoIntegrationTest extends AbstractDaoIntegrationTest {
 		String variableId = variableDao.save(newVariable);
 		Item newItem = new Item();
 		newItem.setValue("1");
+		newItem.setText("A");
 		Variable variable = new Variable();
 		variable.setId(variableId);
 		newItem.setVariable(variable);
@@ -84,8 +66,9 @@ public class ItemDaoIntegrationTest extends AbstractDaoIntegrationTest {
 		Item item = new Item();
 		item.setId(itemId);
 		item.setValue("2");
+		item.setText("B");
 		itemId = itemDao.update(item);
-//		assertEquals("2", ((Item) itemDao.find("id=='"+itemId+"'").toArray()[0]).getValue());
+		assertEquals("B", ((Item) itemDao.find("id=='"+itemId+"'").toArray()[0]).getText());
 		itemDao.delete(itemId);
 		assertEquals(0, itemDao.find("id=='"+itemId+"'").size());
 	}

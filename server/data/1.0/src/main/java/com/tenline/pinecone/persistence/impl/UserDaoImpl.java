@@ -4,27 +4,32 @@
 package com.tenline.pinecone.persistence.impl;
 
 import java.util.Collection;
-import java.util.Iterator;
 
+import javax.jdo.PersistenceManagerFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jdo.support.JdoDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.tenline.pinecone.model.Device;
 import com.tenline.pinecone.model.User;
 import com.tenline.pinecone.persistence.UserDao;
-import com.tenline.pinecone.utils.AbstractDaoSupport;
 
 /**
  * @author Bill
  *
  */
 @Repository
-public class UserDaoImpl extends AbstractDaoSupport implements UserDao {
+@Transactional
+public class UserDaoImpl extends JdoDaoSupport implements UserDao {
 
 	/**
 	 * 
 	 */
-	public UserDaoImpl() {
+	@Autowired
+	public UserDaoImpl(PersistenceManagerFactory persistenceManagerFactory) {
 		// TODO Auto-generated constructor stub
+		setPersistenceManagerFactory(persistenceManagerFactory);
 	}
 
 	/* (non-Javadoc)
@@ -33,7 +38,7 @@ public class UserDaoImpl extends AbstractDaoSupport implements UserDao {
 	@Override
 	public String save(User newInstance) {
 		// TODO Auto-generated method stub
-		return ((User) getJdoTemplate().persist(newInstance)).getId();
+		return ((User) getJdoTemplate().makePersistent(newInstance)).getId();
 	}
 
 	/* (non-Javadoc)
@@ -45,7 +50,7 @@ public class UserDaoImpl extends AbstractDaoSupport implements UserDao {
 		// TODO Auto-generated method stub
 		String queryString = "select from " + User.class.getName();
 		if (!filter.equals("all")) queryString += " where " + filter;
-		return (Collection<User>) getJdoTemplate().get(queryString);
+		return (Collection<User>) getJdoTemplate().find(queryString);
 	}
 
 	/* (non-Javadoc)
@@ -54,16 +59,9 @@ public class UserDaoImpl extends AbstractDaoSupport implements UserDao {
 	@Override
 	public String update(User instance) {
 		// TODO Auto-generated method stub
-		User detachedUser = (User) getJdoTemplate().find(User.class, instance.getId());
+		User detachedUser = (User) getJdoTemplate().getObjectById(User.class, instance.getId());
 		if (instance.getSnsId() != null) detachedUser.setSnsId(instance.getSnsId());
-		if (instance.getDevices() != null) {
-			for (Iterator<Device> i = instance.getDevices().iterator(); i.hasNext();) {
-				Device device = i.next();
-				device.setUser(detachedUser);
-				detachedUser.getDevices().add(device);
-			}
-		}
-		return ((User) getJdoTemplate().persist(detachedUser)).getId();
+		return ((User) getJdoTemplate().makePersistent(detachedUser)).getId();
 	}
 	
 	/* (non-Javadoc)
@@ -72,7 +70,7 @@ public class UserDaoImpl extends AbstractDaoSupport implements UserDao {
 	@Override
 	public void delete(String id) {
 		// TODO Auto-generated method stub
-		getJdoTemplate().delete(getJdoTemplate().find(User.class, id));
+		getJdoTemplate().deletePersistent(getJdoTemplate().getObjectById(User.class, id));
 	}
 
 }
