@@ -5,9 +5,8 @@ package com.tenline.pinecone.persistence.integration;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tenline.pinecone.model.Device;
 import com.tenline.pinecone.model.Record;
@@ -17,10 +16,6 @@ import com.tenline.pinecone.persistence.DeviceDao;
 import com.tenline.pinecone.persistence.RecordDao;
 import com.tenline.pinecone.persistence.UserDao;
 import com.tenline.pinecone.persistence.VariableDao;
-import com.tenline.pinecone.persistence.impl.DeviceDaoImpl;
-import com.tenline.pinecone.persistence.impl.RecordDaoImpl;
-import com.tenline.pinecone.persistence.impl.UserDaoImpl;
-import com.tenline.pinecone.persistence.impl.VariableDaoImpl;
 
 /**
  * @author Bill
@@ -28,31 +23,17 @@ import com.tenline.pinecone.persistence.impl.VariableDaoImpl;
  */
 public class RecordDaoIntegrationTest extends AbstractDaoIntegrationTest {
 
+	@Autowired
 	private UserDao userDao;
 	
+	@Autowired
 	private DeviceDao deviceDao;
 	
+	@Autowired
 	private VariableDao variableDao;
 	
+	@Autowired
 	private RecordDao recordDao;
-
-	@Before
-	public void testSetup() {
-		super.testSetup();
-		userDao = new UserDaoImpl();
-		deviceDao = new DeviceDaoImpl();
-		variableDao = new VariableDaoImpl();
-		recordDao = new RecordDaoImpl();
-	}
-	
-	@After
-	public void testShutdown() {
-		super.testShutdown();
-		userDao = null;
-		deviceDao = null;
-		variableDao = null;
-		recordDao = null;
-	}
 	
 	@Test
 	public void testCURD() {
@@ -85,7 +66,7 @@ public class RecordDaoIntegrationTest extends AbstractDaoIntegrationTest {
 		record.setId(recordId);
 		record.setValue("2");
 		recordId = recordDao.update(record);
-//		assertEquals("2", ((Record) recordDao.find("id=='"+recordId+"'").toArray()[0]).getValue());
+		assertEquals("2", ((Record) recordDao.find("id=='"+recordId+"'").toArray()[0]).getValue());
 		recordDao.delete(recordId);
 		assertEquals(0, recordDao.find("id=='"+recordId+"'").size());
 	}

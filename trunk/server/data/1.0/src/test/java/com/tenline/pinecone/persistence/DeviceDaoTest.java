@@ -40,7 +40,7 @@ public class DeviceDaoTest extends AbstractDaoTest {
 
 	@Before
 	public void testSetup() {
-		deviceDao = new DeviceDaoImpl();
+		deviceDao = new DeviceDaoImpl(persistenceManagerFactory);
 		deviceDao.setJdoTemplate(jdoTemplate);
 		device = new Device();
 		device.setId("asa");
@@ -63,11 +63,11 @@ public class DeviceDaoTest extends AbstractDaoTest {
 	
 	@Test
 	public void testSave() {
-		when(jdoTemplate.persist(device)).thenReturn(device);
-		when(jdoTemplate.find(User.class, user.getId())).thenReturn(user);
+		when(jdoTemplate.makePersistent(device)).thenReturn(device);
+		when(jdoTemplate.getObjectById(User.class, user.getId())).thenReturn(user);
 		String result = deviceDao.save(device);
-		verify(jdoTemplate).find(User.class, user.getId());
-		verify(jdoTemplate).persist(device);
+		verify(jdoTemplate).getObjectById(User.class, user.getId());
+		verify(jdoTemplate).makePersistent(device);
 		assertEquals("asa", result);
 	}
 	
@@ -79,20 +79,20 @@ public class DeviceDaoTest extends AbstractDaoTest {
 	            assertNotNull(args[0]);
 	            return args;
 	        }
-	    }).when(jdoTemplate).delete(device);
-		when(jdoTemplate.find(Device.class, device.getId())).thenReturn(device);
+	    }).when(jdoTemplate).deletePersistent(device);
+		when(jdoTemplate.getObjectById(Device.class, device.getId())).thenReturn(device);
 		deviceDao.delete(device.getId());
-		verify(jdoTemplate).find(Device.class, device.getId());
-		verify(jdoTemplate).delete(device);
+		verify(jdoTemplate).getObjectById(Device.class, device.getId());
+		verify(jdoTemplate).deletePersistent(device);
 	}
 	
 	@Test
 	public void testUpdate() {
-		when(jdoTemplate.find(Device.class, device.getId())).thenReturn(device);
-		when(jdoTemplate.persist(device)).thenReturn(device);
+		when(jdoTemplate.getObjectById(Device.class, device.getId())).thenReturn(device);
+		when(jdoTemplate.makePersistent(device)).thenReturn(device);
 		String deviceId = deviceDao.update(device);
-		verify(jdoTemplate).persist(device);
-		verify(jdoTemplate).find(Device.class, device.getId());
+		verify(jdoTemplate).makePersistent(device);
+		verify(jdoTemplate).getObjectById(Device.class, device.getId());
 		assertNotNull(deviceId);
 	}
 	
@@ -100,9 +100,9 @@ public class DeviceDaoTest extends AbstractDaoTest {
 	public void testFind() {
 		String filter = "name=='ACU'";
 		String queryString = "select from " + Device.class.getName() + " where " + filter;
-		when(jdoTemplate.get(queryString)).thenReturn(devices);
+		when(jdoTemplate.find(queryString)).thenReturn(devices);
 		Collection<Device> result = deviceDao.find(filter);
-		verify(jdoTemplate).get(queryString);
+		verify(jdoTemplate).find(queryString);
 		assertEquals(1, result.size());
 	}
 

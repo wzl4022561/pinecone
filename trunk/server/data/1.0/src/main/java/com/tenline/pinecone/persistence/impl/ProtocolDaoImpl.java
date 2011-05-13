@@ -5,25 +5,32 @@ package com.tenline.pinecone.persistence.impl;
 
 import java.util.Collection;
 
+import javax.jdo.PersistenceManagerFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jdo.support.JdoDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tenline.pinecone.model.Device;
 import com.tenline.pinecone.model.Protocol;
 import com.tenline.pinecone.persistence.ProtocolDao;
-import com.tenline.pinecone.utils.AbstractDaoSupport;
 
 /**
  * @author Bill
  *
  */
 @Repository
-public class ProtocolDaoImpl extends AbstractDaoSupport implements ProtocolDao {
+@Transactional
+public class ProtocolDaoImpl extends JdoDaoSupport implements ProtocolDao {
 
 	/**
 	 * 
 	 */
-	public ProtocolDaoImpl() {
+	@Autowired
+	public ProtocolDaoImpl(PersistenceManagerFactory persistenceManagerFactory) {
 		// TODO Auto-generated constructor stub
+		setPersistenceManagerFactory(persistenceManagerFactory);
 	}
 
 	/* (non-Javadoc)
@@ -32,7 +39,7 @@ public class ProtocolDaoImpl extends AbstractDaoSupport implements ProtocolDao {
 	@Override
 	public void delete(String id) {
 		// TODO Auto-generated method stub
-		getJdoTemplate().delete(getJdoTemplate().find(Protocol.class, id));
+		getJdoTemplate().deletePersistent(getJdoTemplate().getObjectById(Protocol.class, id));
 	}
 
 	/* (non-Javadoc)
@@ -41,8 +48,9 @@ public class ProtocolDaoImpl extends AbstractDaoSupport implements ProtocolDao {
 	@Override
 	public String save(Protocol newInstance) {
 		// TODO Auto-generated method stub
-		newInstance.setDevice((Device) getJdoTemplate().find(Device.class, newInstance.getDevice().getId()));
-		return ((Protocol) getJdoTemplate().persist(newInstance)).getId();
+		newInstance.setDevice((Device) getJdoTemplate().getObjectById(Device.class, 
+				newInstance.getDevice().getId()));
+		return ((Protocol) getJdoTemplate().makePersistent(newInstance)).getId();
 	}
 
 	/* (non-Javadoc)
@@ -51,10 +59,10 @@ public class ProtocolDaoImpl extends AbstractDaoSupport implements ProtocolDao {
 	@Override
 	public String update(Protocol instance) {
 		// TODO Auto-generated method stub
-		Protocol detachedProtocol = (Protocol) getJdoTemplate().find(Protocol.class, instance.getId());
+		Protocol detachedProtocol = (Protocol) getJdoTemplate().getObjectById(Protocol.class, instance.getId());
 		if (instance.getName() != null) detachedProtocol.setName(instance.getName());
 		if (instance.getVersion() != null) detachedProtocol.setVersion(instance.getVersion());
-		return ((Protocol) getJdoTemplate().persist(detachedProtocol)).getId();
+		return ((Protocol) getJdoTemplate().makePersistent(detachedProtocol)).getId();
 	}
 
 	/* (non-Javadoc)
@@ -66,7 +74,7 @@ public class ProtocolDaoImpl extends AbstractDaoSupport implements ProtocolDao {
 		// TODO Auto-generated method stub
 		String queryString = "select from " + Protocol.class.getName();
 		if (!filter.equals("all")) queryString += " where " + filter;
-		return (Collection<Protocol>) getJdoTemplate().get(queryString);
+		return (Collection<Protocol>) getJdoTemplate().find(queryString);
 	}
 
 }

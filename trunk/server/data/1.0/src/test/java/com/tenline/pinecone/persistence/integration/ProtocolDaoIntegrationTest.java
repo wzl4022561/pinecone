@@ -5,9 +5,8 @@ package com.tenline.pinecone.persistence.integration;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tenline.pinecone.model.Device;
 import com.tenline.pinecone.model.Protocol;
@@ -15,9 +14,6 @@ import com.tenline.pinecone.model.User;
 import com.tenline.pinecone.persistence.DeviceDao;
 import com.tenline.pinecone.persistence.ProtocolDao;
 import com.tenline.pinecone.persistence.UserDao;
-import com.tenline.pinecone.persistence.impl.DeviceDaoImpl;
-import com.tenline.pinecone.persistence.impl.ProtocolDaoImpl;
-import com.tenline.pinecone.persistence.impl.UserDaoImpl;
 
 /**
  * @author Bill
@@ -25,27 +21,14 @@ import com.tenline.pinecone.persistence.impl.UserDaoImpl;
  */
 public class ProtocolDaoIntegrationTest extends AbstractDaoIntegrationTest {
 	
+	@Autowired
 	private UserDao userDao;
 	
+	@Autowired
 	private DeviceDao deviceDao;
 	
+	@Autowired
 	private ProtocolDao protocolDao;
-
-	@Before
-	public void testSetup() {
-		super.testSetup();
-		userDao = new UserDaoImpl();
-		deviceDao = new DeviceDaoImpl();
-		protocolDao = new ProtocolDaoImpl();
-	}
-	
-	@After
-	public void testShutdown() {
-		super.testShutdown();
-		userDao = null;
-		deviceDao = null;
-		protocolDao = null;
-	}
 	
 	@Test
 	public void testCURD() {
@@ -73,6 +56,7 @@ public class ProtocolDaoIntegrationTest extends AbstractDaoIntegrationTest {
 		protocol.setVersion("2.0");
 		protocolId = protocolDao.update(protocol);
 		assertEquals("SNMP", ((Protocol) protocolDao.find("id=='"+protocolId+"'").toArray()[0]).getName());
+		assertEquals("2.0", ((Protocol) protocolDao.find("id=='"+protocolId+"'").toArray()[0]).getVersion());
 		protocolDao.delete(protocolId);
 		assertEquals(0, protocolDao.find("id=='"+protocolId+"'").size());
 	}

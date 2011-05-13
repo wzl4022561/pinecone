@@ -6,25 +6,32 @@ package com.tenline.pinecone.persistence.impl;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.jdo.PersistenceManagerFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jdo.support.JdoDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tenline.pinecone.model.Record;
 import com.tenline.pinecone.model.Variable;
 import com.tenline.pinecone.persistence.RecordDao;
-import com.tenline.pinecone.utils.AbstractDaoSupport;
 
 /**
  * @author Bill
  *
  */
 @Repository
-public class RecordDaoImpl extends AbstractDaoSupport implements RecordDao {
+@Transactional
+public class RecordDaoImpl extends JdoDaoSupport implements RecordDao {
 
 	/**
 	 * 
 	 */
-	public RecordDaoImpl() {
+	@Autowired
+	public RecordDaoImpl(PersistenceManagerFactory persistenceManagerFactory) {
 		// TODO Auto-generated constructor stub
+		setPersistenceManagerFactory(persistenceManagerFactory);
 	}
 
 	/* (non-Javadoc)
@@ -33,7 +40,7 @@ public class RecordDaoImpl extends AbstractDaoSupport implements RecordDao {
 	@Override
 	public void delete(String id) {
 		// TODO Auto-generated method stub
-		getJdoTemplate().delete(getJdoTemplate().find(Record.class, id));
+		getJdoTemplate().deletePersistent(getJdoTemplate().getObjectById(Record.class, id));
 	}
 
 	/* (non-Javadoc)
@@ -43,8 +50,9 @@ public class RecordDaoImpl extends AbstractDaoSupport implements RecordDao {
 	public String save(Record newInstance) {
 		// TODO Auto-generated method stub
 		newInstance.setTimestamp(new Date());
-		newInstance.setVariable((Variable) getJdoTemplate().find(Variable.class, newInstance.getVariable().getId()));
-		return ((Record) getJdoTemplate().persist(newInstance)).getId();
+		newInstance.setVariable((Variable) getJdoTemplate().getObjectById(Variable.class, 
+				newInstance.getVariable().getId()));
+		return ((Record) getJdoTemplate().makePersistent(newInstance)).getId();
 	}
 
 	/* (non-Javadoc)
@@ -53,10 +61,10 @@ public class RecordDaoImpl extends AbstractDaoSupport implements RecordDao {
 	@Override
 	public String update(Record instance) {
 		// TODO Auto-generated method stub
-		Record detachedRecord = (Record) getJdoTemplate().find(Record.class, instance.getId());
+		Record detachedRecord = (Record) getJdoTemplate().getObjectById(Record.class, instance.getId());
 		detachedRecord.setTimestamp(new Date());
 		if (instance.getValue() != null) detachedRecord.setValue(instance.getValue());
-		return ((Record) getJdoTemplate().persist(detachedRecord)).getId();
+		return ((Record) getJdoTemplate().makePersistent(detachedRecord)).getId();
 	}
 
 	/* (non-Javadoc)
@@ -68,7 +76,7 @@ public class RecordDaoImpl extends AbstractDaoSupport implements RecordDao {
 		// TODO Auto-generated method stub
 		String queryString = "select from " + Record.class.getName();
 		if (!filter.equals("all")) queryString += " where " + filter;
-		return (Collection<Record>) getJdoTemplate().get(queryString);
+		return (Collection<Record>) getJdoTemplate().find(queryString);
 	}
 
 }

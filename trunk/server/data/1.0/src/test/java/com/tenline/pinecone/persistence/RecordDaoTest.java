@@ -41,7 +41,7 @@ public class RecordDaoTest extends AbstractDaoTest {
 
 	@Before
 	public void testSetup() {
-		recordDao = new RecordDaoImpl();
+		recordDao = new RecordDaoImpl(persistenceManagerFactory);
 		recordDao.setJdoTemplate(jdoTemplate);
 		record = new Record();
 		record.setId("asa");
@@ -65,9 +65,9 @@ public class RecordDaoTest extends AbstractDaoTest {
 	
 	@Test
 	public void testSave() {
-		when(jdoTemplate.persist(record)).thenReturn(record);
+		when(jdoTemplate.makePersistent(record)).thenReturn(record);
 		String result = recordDao.save(record);
-		verify(jdoTemplate).persist(record);
+		verify(jdoTemplate).makePersistent(record);
 		assertEquals("asa", result);
 	}
 	
@@ -79,20 +79,20 @@ public class RecordDaoTest extends AbstractDaoTest {
 	            assertNotNull(args[0]);
 	            return args;
 	        }
-	    }).when(jdoTemplate).delete(record);
-		when(jdoTemplate.find(Record.class, record.getId())).thenReturn(record);
+	    }).when(jdoTemplate).deletePersistent(record);
+		when(jdoTemplate.getObjectById(Record.class, record.getId())).thenReturn(record);
 		recordDao.delete(record.getId());
-		verify(jdoTemplate).find(Record.class, record.getId());
-		verify(jdoTemplate).delete(record);
+		verify(jdoTemplate).getObjectById(Record.class, record.getId());
+		verify(jdoTemplate).deletePersistent(record);
 	}
 	
 	@Test
 	public void testUpdate() {
-		when(jdoTemplate.find(Record.class, record.getId())).thenReturn(record);
-		when(jdoTemplate.persist(record)).thenReturn(record);
+		when(jdoTemplate.getObjectById(Record.class, record.getId())).thenReturn(record);
+		when(jdoTemplate.makePersistent(record)).thenReturn(record);
 		String userId = recordDao.update(record);
-		verify(jdoTemplate).persist(record);
-		verify(jdoTemplate).find(Record.class, record.getId());
+		verify(jdoTemplate).makePersistent(record);
+		verify(jdoTemplate).getObjectById(Record.class, record.getId());
 		assertNotNull(userId);
 	}
 	
@@ -100,9 +100,9 @@ public class RecordDaoTest extends AbstractDaoTest {
 	public void testFind() {
 		String filter = "value=='1'";
 		String queryString = "select from " + Record.class.getName() + " where " + filter;
-		when(jdoTemplate.get(queryString)).thenReturn(records);
+		when(jdoTemplate.find(queryString)).thenReturn(records);
 		Collection<Record> result = recordDao.find(filter);
-		verify(jdoTemplate).get(queryString);
+		verify(jdoTemplate).find(queryString);
 		assertEquals(1, result.size());
 	}
 
