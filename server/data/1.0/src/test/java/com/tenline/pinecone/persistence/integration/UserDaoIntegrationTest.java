@@ -36,19 +36,17 @@ public class UserDaoIntegrationTest extends AbstractDaoIntegrationTest {
 		newDevice.setName("ACU");
 		newDevice.setType("serial");
 		newUser.getDevices().add(newDevice);
-		String userId = userDao.save(newUser);
-		assertEquals("23", ((User) userDao.find("id=='"+userId+"'").toArray()[0]).getSnsId());
-		assertEquals(1, ((User) userDao.find("id=='"+userId+"'").toArray()[0]).getDevices().size());
+		User user = userDao.save(newUser);
+		assertEquals("23", ((User) userDao.find("id=='"+user.getId()+"'").toArray()[0]).getSnsId());
+		assertEquals(1, ((User) userDao.find("id=='"+user.getId()+"'").toArray()[0]).getDevices().size());
 		assertEquals(1, deviceDao.find("all").size());
 		assertEquals("23", ((Device) deviceDao.find("all").toArray()[0]).getUser().getSnsId());
-		User user = new User();
-		user.setId(userId);
 		user.setSnsId("24");
-		userId = userDao.update(user);
-		assertEquals("24", ((User) userDao.find("id=='"+userId+"'").toArray()[0]).getSnsId());
+		user = userDao.update(user);
+		assertEquals("24", ((User) userDao.find("id=='"+user.getId()+"'").toArray()[0]).getSnsId());
 		assertEquals("24", ((Device) deviceDao.find("all").toArray()[0]).getUser().getSnsId());
-		userDao.delete(userId);
-		assertEquals(0, userDao.find("id=='"+userId+"'").size());
+		userDao.delete(user.getId());
+		assertEquals(0, userDao.find("id=='"+user.getId()+"'").size());
 		assertEquals(0, deviceDao.find("all").size());
 	}
 	

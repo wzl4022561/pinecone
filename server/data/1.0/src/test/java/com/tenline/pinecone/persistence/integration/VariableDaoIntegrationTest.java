@@ -46,19 +46,15 @@ public class VariableDaoIntegrationTest extends AbstractDaoIntegrationTest {
 	public void testCURD() {
 		User newUser = new User();
 		newUser.setSnsId("23");
-		String userId = userDao.save(newUser);
+		User user = userDao.save(newUser);
 		Device newDevice = new Device();
 		newDevice.setName("LNB");
 		newDevice.setType("serial");
-		User user = new User();
-		user.setId(userId);
 		newDevice.setUser(user);
-		String deviceId = deviceDao.save(newDevice);
+		Device device = deviceDao.save(newDevice);
 		Variable newVariable = new Variable();
 		newVariable.setName("STA");
 		newVariable.setType("READ_ONLY");
-		Device device = new Device();
-		device.setId(deviceId);
 		newVariable.setDevice(device);
 		newVariable.setItems(new ArrayList<Item>());
 		Item newItem = new Item();
@@ -69,19 +65,17 @@ public class VariableDaoIntegrationTest extends AbstractDaoIntegrationTest {
 		Record newRecord = new Record();
 		newRecord.setValue("1");
 		newVariable.getRecords().add(newRecord);
-		String variableId = variableDao.save(newVariable);
-		assertEquals("STA", ((Variable) variableDao.find("id=='"+variableId+"'").toArray()[0]).getName());
+		Variable variable = variableDao.save(newVariable);
+		assertEquals("STA", ((Variable) variableDao.find("id=='"+variable.getId()+"'").toArray()[0]).getName());
 		assertEquals(1, itemDao.find("all").size());
 		assertEquals(1, recordDao.find("all").size());
-		Variable variable = new Variable();
-		variable.setId(variableId);
 		variable.setName("MUT");
 		variable.setType("WRITE_ONLY");
-		variableId = variableDao.update(variable);
-		assertEquals("MUT", ((Variable) variableDao.find("id=='"+variableId+"'").toArray()[0]).getName());
-		assertEquals("WRITE_ONLY", ((Variable) variableDao.find("id=='"+variableId+"'").toArray()[0]).getType());
-		variableDao.delete(variableId);
-		assertEquals(0, variableDao.find("id=='"+variableId+"'").size());
+		variable = variableDao.update(variable);
+		assertEquals("MUT", ((Variable) variableDao.find("id=='"+variable.getId()+"'").toArray()[0]).getName());
+		assertEquals("WRITE_ONLY", ((Variable) variableDao.find("id=='"+variable.getId()+"'").toArray()[0]).getType());
+		variableDao.delete(variable.getId());
+		assertEquals(0, variableDao.find("id=='"+variable.getId()+"'").size());
 		assertEquals(0, itemDao.find("all").size());
 		assertEquals(0, recordDao.find("all").size());
 	}

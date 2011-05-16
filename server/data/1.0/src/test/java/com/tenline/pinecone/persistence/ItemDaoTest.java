@@ -21,7 +21,7 @@ import org.mockito.stubbing.Answer;
 
 import com.tenline.pinecone.model.Item;
 import com.tenline.pinecone.model.Variable;
-import com.tenline.pinecone.persistence.impl.ItemDaoImpl;
+import com.tenline.pinecone.persistence.jdo.ItemJdoDao;
 
 /**
  * @author Bill
@@ -36,11 +36,11 @@ public class ItemDaoTest extends AbstractDaoTest {
 	
 	private List items;
 	
-	private ItemDaoImpl itemDao;
+	private ItemJdoDao itemDao;
 
 	@Before
 	public void testSetup() {
-		itemDao = new ItemDaoImpl(persistenceManagerFactory);
+		itemDao = new ItemJdoDao(persistenceManagerFactory);
 		itemDao.setJdoTemplate(jdoTemplate);
 		item = new Item();
 		item.setId("asa");
@@ -64,9 +64,9 @@ public class ItemDaoTest extends AbstractDaoTest {
 	@Test
 	public void testSave() {
 		when(jdoTemplate.makePersistent(item)).thenReturn(item);
-		String result = itemDao.save(item);
+		Item result = itemDao.save(item);
 		verify(jdoTemplate).makePersistent(item);
-		assertEquals("asa", result);
+		assertEquals("asa", result.getId());
 	}
 	
 	@Test
@@ -88,10 +88,10 @@ public class ItemDaoTest extends AbstractDaoTest {
 	public void testUpdate() {
 		when(jdoTemplate.getObjectById(Item.class, item.getId())).thenReturn(item);
 		when(jdoTemplate.makePersistent(item)).thenReturn(item);
-		String userId = itemDao.update(item);
+		Item result = itemDao.update(item);
 		verify(jdoTemplate).makePersistent(item);
 		verify(jdoTemplate).getObjectById(Item.class, item.getId());
-		assertNotNull(userId);
+		assertEquals("asa", result.getId());
 	}
 	
 	@Test

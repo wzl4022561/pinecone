@@ -18,14 +18,14 @@ public interface ProtocolDao extends AbstractDao {
 	 * @param newInstance
 	 * @return
 	 */
-	String save(Protocol newInstance);
+	Protocol save(Protocol newInstance);
 	
 	/**
 	 * 
 	 * @param instance
 	 * @return
 	 */
-	String update(Protocol instance);
+	Protocol update(Protocol instance);
 	
 	/**
 	 * 

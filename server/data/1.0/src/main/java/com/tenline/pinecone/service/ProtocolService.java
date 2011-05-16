@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tenline.pinecone.rest;
+package com.tenline.pinecone.service;
 
 import java.util.Collection;
 
@@ -13,36 +13,37 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
-import com.tenline.pinecone.model.Record;
+import com.tenline.pinecone.model.Protocol;
 
 /**
  * @author Bill
  *
  */
-@Path("/api/record")
-public interface RecordService extends AbstractService {
+@Path("/api/protocol")
+public interface ProtocolService extends AbstractService {
 
 	/**
 	 * 
-	 * @param record
+	 * @param protocol
 	 * @return
 	 */
 	@POST
 	@Path("/create")
 	@Consumes(MediaType.APPLICATION_JSON)
-	Response create(Record record);
+	@Produces(MediaType.APPLICATION_JSON)
+	Protocol create(Protocol protocol);
 	
 	/**
 	 * 
-	 * @param record
+	 * @param protocol
 	 * @return
 	 */
 	@PUT
 	@Path("/update")
 	@Consumes(MediaType.APPLICATION_JSON)
-	Response update(Record record);
+	@Produces(MediaType.APPLICATION_JSON)
+	Protocol update(Protocol protocol);
 	
 	/**
 	 * 
@@ -51,6 +52,6 @@ public interface RecordService extends AbstractService {
 	@GET
 	@Path("/show/{filter}")
 	@Produces(MediaType.APPLICATION_JSON)
-	Collection<Record> show(@PathParam("filter") String filter);
+	Collection<Protocol> show(@PathParam("filter") String filter);
 	
 }

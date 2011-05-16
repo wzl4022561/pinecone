@@ -47,7 +47,7 @@
 		<artifactId>logback-classic</artifactId>
 		<version>0.9.24</version>
 	</dependency>
-	<!-- Spring MVC -->
+	<!-- Spring Framework -->
 	<dependency>
   		<groupId>org.springframework</groupId>
   		<artifactId>spring-webmvc</artifactId>
@@ -124,21 +124,53 @@
   <build>
 	<plugins>
 		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-war-plugin</artifactId>
-			<version>2.1-beta-1</version>
-			<configuration>
-				<webResources>
-					<resource>
-						<directory>src/main/webapp</directory>
-						<filtering>true</filtering>
-						<includes>
-							<include>**/appengine-web.xml</include>
-						</includes>
-					</resource>
-				</webResources>
-			</configuration>
-		</plugin>
+    		<!-- Separates the unit tests from the integration tests. -->
+    		<groupId>org.apache.maven.plugins</groupId>
+    		<artifactId>maven-surefire-plugin</artifactId>
+    		<version>2.8.1</version>
+    		<configuration>
+       			<!-- Skip the default running of this plug-in (or everything is run twice...see below) -->
+       			<skip>true</skip>
+       			<!-- Show 100% of the lines from the stack trace (doesn't work) -->
+       			<trimStackTrace>false</trimStackTrace>
+    		</configuration>
+    		<executions>
+       			<execution>
+          			<id>unit-tests</id>
+          			<phase>test</phase>
+          			<goals>
+             			<goal>test</goal>
+          			</goals>
+          			<configuration>
+                		<!-- Never skip running the tests when the test phase is invoked -->
+                		<skip>false</skip>
+             			<includes>
+                   			<!-- Include unit tests within integration-test phase. -->
+                			<include>**/*Test.java</include>
+             			</includes>
+             			<excludes>
+               				<!-- Exclude integration tests within (unit) test phase. -->
+                			<exclude>**/*IntegrationTest.java</exclude>
+            			</excludes>
+          			</configuration>
+       			</execution>
+       			<execution>
+          			<id>integration-tests</id>
+          			<phase>integration-test</phase>
+          			<goals>
+             			<goal>test</goal>
+          			</goals>
+          			<configuration>
+            			<!-- Never skip running the tests when the integration-test phase is invoked -->
+             			<skip>false</skip>
+             			<includes>
+               				<!-- Include integration tests within integration-test phase. -->
+               				<include>**/*IntegrationTest.java</include>
+             			</includes>
+          			</configuration>
+       			</execution>
+    		</executions>
+  		</plugin>
 		<!--
 				The actual maven-gae-plugin. Type "mvn gae:run" to run project, "mvn
 				gae:deploy" to upload to GAE.
@@ -147,6 +179,22 @@
 			<groupId>net.kindleit</groupId>
 			<artifactId>maven-gae-plugin</artifactId>
 			<version>0.8.4</version>
+			<executions>
+				<execution>
+					<id>start-gae-server</id>
+					<phase>pre-integration-test</phase>
+					<goals>
+						<goal>start</goal>
+					</goals>
+				</execution>
+				<execution>
+					<id>stop-gae-server</id>
+					<phase>post-integration-test</phase>
+					<goals>
+						<goal>stop</goal>
+					</goals>
+				</execution>
+			</executions>
         	<dependencies>
           		<dependency>
             		<groupId>net.kindleit</groupId>
@@ -166,7 +214,9 @@
 				<goals>gae:deploy</goals>
 			</configuration>
 		</plugin>
-		<!-- Java compiler version -->
+		<!-- 
+				maven-compiler-plugin
+		-->
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-compiler-plugin</artifactId>
@@ -174,6 +224,25 @@
 			<configuration>
 				<source>1.6</source>
 				<target>1.6</target>
+			</configuration>
+		</plugin>
+		<!-- 
+				maven-war-plugin
+		-->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-war-plugin</artifactId>
+			<version>2.1-beta-1</version>
+			<configuration>
+				<webResources>
+					<resource>
+						<directory>src/main/webapp</directory>
+						<filtering>true</filtering>
+						<includes>
+							<include>**/appengine-web.xml</include>
+						</includes>
+					</resource>
+				</webResources>
 			</configuration>
 		</plugin>
 	</plugins>

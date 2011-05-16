@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tenline.pinecone.rest;
+package com.tenline.pinecone.service;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-
-import javax.ws.rs.core.Response;
 
 import org.junit.After;
 import org.junit.Before;
@@ -24,7 +22,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.tenline.pinecone.model.Record;
 import com.tenline.pinecone.persistence.RecordDao;
-import com.tenline.pinecone.rest.impl.RecordServiceImpl;
+import com.tenline.pinecone.service.restful.RecordRestfulService;
 
 /**
  * @author Bill
@@ -38,14 +36,14 @@ public class RecordServiceTest {
 	
 	private List records;
 	
-	private RecordServiceImpl recordService;
+	private RecordRestfulService recordService;
 	
 	@Mock
 	private RecordDao recordDao;
 
 	@Before
 	public void testSetup() {
-		recordService = new RecordServiceImpl(recordDao);
+		recordService = new RecordRestfulService(recordDao);
 		record = new Record();
 		record.setId("asa");
 		record.setValue("1");
@@ -65,29 +63,32 @@ public class RecordServiceTest {
 
 	@Test
 	public void testCreate() {
-		Response result = recordService.create(record);
 		ArgumentCaptor<Record> argument = ArgumentCaptor.forClass(Record.class);  
+		when(recordDao.save(record)).thenReturn(record);
+		Record result = recordService.create(record);
 		verify(recordDao).save(argument.capture()); 
+		verify(recordDao).save(record);
 		assertEquals("1", argument.getValue().getValue());
-		assertEquals(200, result.getStatus());
+		assertEquals("1", result.getValue());
 	}
 	
 	@Test
 	public void testDelete() {
-		Response result = recordService.delete(record.getId());
 		ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);  
+		recordService.delete(record.getId());
 		verify(recordDao).delete(argument.capture());
 		assertEquals("asa", argument.getValue());
-		assertEquals(200, result.getStatus());
 	}
 	
 	@Test
 	public void testUpdate() {
-		Response result = recordService.update(record);
-		ArgumentCaptor<Record> argument = ArgumentCaptor.forClass(Record.class);  
+		ArgumentCaptor<Record> argument = ArgumentCaptor.forClass(Record.class); 
+		when(recordDao.update(record)).thenReturn(record);
+		Record result = recordService.update(record);
 		verify(recordDao).update(argument.capture());
+		verify(recordDao).update(record);
 		assertEquals("1", argument.getValue().getValue());
-		assertEquals(200, result.getStatus());
+		assertEquals("1", result.getValue());
 	}
 	
 	@Test

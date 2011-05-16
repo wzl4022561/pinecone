@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tenline.pinecone.rest;
+package com.tenline.pinecone.service;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -10,8 +10,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import javax.ws.rs.core.Response;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,7 +21,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.tenline.pinecone.model.Protocol;
 import com.tenline.pinecone.persistence.ProtocolDao;
-import com.tenline.pinecone.rest.impl.ProtocolServiceImpl;
+import com.tenline.pinecone.service.restful.ProtocolRestfulService;
 
 /**
  * @author Bill
@@ -37,14 +35,14 @@ public class ProtocolServiceTest {
 	
 	private List protocols;
 	
-	private ProtocolServiceImpl protocolService;
+	private ProtocolRestfulService protocolService;
 	
 	@Mock
 	private ProtocolDao protocolDao;
 	
 	@Before
 	public void testSetup() {
-		protocolService = new ProtocolServiceImpl(protocolDao);
+		protocolService = new ProtocolRestfulService(protocolDao);
 		protocol = new Protocol();
 		protocol.setId("asa");
 		protocol.setName("modbus");
@@ -63,29 +61,32 @@ public class ProtocolServiceTest {
 
 	@Test
 	public void testCreate() {
-		Response result = protocolService.create(protocol);
 		ArgumentCaptor<Protocol> argument = ArgumentCaptor.forClass(Protocol.class);  
+		when(protocolDao.save(protocol)).thenReturn(protocol);
+		Protocol result = protocolService.create(protocol);
 		verify(protocolDao).save(argument.capture()); 
+		verify(protocolDao).save(protocol);
 		assertEquals("modbus", argument.getValue().getName());
-		assertEquals(200, result.getStatus());
+		assertEquals("modbus", result.getName());
 	}
 	
 	@Test
 	public void testDelete() {
-		Response result = protocolService.delete(protocol.getId());
-		ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);  
+		ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class); 
+		protocolService.delete(protocol.getId());
 		verify(protocolDao).delete(argument.capture());
 		assertEquals("asa", argument.getValue());
-		assertEquals(200, result.getStatus());
 	}
 	
 	@Test
 	public void testUpdate() {
-		Response result = protocolService.update(protocol);
 		ArgumentCaptor<Protocol> argument = ArgumentCaptor.forClass(Protocol.class);  
+		when(protocolDao.update(protocol)).thenReturn(protocol);
+		Protocol result = protocolService.update(protocol);
 		verify(protocolDao).update(argument.capture());
+		verify(protocolDao).update(protocol);
 		assertEquals("modbus", argument.getValue().getName());
-		assertEquals(200, result.getStatus());
+		assertEquals("modbus", result.getName());
 	}
 	
 	@Test

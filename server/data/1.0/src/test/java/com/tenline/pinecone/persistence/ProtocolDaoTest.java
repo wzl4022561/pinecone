@@ -21,7 +21,7 @@ import org.mockito.stubbing.Answer;
 
 import com.tenline.pinecone.model.Device;
 import com.tenline.pinecone.model.Protocol;
-import com.tenline.pinecone.persistence.impl.ProtocolDaoImpl;
+import com.tenline.pinecone.persistence.jdo.ProtocolJdoDao;
 
 /**
  * @author Bill
@@ -36,11 +36,11 @@ public class ProtocolDaoTest extends AbstractDaoTest {
 	
 	private List protocols;
 	
-	private ProtocolDaoImpl protocolDao;
+	private ProtocolJdoDao protocolDao;
 
 	@Before
 	public void testSetup() {
-		protocolDao = new ProtocolDaoImpl(persistenceManagerFactory);
+		protocolDao = new ProtocolJdoDao(persistenceManagerFactory);
 		protocolDao.setJdoTemplate(jdoTemplate);
 		protocol = new Protocol();
 		protocol.setId("asa");
@@ -65,9 +65,9 @@ public class ProtocolDaoTest extends AbstractDaoTest {
 	@Test
 	public void testSave() {
 		when(jdoTemplate.makePersistent(protocol)).thenReturn(protocol);
-		String result = protocolDao.save(protocol);
+		Protocol result = protocolDao.save(protocol);
 		verify(jdoTemplate).makePersistent(protocol);
-		assertEquals("asa", result);
+		assertEquals("asa", result.getId());
 	}
 	
 	@Test
@@ -89,10 +89,10 @@ public class ProtocolDaoTest extends AbstractDaoTest {
 	public void testUpdate() {
 		when(jdoTemplate.getObjectById(Protocol.class, protocol.getId())).thenReturn(protocol);
 		when(jdoTemplate.makePersistent(protocol)).thenReturn(protocol);
-		String protocolId = protocolDao.update(protocol);
+		Protocol result = protocolDao.update(protocol);
 		verify(jdoTemplate).makePersistent(protocol);
 		verify(jdoTemplate).getObjectById(Protocol.class, protocol.getId());
-		assertNotNull(protocolId);
+		assertEquals("asa", result.getId());
 	}
 	
 	@Test

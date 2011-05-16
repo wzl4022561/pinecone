@@ -39,38 +39,30 @@ public class ItemDaoIntegrationTest extends AbstractDaoIntegrationTest {
 	public void testCURD() {
 		User newUser = new User();
 		newUser.setSnsId("23");
-		String userId = userDao.save(newUser);		
+		User user = userDao.save(newUser);		
 		Device newDevice = new Device();
 		newDevice.setName("ACU");
-		User user = new User();
-		user.setId(userId);
 		newDevice.setUser(user);
-		String deviceId = deviceDao.save(newDevice);
+		Device device = deviceDao.save(newDevice);
 		Variable newVariable = new Variable();
 		newVariable.setName("STA");
 		newVariable.setType("READ_ONLY");
-		Device device = new Device();
-		device.setId(deviceId);
 		newVariable.setDevice(device);
-		String variableId = variableDao.save(newVariable);
+		Variable variable = variableDao.save(newVariable);
 		Item newItem = new Item();
 		newItem.setValue("1");
 		newItem.setText("A");
-		Variable variable = new Variable();
-		variable.setId(variableId);
 		newItem.setVariable(variable);
-		String itemId = itemDao.save(newItem);
-		assertEquals("1", ((Item) itemDao.find("id=='"+itemId+"'").toArray()[0]).getValue());
-		assertEquals("STA", ((Item) itemDao.find("id=='"+itemId+"'").toArray()[0]).getVariable().getName());
-		assertEquals(1, ((Item) itemDao.find("id=='"+itemId+"'").toArray()[0]).getVariable().getItems().size());
-		Item item = new Item();
-		item.setId(itemId);
+		Item item = itemDao.save(newItem);
+		assertEquals("1", ((Item) itemDao.find("id=='"+item.getId()+"'").toArray()[0]).getValue());
+		assertEquals("STA", ((Item) itemDao.find("id=='"+item.getId()+"'").toArray()[0]).getVariable().getName());
+		assertEquals(1, ((Item) itemDao.find("id=='"+item.getId()+"'").toArray()[0]).getVariable().getItems().size());
 		item.setValue("2");
 		item.setText("B");
-		itemId = itemDao.update(item);
-		assertEquals("B", ((Item) itemDao.find("id=='"+itemId+"'").toArray()[0]).getText());
-		itemDao.delete(itemId);
-		assertEquals(0, itemDao.find("id=='"+itemId+"'").size());
+		item = itemDao.update(item);
+		assertEquals("B", ((Item) itemDao.find("id=='"+item.getId()+"'").toArray()[0]).getText());
+		itemDao.delete(item.getId());
+		assertEquals(0, itemDao.find("id=='"+item.getId()+"'").size());
 	}
 
 }

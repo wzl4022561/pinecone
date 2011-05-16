@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tenline.pinecone.persistence.impl;
+package com.tenline.pinecone.persistence.jdo;
 
 import java.util.Collection;
 
@@ -22,13 +22,13 @@ import com.tenline.pinecone.persistence.DeviceDao;
  */
 @Repository
 @Transactional
-public class DeviceDaoImpl extends JdoDaoSupport implements DeviceDao {
+public class DeviceJdoDao extends JdoDaoSupport implements DeviceDao {
 
 	/**
 	 * 
 	 */
 	@Autowired
-	public DeviceDaoImpl(PersistenceManagerFactory persistenceManagerFactory) {
+	public DeviceJdoDao(PersistenceManagerFactory persistenceManagerFactory) {
 		// TODO Auto-generated constructor stub
 		setPersistenceManagerFactory(persistenceManagerFactory);
 	}
@@ -37,10 +37,10 @@ public class DeviceDaoImpl extends JdoDaoSupport implements DeviceDao {
 	 * @see com.tenline.pinecone.persistence.DeviceDao#save(com.tenline.pinecone.model.Device)
 	 */
 	@Override
-	public String save(Device newInstance) {
+	public Device save(Device newInstance) {
 		// TODO Auto-generated method stub
 		newInstance.setUser((User) getJdoTemplate().getObjectById(User.class, newInstance.getUser().getId()));
-		return ((Device) getJdoTemplate().makePersistent(newInstance)).getId();
+		return (Device) getJdoTemplate().makePersistent(newInstance);
 	}
 
 	/* (non-Javadoc)
@@ -68,12 +68,12 @@ public class DeviceDaoImpl extends JdoDaoSupport implements DeviceDao {
 	 * @see com.tenline.pinecone.persistence.DeviceDao#update(com.tenline.pinecone.model.Device)
 	 */
 	@Override
-	public String update(Device instance) {
+	public Device update(Device instance) {
 		// TODO Auto-generated method stub
 		Device detachedDevice = (Device) getJdoTemplate().getObjectById(Device.class, instance.getId());
 		if (instance.getName() != null) detachedDevice.setName(instance.getName());
 		if (instance.getType() != null) detachedDevice.setType(instance.getType());
-		return ((Device) getJdoTemplate().makePersistent(detachedDevice)).getId();
+		return (Device) getJdoTemplate().makePersistent(detachedDevice);
 	}
 
 }

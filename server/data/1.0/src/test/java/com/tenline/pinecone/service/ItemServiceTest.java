@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tenline.pinecone.rest;
+package com.tenline.pinecone.service;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -10,8 +10,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import javax.ws.rs.core.Response;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,7 +21,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.tenline.pinecone.model.Item;
 import com.tenline.pinecone.persistence.ItemDao;
-import com.tenline.pinecone.rest.impl.ItemServiceImpl;
+import com.tenline.pinecone.service.restful.ItemRestfulService;
 
 /**
  * @author Bill
@@ -37,14 +35,14 @@ public class ItemServiceTest {
 	
 	private List items;
 	
-	private ItemServiceImpl itemService;
+	private ItemRestfulService itemService;
 	
 	@Mock
 	private ItemDao itemDao;
 
 	@Before
 	public void testSetup() {
-		itemService = new ItemServiceImpl(itemDao);
+		itemService = new ItemRestfulService(itemDao);
 		item = new Item();
 		item.setId("asa");
 		item.setValue("1");
@@ -63,29 +61,32 @@ public class ItemServiceTest {
 
 	@Test
 	public void testCreate() {
-		Response result = itemService.create(item);
 		ArgumentCaptor<Item> argument = ArgumentCaptor.forClass(Item.class);  
+		when(itemDao.save(item)).thenReturn(item);
+		Item result = itemService.create(item);
 		verify(itemDao).save(argument.capture()); 
+		verify(itemDao).save(item);
 		assertEquals("1", argument.getValue().getValue());
-		assertEquals(200, result.getStatus());
+		assertEquals("1", result.getValue());
 	}
 	
 	@Test
 	public void testDelete() {
-		Response result = itemService.delete(item.getId());
 		ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);  
+		itemService.delete(item.getId());
 		verify(itemDao).delete(argument.capture());
 		assertEquals("asa", argument.getValue());
-		assertEquals(200, result.getStatus());
 	}
 	
 	@Test
 	public void testUpdate() {
-		Response result = itemService.update(item);
 		ArgumentCaptor<Item> argument = ArgumentCaptor.forClass(Item.class);  
+		when(itemDao.update(item)).thenReturn(item);
+		Item result = itemService.update(item);
 		verify(itemDao).update(argument.capture());
+		verify(itemDao).update(item);
 		assertEquals("1", argument.getValue().getValue());
-		assertEquals(200, result.getStatus());
+		assertEquals("1", result.getValue());
 	}
 	
 	@Test

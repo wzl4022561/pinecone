@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tenline.pinecone.rest;
+package com.tenline.pinecone.service;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -10,8 +10,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import javax.ws.rs.core.Response;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,7 +21,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.tenline.pinecone.model.User;
 import com.tenline.pinecone.persistence.UserDao;
-import com.tenline.pinecone.rest.impl.UserServiceImpl;
+import com.tenline.pinecone.service.restful.UserRestfulService;
 
 /**
  * @author Bill
@@ -37,14 +35,14 @@ public class UserServiceTest {
 	
 	private List users;
 	
-	private UserServiceImpl userService; 	
+	private UserRestfulService userService; 	
 	
 	@Mock
 	private UserDao userDao;
 		
 	@Before
 	public void testSetup() {
-		userService = new UserServiceImpl(userDao);
+		userService = new UserRestfulService(userDao);
 		user = new User();
 		user.setId("asa");
 		user.setSnsId("23");		
@@ -63,29 +61,32 @@ public class UserServiceTest {
 
 	@Test
 	public void testCreate() {
-		Response result = userService.create(user);
 		ArgumentCaptor<User> argument = ArgumentCaptor.forClass(User.class);  
+		when(userDao.save(user)).thenReturn(user);
+		User result = userService.create(user);
 		verify(userDao).save(argument.capture()); 
+		verify(userDao).save(user);
 		assertEquals("23", argument.getValue().getSnsId());
-		assertEquals(200, result.getStatus());
+		assertEquals("23", result.getSnsId());
 	}
 	
 	@Test
 	public void testDelete() {
-		Response result = userService.delete(user.getId());
 		ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);  
+		userService.delete(user.getId());
 		verify(userDao).delete(argument.capture());
 		assertEquals("asa", argument.getValue());
-		assertEquals(200, result.getStatus());
 	}
 	
 	@Test
 	public void testUpdate() {
-		Response result = userService.update(user);
 		ArgumentCaptor<User> argument = ArgumentCaptor.forClass(User.class);  
+		when(userDao.update(user)).thenReturn(user);
+		User result = userService.update(user);
 		verify(userDao).update(argument.capture());
+		verify(userDao).update(user);
 		assertEquals("23", argument.getValue().getSnsId());
-		assertEquals(200, result.getStatus());
+		assertEquals("23", result.getSnsId());
 	}
 	
 	@Test
