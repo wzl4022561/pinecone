@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tenline.pinecone.persistence.impl;
+package com.tenline.pinecone.persistence.jdo;
 
 import java.util.Collection;
 
@@ -22,13 +22,13 @@ import com.tenline.pinecone.persistence.VariableDao;
  */
 @Repository
 @Transactional
-public class VariableDaoImpl extends JdoDaoSupport implements VariableDao {
+public class VariableJdoDao extends JdoDaoSupport implements VariableDao {
 
 	/**
 	 * 
 	 */
 	@Autowired
-	public VariableDaoImpl(PersistenceManagerFactory persistenceManagerFactory) {
+	public VariableJdoDao(PersistenceManagerFactory persistenceManagerFactory) {
 		// TODO Auto-generated constructor stub
 		setPersistenceManagerFactory(persistenceManagerFactory);
 	}
@@ -37,11 +37,11 @@ public class VariableDaoImpl extends JdoDaoSupport implements VariableDao {
 	 * @see com.tenline.pinecone.persistence.VariableDao#save(com.tenline.pinecone.model.Variable)
 	 */
 	@Override
-	public String save(Variable newInstance) {
+	public Variable save(Variable newInstance) {
 		// TODO Auto-generated method stub
 		newInstance.setDevice((Device) getJdoTemplate().getObjectById(Device.class, 
 				newInstance.getDevice().getId()));
-		return ((Variable) getJdoTemplate().makePersistent(newInstance)).getId();
+		return (Variable) getJdoTemplate().makePersistent(newInstance);
 	}
 
 	/* (non-Javadoc)
@@ -69,12 +69,12 @@ public class VariableDaoImpl extends JdoDaoSupport implements VariableDao {
 	 * @see com.tenline.pinecone.persistence.VariableDao#update(com.tenline.pinecone.model.Variable)
 	 */
 	@Override
-	public String update(Variable instance) {
+	public Variable update(Variable instance) {
 		// TODO Auto-generated method stub
 		Variable detachedVariable = (Variable) getJdoTemplate().getObjectById(Variable.class, instance.getId());
 		if (instance.getName() != null) detachedVariable.setName(instance.getName());
 		if (instance.getType() != null) detachedVariable.setType(instance.getType());
-		return ((Variable) getJdoTemplate().makePersistent(detachedVariable)).getId();
+		return (Variable) getJdoTemplate().makePersistent(detachedVariable);
 	}
 
 }

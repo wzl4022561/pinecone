@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tenline.pinecone.rest;
+package com.tenline.pinecone.service;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -10,8 +10,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import javax.ws.rs.core.Response;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,7 +21,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.tenline.pinecone.model.Device;
 import com.tenline.pinecone.persistence.DeviceDao;
-import com.tenline.pinecone.rest.impl.DeviceServiceImpl;
+import com.tenline.pinecone.service.restful.DeviceRestfulService;
 
 /**
  * @author Bill
@@ -37,14 +35,14 @@ public class DeviceServiceTest {
 	
 	private List devices;
 	
-	private DeviceServiceImpl deviceService;
+	private DeviceRestfulService deviceService;
 	
 	@Mock
 	private DeviceDao deviceDao;
 	
 	@Before
 	public void testSetup() {
-		deviceService = new DeviceServiceImpl(deviceDao);
+		deviceService = new DeviceRestfulService(deviceDao);
 		device = new Device();
 		device.setId("asa");
 		device.setName("ACU");
@@ -63,29 +61,32 @@ public class DeviceServiceTest {
 
 	@Test
 	public void testCreate() {
-		Response result = deviceService.create(device);
 		ArgumentCaptor<Device> argument = ArgumentCaptor.forClass(Device.class);  
+		when(deviceDao.save(device)).thenReturn(device);
+		Device result = deviceService.create(device);
 		verify(deviceDao).save(argument.capture()); 
+		verify(deviceDao).save(device);
 		assertEquals("ACU", argument.getValue().getName());
-		assertEquals(200, result.getStatus());
+		assertEquals("ACU", result.getName());
 	}
 	
 	@Test
 	public void testDelete() {
-		Response result = deviceService.delete(device.getId());
-		ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);  
+		ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class); 
+		deviceService.delete(device.getId());
 		verify(deviceDao).delete(argument.capture());
 		assertEquals("asa", argument.getValue());
-		assertEquals(200, result.getStatus());
 	}
 	
 	@Test
 	public void testUpdate() {
-		Response result = deviceService.update(device);
-		ArgumentCaptor<Device> argument = ArgumentCaptor.forClass(Device.class);  
+		ArgumentCaptor<Device> argument = ArgumentCaptor.forClass(Device.class); 
+		when(deviceDao.update(device)).thenReturn(device);
+		Device result = deviceService.update(device);
 		verify(deviceDao).update(argument.capture());
+		verify(deviceDao).update(device);
 		assertEquals("ACU", argument.getValue().getName());
-		assertEquals(200, result.getStatus());
+		assertEquals("ACU", result.getName());
 	}
 	
 	@Test

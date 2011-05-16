@@ -18,14 +18,14 @@ public interface DeviceDao extends AbstractDao {
 	 * @param newInstance
 	 * @return
 	 */
-	String save(Device newInstance);
+	Device save(Device newInstance);
 	
 	/**
 	 * 
 	 * @param instance
 	 * @return
 	 */
-	String update(Device instance);
+	Device update(Device instance);
 	
 	/**
 	 * 

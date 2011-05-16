@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tenline.pinecone.persistence.impl;
+package com.tenline.pinecone.persistence.jdo;
 
 import java.util.Collection;
 
@@ -22,13 +22,13 @@ import com.tenline.pinecone.persistence.ItemDao;
  */
 @Repository
 @Transactional
-public class ItemDaoImpl extends JdoDaoSupport implements ItemDao {
+public class ItemJdoDao extends JdoDaoSupport implements ItemDao {
 
 	/**
 	 * 
 	 */
 	@Autowired
-	public ItemDaoImpl(PersistenceManagerFactory persistenceManagerFactory) {
+	public ItemJdoDao(PersistenceManagerFactory persistenceManagerFactory) {
 		// TODO Auto-generated constructor stub
 		setPersistenceManagerFactory(persistenceManagerFactory);
 	}
@@ -46,23 +46,23 @@ public class ItemDaoImpl extends JdoDaoSupport implements ItemDao {
 	 * @see com.tenline.pinecone.persistence.ItemDao#save(com.tenline.pinecone.model.Item)
 	 */
 	@Override
-	public String save(Item newInstance) {
+	public Item save(Item newInstance) {
 		// TODO Auto-generated method stub
 		newInstance.setVariable((Variable) getJdoTemplate().getObjectById(Variable.class, 
 				newInstance.getVariable().getId()));
-		return ((Item) getJdoTemplate().makePersistent(newInstance)).getId();
+		return (Item) getJdoTemplate().makePersistent(newInstance);
 	}
 
 	/* (non-Javadoc)
 	 * @see com.tenline.pinecone.persistence.ItemDao#update(com.tenline.pinecone.model.Item)
 	 */
 	@Override
-	public String update(Item instance) {
+	public Item update(Item instance) {
 		// TODO Auto-generated method stub
 		Item detachedItem = (Item) getJdoTemplate().getObjectById(Item.class, instance.getId());
 		if (instance.getValue() != null) detachedItem.setValue(instance.getValue());
 		if (instance.getText() != null) detachedItem.setText(instance.getText());
-		return ((Item) getJdoTemplate().makePersistent(detachedItem)).getId();
+		return (Item) getJdoTemplate().makePersistent(detachedItem);
 	}
 
 	/* (non-Javadoc)

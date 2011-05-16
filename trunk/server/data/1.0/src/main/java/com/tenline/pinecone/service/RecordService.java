@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tenline.pinecone.rest;
+package com.tenline.pinecone.service;
 
 import java.util.Collection;
 
@@ -13,36 +13,37 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
-import com.tenline.pinecone.model.Device;
+import com.tenline.pinecone.model.Record;
 
 /**
  * @author Bill
  *
  */
-@Path("/api/device")
-public interface DeviceService extends AbstractService {
-	
+@Path("/api/record")
+public interface RecordService extends AbstractService {
+
 	/**
 	 * 
-	 * @param device
+	 * @param record
 	 * @return
 	 */
 	@POST
 	@Path("/create")
 	@Consumes(MediaType.APPLICATION_JSON)
-	Response create(Device device);
+	@Produces(MediaType.APPLICATION_JSON)
+	Record create(Record record);
 	
 	/**
 	 * 
-	 * @param device
+	 * @param record
 	 * @return
 	 */
 	@PUT
 	@Path("/update")
 	@Consumes(MediaType.APPLICATION_JSON)
-	Response update(Device device);
+	@Produces(MediaType.APPLICATION_JSON)
+	Record update(Record record);
 	
 	/**
 	 * 
@@ -51,6 +52,6 @@ public interface DeviceService extends AbstractService {
 	@GET
 	@Path("/show/{filter}")
 	@Produces(MediaType.APPLICATION_JSON)
-	Collection<Device> show(@PathParam("filter") String filter);
-
+	Collection<Record> show(@PathParam("filter") String filter);
+	
 }

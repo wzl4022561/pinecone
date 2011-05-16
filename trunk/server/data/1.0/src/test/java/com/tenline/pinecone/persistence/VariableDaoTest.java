@@ -21,7 +21,7 @@ import org.mockito.stubbing.Answer;
 
 import com.tenline.pinecone.model.Device;
 import com.tenline.pinecone.model.Variable;
-import com.tenline.pinecone.persistence.impl.VariableDaoImpl;
+import com.tenline.pinecone.persistence.jdo.VariableJdoDao;
 
 /**
  * @author Bill
@@ -36,11 +36,11 @@ public class VariableDaoTest extends AbstractDaoTest {
 	
 	private List variables;
 	
-	private VariableDaoImpl variableDao;
+	private VariableJdoDao variableDao;
 	
 	@Before
 	public void testSetup() {
-		variableDao = new VariableDaoImpl(persistenceManagerFactory);
+		variableDao = new VariableJdoDao(persistenceManagerFactory);
 		variableDao.setJdoTemplate(jdoTemplate);
 		variable = new Variable();
 		variable.setId("asa");
@@ -65,10 +65,10 @@ public class VariableDaoTest extends AbstractDaoTest {
 	public void testSave() {
 		when(jdoTemplate.makePersistent(variable)).thenReturn(variable);
 		when(jdoTemplate.getObjectById(Device.class, device.getId())).thenReturn(device);
-		String result = variableDao.save(variable);
+		Variable result = variableDao.save(variable);
 		verify(jdoTemplate).getObjectById(Device.class, device.getId());
 		verify(jdoTemplate).makePersistent(variable);
-		assertEquals("asa", result);
+		assertEquals("asa", result.getId());
 	}
 	
 	@Test
@@ -90,10 +90,10 @@ public class VariableDaoTest extends AbstractDaoTest {
 	public void testUpdate() {
 		when(jdoTemplate.getObjectById(Variable.class, variable.getId())).thenReturn(variable);
 		when(jdoTemplate.makePersistent(variable)).thenReturn(variable);
-		String variableId = variableDao.update(variable);
+		Variable result = variableDao.update(variable);
 		verify(jdoTemplate).makePersistent(variable);
 		verify(jdoTemplate).getObjectById(Variable.class, variable.getId());
-		assertNotNull(variableId);
+		assertEquals("asa", result.getId());
 	}
 	
 	@Test

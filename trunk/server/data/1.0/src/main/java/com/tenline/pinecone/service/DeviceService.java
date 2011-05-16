@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tenline.pinecone.rest;
+package com.tenline.pinecone.service;
 
 import java.util.Collection;
 
@@ -13,45 +13,45 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
-import com.tenline.pinecone.model.Variable;
+import com.tenline.pinecone.model.Device;
 
 /**
  * @author Bill
  *
  */
-@Path("/api/variable")
-public interface VariableService extends AbstractService {
+@Path("/api/device")
+public interface DeviceService extends AbstractService {
 	
 	/**
 	 * 
-	 * @param variable
+	 * @param device
 	 * @return
 	 */
 	@POST
 	@Path("/create")
 	@Consumes(MediaType.APPLICATION_JSON)
-	Response create(Variable variable);
+	@Produces(MediaType.APPLICATION_JSON)
+	Device create(Device device);
 	
 	/**
 	 * 
-	 * @param variable
+	 * @param device
 	 * @return
 	 */
 	@PUT
 	@Path("/update")
 	@Consumes(MediaType.APPLICATION_JSON)
-	Response update(Variable variable);
+	@Produces(MediaType.APPLICATION_JSON)
+	Device update(Device device);
 	
 	/**
 	 * 
-	 * @param filter
 	 * @return
 	 */
 	@GET
 	@Path("/show/{filter}")
 	@Produces(MediaType.APPLICATION_JSON)
-	Collection<Variable> show(@PathParam("filter") String filter);
-	
+	Collection<Device> show(@PathParam("filter") String filter);
+
 }

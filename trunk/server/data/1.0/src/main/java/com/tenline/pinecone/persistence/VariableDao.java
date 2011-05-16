@@ -18,14 +18,14 @@ public interface VariableDao extends AbstractDao {
 	 * @param newInstance
 	 * @return
 	 */
-	String save(Variable newInstance);
+	Variable save(Variable newInstance);
 	
 	/**
 	 * 
 	 * @param instance
 	 * @return
 	 */
-	String update(Variable instance);
+	Variable update(Variable instance);
 	
 	/**
 	 * 

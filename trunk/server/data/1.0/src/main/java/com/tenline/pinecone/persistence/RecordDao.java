@@ -18,14 +18,14 @@ public interface RecordDao extends AbstractDao {
 	 * @param newInstance
 	 * @return
 	 */
-	String save(Record newInstance);
+	Record save(Record newInstance);
 	
 	/**
 	 * 
 	 * @param instance
 	 * @return
 	 */
-	String update(Record instance);
+	Record update(Record instance);
 	
 	/** 
 	 * @param filter

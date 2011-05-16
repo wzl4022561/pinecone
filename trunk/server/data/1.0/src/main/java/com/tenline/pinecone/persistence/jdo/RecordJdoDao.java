@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tenline.pinecone.persistence.impl;
+package com.tenline.pinecone.persistence.jdo;
 
 import java.util.Collection;
 import java.util.Date;
@@ -23,13 +23,13 @@ import com.tenline.pinecone.persistence.RecordDao;
  */
 @Repository
 @Transactional
-public class RecordDaoImpl extends JdoDaoSupport implements RecordDao {
+public class RecordJdoDao extends JdoDaoSupport implements RecordDao {
 
 	/**
 	 * 
 	 */
 	@Autowired
-	public RecordDaoImpl(PersistenceManagerFactory persistenceManagerFactory) {
+	public RecordJdoDao(PersistenceManagerFactory persistenceManagerFactory) {
 		// TODO Auto-generated constructor stub
 		setPersistenceManagerFactory(persistenceManagerFactory);
 	}
@@ -47,24 +47,24 @@ public class RecordDaoImpl extends JdoDaoSupport implements RecordDao {
 	 * @see com.tenline.pinecone.persistence.RecordDao#save(com.tenline.pinecone.model.Record)
 	 */
 	@Override
-	public String save(Record newInstance) {
+	public Record save(Record newInstance) {
 		// TODO Auto-generated method stub
 		newInstance.setTimestamp(new Date());
 		newInstance.setVariable((Variable) getJdoTemplate().getObjectById(Variable.class, 
 				newInstance.getVariable().getId()));
-		return ((Record) getJdoTemplate().makePersistent(newInstance)).getId();
+		return (Record) getJdoTemplate().makePersistent(newInstance);
 	}
 
 	/* (non-Javadoc)
 	 * @see com.tenline.pinecone.persistence.RecordDao#update(com.tenline.pinecone.model.Record)
 	 */
 	@Override
-	public String update(Record instance) {
+	public Record update(Record instance) {
 		// TODO Auto-generated method stub
 		Record detachedRecord = (Record) getJdoTemplate().getObjectById(Record.class, instance.getId());
 		detachedRecord.setTimestamp(new Date());
 		if (instance.getValue() != null) detachedRecord.setValue(instance.getValue());
-		return ((Record) getJdoTemplate().makePersistent(detachedRecord)).getId();
+		return (Record) getJdoTemplate().makePersistent(detachedRecord);
 	}
 
 	/* (non-Javadoc)

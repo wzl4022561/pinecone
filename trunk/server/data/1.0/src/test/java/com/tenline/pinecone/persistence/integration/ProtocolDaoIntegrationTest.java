@@ -34,31 +34,25 @@ public class ProtocolDaoIntegrationTest extends AbstractDaoIntegrationTest {
 	public void testCURD() {
 		User newUser = new User();
 		newUser.setSnsId("23");
-		String userId = userDao.save(newUser);		
+		User user = userDao.save(newUser);		
 		Device newDevice = new Device();
 		newDevice.setName("ACU");
-		User user = new User();
-		user.setId(userId);
 		newDevice.setUser(user);
-		String deviceId = deviceDao.save(newDevice);
+		Device device = deviceDao.save(newDevice);
 		Protocol newProtocol = new Protocol();
 		newProtocol.setName("modbus");
 		newProtocol.setVersion("1.0");
-		Device device = new Device();
-		device.setId(deviceId);
 		newProtocol.setDevice(device);
-		String protocolId = protocolDao.save(newProtocol);
-		assertEquals("modbus", ((Protocol) protocolDao.find("id=='"+protocolId+"'").toArray()[0]).getName());
-		assertEquals("ACU", ((Protocol) protocolDao.find("id=='"+protocolId+"'").toArray()[0]).getDevice().getName());
-		Protocol protocol = new Protocol();
-		protocol.setId(protocolId);
+		Protocol protocol = protocolDao.save(newProtocol);
+		assertEquals("modbus", ((Protocol) protocolDao.find("id=='"+protocol.getId()+"'").toArray()[0]).getName());
+		assertEquals("ACU", ((Protocol) protocolDao.find("id=='"+protocol.getId()+"'").toArray()[0]).getDevice().getName());
 		protocol.setName("SNMP");
 		protocol.setVersion("2.0");
-		protocolId = protocolDao.update(protocol);
-		assertEquals("SNMP", ((Protocol) protocolDao.find("id=='"+protocolId+"'").toArray()[0]).getName());
-		assertEquals("2.0", ((Protocol) protocolDao.find("id=='"+protocolId+"'").toArray()[0]).getVersion());
-		protocolDao.delete(protocolId);
-		assertEquals(0, protocolDao.find("id=='"+protocolId+"'").size());
+		protocol = protocolDao.update(protocol);
+		assertEquals("SNMP", ((Protocol) protocolDao.find("id=='"+protocol.getId()+"'").toArray()[0]).getName());
+		assertEquals("2.0", ((Protocol) protocolDao.find("id=='"+protocol.getId()+"'").toArray()[0]).getVersion());
+		protocolDao.delete(protocol.getId());
+		assertEquals(0, protocolDao.find("id=='"+protocol.getId()+"'").size());
 	}
 
 }

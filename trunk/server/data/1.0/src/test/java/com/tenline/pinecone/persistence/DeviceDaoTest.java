@@ -21,7 +21,7 @@ import org.mockito.stubbing.Answer;
 
 import com.tenline.pinecone.model.Device;
 import com.tenline.pinecone.model.User;
-import com.tenline.pinecone.persistence.impl.DeviceDaoImpl;
+import com.tenline.pinecone.persistence.jdo.DeviceJdoDao;
 
 /**
  * @author Bill
@@ -36,11 +36,11 @@ public class DeviceDaoTest extends AbstractDaoTest {
 	
 	private List devices;
 	
-	private DeviceDaoImpl deviceDao;
+	private DeviceJdoDao deviceDao;
 
 	@Before
 	public void testSetup() {
-		deviceDao = new DeviceDaoImpl(persistenceManagerFactory);
+		deviceDao = new DeviceJdoDao(persistenceManagerFactory);
 		deviceDao.setJdoTemplate(jdoTemplate);
 		device = new Device();
 		device.setId("asa");
@@ -65,10 +65,10 @@ public class DeviceDaoTest extends AbstractDaoTest {
 	public void testSave() {
 		when(jdoTemplate.makePersistent(device)).thenReturn(device);
 		when(jdoTemplate.getObjectById(User.class, user.getId())).thenReturn(user);
-		String result = deviceDao.save(device);
+		Device result = deviceDao.save(device);
 		verify(jdoTemplate).getObjectById(User.class, user.getId());
 		verify(jdoTemplate).makePersistent(device);
-		assertEquals("asa", result);
+		assertEquals("asa", result.getId());
 	}
 	
 	@Test
@@ -90,10 +90,10 @@ public class DeviceDaoTest extends AbstractDaoTest {
 	public void testUpdate() {
 		when(jdoTemplate.getObjectById(Device.class, device.getId())).thenReturn(device);
 		when(jdoTemplate.makePersistent(device)).thenReturn(device);
-		String deviceId = deviceDao.update(device);
+		Device result = deviceDao.update(device);
 		verify(jdoTemplate).makePersistent(device);
 		verify(jdoTemplate).getObjectById(Device.class, device.getId());
-		assertNotNull(deviceId);
+		assertEquals("asa", result.getId());
 	}
 	
 	@Test

@@ -41,12 +41,10 @@ public class DeviceDaoIntegrationTest extends AbstractDaoIntegrationTest {
 	public void testCURD() {
 		User newUser = new User();
 		newUser.setSnsId("23");
-		String userId = userDao.save(newUser);
+		User user = userDao.save(newUser);
 		Device newDevice = new Device();
 		newDevice.setName("ACU");
 		newDevice.setType("serial");
-		User user = new User();
-		user.setId(userId);
 		newDevice.setUser(user);
 		Protocol newProtocol = new Protocol();
 		newProtocol.setName("modbus");
@@ -58,23 +56,21 @@ public class DeviceDaoIntegrationTest extends AbstractDaoIntegrationTest {
 		newVariable.setType("READ_ONLY");	
 		newDevice.setVariables(new ArrayList<Variable>());
 		newDevice.getVariables().add(newVariable);
-		String deviceId = deviceDao.save(newDevice);
-		assertEquals("ACU", ((Device) deviceDao.find("id=='"+deviceId+"'").toArray()[0]).getName());
-		assertEquals(1, ((Device) deviceDao.find("id=='"+deviceId+"'").toArray()[0]).getProtocols().size());
-		assertEquals(1, ((Device) deviceDao.find("id=='"+deviceId+"'").toArray()[0]).getVariables().size());
+		Device device = deviceDao.save(newDevice);
+		assertEquals("ACU", ((Device) deviceDao.find("id=='"+device.getId()+"'").toArray()[0]).getName());
+		assertEquals(1, ((Device) deviceDao.find("id=='"+device.getId()+"'").toArray()[0]).getProtocols().size());
+		assertEquals(1, ((Device) deviceDao.find("id=='"+device.getId()+"'").toArray()[0]).getVariables().size());
 		assertEquals(1, variableDao.find("all").size());
 		assertEquals("ACU", ((Variable) variableDao.find("all").toArray()[0]).getDevice().getName());
 		assertEquals(1, protocolDao.find("all").size());
-		Device device = new Device();
-		device.setId(deviceId);
 		device.setName("LNB");
 		device.setType("tcp");
-		deviceId = deviceDao.update(device);
-		assertEquals("LNB", ((Device) deviceDao.find("id=='"+deviceId+"'").toArray()[0]).getName());
-		assertEquals("tcp", ((Device) deviceDao.find("id=='"+deviceId+"'").toArray()[0]).getType());
+		device = deviceDao.update(device);
+		assertEquals("LNB", ((Device) deviceDao.find("id=='"+device.getId()+"'").toArray()[0]).getName());
+		assertEquals("tcp", ((Device) deviceDao.find("id=='"+device.getId()+"'").toArray()[0]).getType());
 		assertEquals("LNB", ((Variable) variableDao.find("all").toArray()[0]).getDevice().getName());
-		deviceDao.delete(deviceId);
-		assertEquals(0, deviceDao.find("id=='"+deviceId+"'").size());
+		deviceDao.delete(device.getId());
+		assertEquals(0, deviceDao.find("id=='"+device.getId()+"'").size());
 		assertEquals(0, variableDao.find("all").size());
 		assertEquals(0, protocolDao.find("all").size());
 	}

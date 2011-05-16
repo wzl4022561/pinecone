@@ -18,14 +18,14 @@ public interface ItemDao extends AbstractDao {
 	 * @param newInstance
 	 * @return
 	 */
-	String save(Item newInstance);
+	Item save(Item newInstance);
 	
 	/**
 	 * 
 	 * @param instance
 	 * @return
 	 */
-	String update(Item instance);
+	Item update(Item instance);
 	
 	/**
 	 * 

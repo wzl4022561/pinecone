@@ -18,14 +18,14 @@ public interface UserDao extends AbstractDao {
 	 * @param newInstance
 	 * @return
 	 */
-	String save(User newInstance);
+	User save(User newInstance);
 	
 	/**
 	 * 
 	 * @param instance
 	 * @return
 	 */
-	String update(User instance);
+	User update(User instance);
 	
 	/**
 	 * 

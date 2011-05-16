@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tenline.pinecone.persistence.impl;
+package com.tenline.pinecone.persistence.jdo;
 
 import java.util.Collection;
 
@@ -22,13 +22,13 @@ import com.tenline.pinecone.persistence.ProtocolDao;
  */
 @Repository
 @Transactional
-public class ProtocolDaoImpl extends JdoDaoSupport implements ProtocolDao {
+public class ProtocolJdoDao extends JdoDaoSupport implements ProtocolDao {
 
 	/**
 	 * 
 	 */
 	@Autowired
-	public ProtocolDaoImpl(PersistenceManagerFactory persistenceManagerFactory) {
+	public ProtocolJdoDao(PersistenceManagerFactory persistenceManagerFactory) {
 		// TODO Auto-generated constructor stub
 		setPersistenceManagerFactory(persistenceManagerFactory);
 	}
@@ -46,23 +46,23 @@ public class ProtocolDaoImpl extends JdoDaoSupport implements ProtocolDao {
 	 * @see com.tenline.pinecone.persistence.ProtocolDao#save(com.tenline.pinecone.model.Protocol)
 	 */
 	@Override
-	public String save(Protocol newInstance) {
+	public Protocol save(Protocol newInstance) {
 		// TODO Auto-generated method stub
 		newInstance.setDevice((Device) getJdoTemplate().getObjectById(Device.class, 
 				newInstance.getDevice().getId()));
-		return ((Protocol) getJdoTemplate().makePersistent(newInstance)).getId();
+		return (Protocol) getJdoTemplate().makePersistent(newInstance);
 	}
 
 	/* (non-Javadoc)
 	 * @see com.tenline.pinecone.persistence.ProtocolDao#update(com.tenline.pinecone.model.Protocol)
 	 */
 	@Override
-	public String update(Protocol instance) {
+	public Protocol update(Protocol instance) {
 		// TODO Auto-generated method stub
 		Protocol detachedProtocol = (Protocol) getJdoTemplate().getObjectById(Protocol.class, instance.getId());
 		if (instance.getName() != null) detachedProtocol.setName(instance.getName());
 		if (instance.getVersion() != null) detachedProtocol.setVersion(instance.getVersion());
-		return ((Protocol) getJdoTemplate().makePersistent(detachedProtocol)).getId();
+		return (Protocol) getJdoTemplate().makePersistent(detachedProtocol);
 	}
 
 	/* (non-Javadoc)

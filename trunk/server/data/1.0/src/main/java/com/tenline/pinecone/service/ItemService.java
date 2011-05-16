@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tenline.pinecone.rest;
+package com.tenline.pinecone.service;
 
 import java.util.Collection;
 
@@ -13,45 +13,45 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
-import com.tenline.pinecone.model.User;
+import com.tenline.pinecone.model.Item;
 
 /**
  * @author Bill
  *
  */
-@Path("/api/user")
-public interface UserService extends AbstractService {
+@Path("/api/item")
+public interface ItemService extends AbstractService {
 
 	/**
 	 * 
-	 * @param user
+	 * @param item
 	 * @return
 	 */
 	@POST
 	@Path("/create")
 	@Consumes(MediaType.APPLICATION_JSON)
-	Response create(User user);
+	@Produces(MediaType.APPLICATION_JSON)
+	Item create(Item item);
 	
 	/**
 	 * 
-	 * @param user
+	 * @param item
 	 * @return
 	 */
 	@PUT
 	@Path("/update")
 	@Consumes(MediaType.APPLICATION_JSON)
-	Response update(User user);
+	@Produces(MediaType.APPLICATION_JSON)
+	Item update(Item item);
 	
 	/**
 	 * 
-	 * @param filter
 	 * @return
 	 */
 	@GET
 	@Path("/show/{filter}")
 	@Produces(MediaType.APPLICATION_JSON)
-	Collection<User> show(@PathParam("filter") String filter);
-	
+	Collection<Item> show(@PathParam("filter") String filter);
+
 }

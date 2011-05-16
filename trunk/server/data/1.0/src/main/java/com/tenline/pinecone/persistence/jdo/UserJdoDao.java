@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tenline.pinecone.persistence.impl;
+package com.tenline.pinecone.persistence.jdo;
 
 import java.util.Collection;
 
@@ -21,13 +21,13 @@ import com.tenline.pinecone.persistence.UserDao;
  */
 @Repository
 @Transactional
-public class UserDaoImpl extends JdoDaoSupport implements UserDao {
+public class UserJdoDao extends JdoDaoSupport implements UserDao {
 
 	/**
 	 * 
 	 */
 	@Autowired
-	public UserDaoImpl(PersistenceManagerFactory persistenceManagerFactory) {
+	public UserJdoDao(PersistenceManagerFactory persistenceManagerFactory) {
 		// TODO Auto-generated constructor stub
 		setPersistenceManagerFactory(persistenceManagerFactory);
 	}
@@ -36,9 +36,9 @@ public class UserDaoImpl extends JdoDaoSupport implements UserDao {
 	 * @see com.tenline.pinecone.persistence.UserDao#save(com.tenline.pinecone.model.User)
 	 */
 	@Override
-	public String save(User newInstance) {
+	public User save(User newInstance) {
 		// TODO Auto-generated method stub
-		return ((User) getJdoTemplate().makePersistent(newInstance)).getId();
+		return (User) getJdoTemplate().makePersistent(newInstance);
 	}
 
 	/* (non-Javadoc)
@@ -57,11 +57,11 @@ public class UserDaoImpl extends JdoDaoSupport implements UserDao {
 	 * @see com.tenline.pinecone.persistence.UserDao#update(com.tenline.pinecone.model.User)
 	 */
 	@Override
-	public String update(User instance) {
+	public User update(User instance) {
 		// TODO Auto-generated method stub
 		User detachedUser = (User) getJdoTemplate().getObjectById(User.class, instance.getId());
 		if (instance.getSnsId() != null) detachedUser.setSnsId(instance.getSnsId());
-		return ((User) getJdoTemplate().makePersistent(detachedUser)).getId();
+		return (User) getJdoTemplate().makePersistent(detachedUser);
 	}
 	
 	/* (non-Javadoc)
