@@ -1,1 +1,17 @@
-<repository lastmodified='20110610112255.500'/>
+<repository lastmodified='20110610112503.078'>
+  <resource id='com.10line.pinecone.platform.osgi.driver.efish/0.1.0' symbolicname='com.10line.pinecone.platform.osgi.driver.efish' presentationname='Unnamed - com.10line.pinecone.platform.osgi.driver:efish:bundle:0.1' uri='file:/C:/DOCUME~1/Bill/LOCALS~1/Temp/com/10line/pinecone/platform/osgi/driver/efish/0.1/efish-0.1.jar' version='0.1.0'>
+    <size>3955</size>
+    <capability name='bundle'>
+      <p n='symbolicname' v='com.10line.pinecone.platform.osgi.driver.efish'/>
+      <p n='presentationname' v='Unnamed - com.10line.pinecone.platform.osgi.driver:efish:bundle:0.1'/>
+      <p n='version' t='version' v='0.1.0'/>
+      <p n='manifestversion' v='2'/>
+    </capability>
+    <capability name='package'>
+      <p n='package' v='com.tenline.pinecone.platform.osgi.driver.efish'/>
+      <p n='version' t='version' v='0.0.0'/>
+      <p n='uses:' v='org.osgi.framework'/>
+    </capability>
+    <require name='package' filter='(&amp;(package=org.osgi.framework)(version&gt;=1.5.0)(!(version&gt;=2.0.0)))' extend='false' multiple='false' optional='false'>Import package org.osgi.framework;version="[1.5,2)"</require>
+  </resource>
+</repository>
