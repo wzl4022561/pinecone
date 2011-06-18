@@ -1,9 +1,9 @@
-<repository lastmodified='20110611125736.187'>
-  <resource id='com.10line.pinecone.platform.osgi.driver.efish/0.1.0' symbolicname='com.10line.pinecone.platform.osgi.driver.efish' presentationname='efish-driver-0.1' uri='https://pinecone.googlecode.com/svn/repository/com/10line/pinecone/platform/osgi/driver/efish/0.1/efish-0.1.jar' version='0.1.0'>
-    <size>4218</size>
+<repository lastmodified='20110618114854.312'>
+  <resource id='com.10line.pinecone.platform.osgi.driver.efish/0.1.0' symbolicname='com.10line.pinecone.platform.osgi.driver.efish' presentationname='efish' uri='file:/C:/DOCUME~1/Bill/LOCALS~1/Temp/com/10line/pinecone/platform/osgi/driver/efish/0.1.0/efish-0.1.0.jar' version='0.1.0'>
+    <size>4336</size>
     <capability name='bundle'>
       <p n='symbolicname' v='com.10line.pinecone.platform.osgi.driver.efish'/>
-      <p n='presentationname' v='efish-driver-0.1'/>
+      <p n='presentationname' v='efish'/>
       <p n='version' t='version' v='0.1.0'/>
       <p n='manifestversion' v='2'/>
     </capability>
