@@ -7,6 +7,7 @@
   <packaging>bundle</packaging>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <bundle.path>/com/10line/pinecone/platform/osgi/driver/${pom.artifactId}/${pom.version}/</bundle.path>
   </properties>
   <dependencies>
     <dependency>
@@ -36,6 +37,7 @@
             <packaging>${pom.packaging}</packaging>
 			<repositoryId>${project.distributionManagementArtifactRepository.id}</repositoryId>
             <url>${project.distributionManagementArtifactRepository.url}</url>
+            <bundleUrl>${project.distributionManagementArtifactRepository.url}${bundle.path}${pom.artifactId}-${pom.version}.jar</bundleUrl>
         	<instructions>
         		<Bundle-Name>${pom.artifactId}</Bundle-Name>
         	</instructions>
