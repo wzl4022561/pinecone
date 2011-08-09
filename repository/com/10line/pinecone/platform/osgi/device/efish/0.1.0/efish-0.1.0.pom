@@ -9,22 +9,52 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <bundle.path>/com/10line/pinecone/platform/osgi/device/${pom.artifactId}/${pom.version}/</bundle.path>
   </properties>
+  <repositories>
+  	<repository>
+    	<id>maven.2</id>
+        <name>Maven 2 Repository</name>
+        <url>http://repo2.maven.org/maven2/</url>
+    </repository>
+	<repository>
+    	<id>pinecone</id>
+        <name>pinecone repo</name>
+        <url>http://pinecone.googlecode.com/svn/repository</url>
+	</repository>
+  </repositories>
   <dependencies>
+    <!-- Pinecone Serial Monitor -->
     <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.osgi.core</artifactId>
-      <version>1.4.0</version>
+    	<groupId>com.10line.pinecone.platform.osgi.monitor</groupId>
+    	<artifactId>serial</artifactId>
+    	<version>0.1.0</version>
     </dependency>
-    <dependency>
-    	<groupId>org.apache.mina</groupId>
-    	<artifactId>mina-core</artifactId>
-    	<version>2.0.1</version>
-    </dependency>
+    <!-- JUnit -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.5</version>
       <scope>test</scope>
+    </dependency>
+    <!-- Pax-Exam dependencies -->
+    <dependency>
+    	<groupId>org.ops4j.pax.exam</groupId>
+        <artifactId>pax-exam</artifactId>
+        <version>1.2.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.ops4j.pax.exam</groupId>
+        <artifactId>pax-exam-junit</artifactId>
+        <version>1.2.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.ops4j.pax.exam</groupId>
+        <artifactId>pax-exam-container-default</artifactId>
+        <version>1.2.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.ops4j.pax.exam</groupId>
+        <artifactId>pax-exam-junit-extender-impl</artifactId>
+        <version>1.2.0</version>
     </dependency>
   </dependencies>
   <build>
