@@ -1,30 +1,26 @@
-<repository lastmodified='20110809015739.434'>
+<repository lastmodified='20110814112650.421'>
   <resource id='com.10line.pinecone.platform.osgi.device.efish/0.1.0' symbolicname='com.10line.pinecone.platform.osgi.device.efish' presentationname='efish' uri='https://pinecone.googlecode.com/svn/repository/com/10line/pinecone/platform/osgi/device/efish/0.1.0/efish-0.1.0.jar' version='0.1.0'>
-    <size>13800</size>
+    <size>5550</size>
     <capability name='bundle'>
       <p n='symbolicname' v='com.10line.pinecone.platform.osgi.device.efish'/>
       <p n='presentationname' v='efish'/>
       <p n='version' t='version' v='0.1.0'/>
       <p n='manifestversion' v='2'/>
     </capability>
+    <capability name='fragment'>
+      <p n='host' v='com.10line.pinecone.platform.osgi.monitor'/>
+      <p n='version' t='version' v='0.0.0'/>
+    </capability>
     <capability name='package'>
       <p n='package' v='com.tenline.pinecone.platform.osgi.device.efish'/>
       <p n='version' t='version' v='0.0.0'/>
-      <p n='uses:' v='com.tenline.pinecone.platform.osgi.monitor.serial,org.apache.mina.core.future,com.tenline.pinecone.platform.osgi.monitor,org.apache.mina.transport.serial,com.tenline.pinecone.platform.osgi.monitor.model,org.apache.mina.core.session,org.osgi.service.event,com.tenline.pinecone.platform.osgi.monitor.xml,org.osgi.framework,com.tenline.pinecone.platform.osgi.monitor.model.comm,com.tenline.pinecone.platform.osgi.monitor.mina.protocol,org.apache.mina.core.buffer,org.apache.mina.filter.codec,com.tenline.pinecone.platform.osgi.monitor.model.stream'/>
+      <p n='uses:' v='org.apache.mina.core.session,org.apache.mina.core.buffer,com.tenline.pinecone.platform.osgi.monitor.mina,org.osgi.framework,org.apache.mina.filter.codec'/>
     </capability>
-    <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.osgi.monitor))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.osgi.monitor</require>
-    <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.osgi.monitor.mina.protocol))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.osgi.monitor.mina.protocol</require>
-    <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.osgi.monitor.model))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.osgi.monitor.model</require>
-    <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.osgi.monitor.model.comm))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.osgi.monitor.model.comm</require>
-    <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.osgi.monitor.model.stream))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.osgi.monitor.model.stream</require>
-    <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.osgi.monitor.serial))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.osgi.monitor.serial</require>
-    <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.osgi.monitor.xml))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.osgi.monitor.xml</require>
+    <require name='bundle' filter='(&amp;(symbolicname=com.10line.pinecone.platform.osgi.monitor))' extend='true' multiple='false' optional='false'>Required Host com.10line.pinecone.platform.osgi.monitor</require>
+    <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.osgi.monitor.mina))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.osgi.monitor.mina</require>
     <require name='package' filter='(&amp;(package=org.apache.mina.core.buffer)(version&gt;=2.0.0)(!(version&gt;=3.0.0)))' extend='false' multiple='false' optional='false'>Import package org.apache.mina.core.buffer;version="[2.0,3)"</require>
-    <require name='package' filter='(&amp;(package=org.apache.mina.core.future)(version&gt;=2.0.0)(!(version&gt;=3.0.0)))' extend='false' multiple='false' optional='false'>Import package org.apache.mina.core.future;version="[2.0,3)"</require>
     <require name='package' filter='(&amp;(package=org.apache.mina.core.session)(version&gt;=2.0.0)(!(version&gt;=3.0.0)))' extend='false' multiple='false' optional='false'>Import package org.apache.mina.core.session;version="[2.0,3)"</require>
     <require name='package' filter='(&amp;(package=org.apache.mina.filter.codec)(version&gt;=2.0.0)(!(version&gt;=3.0.0)))' extend='false' multiple='false' optional='false'>Import package org.apache.mina.filter.codec;version="[2.0,3)"</require>
-    <require name='package' filter='(&amp;(package=org.apache.mina.transport.serial)(version&gt;=2.0.0)(!(version&gt;=3.0.0)))' extend='false' multiple='false' optional='false'>Import package org.apache.mina.transport.serial;version="[2.0,3)"</require>
     <require name='package' filter='(&amp;(package=org.osgi.framework)(version&gt;=1.5.0)(!(version&gt;=2.0.0)))' extend='false' multiple='false' optional='false'>Import package org.osgi.framework;version="[1.5,2)"</require>
-    <require name='package' filter='(&amp;(package=org.osgi.service.event)(version&gt;=1.2.0)(!(version&gt;=2.0.0)))' extend='false' multiple='false' optional='false'>Import package org.osgi.service.event;version="[1.2,2)"</require>
   </resource>
 </repository>
