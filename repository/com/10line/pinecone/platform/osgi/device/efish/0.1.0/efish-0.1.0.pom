@@ -8,6 +8,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <bundle.path>/com/10line/pinecone/platform/osgi/device/${pom.artifactId}/${pom.version}/</bundle.path>
+    <host.bundle>com.10line.pinecone.platform.osgi.monitor</host.bundle>
   </properties>
   <repositories>
   	<repository>
@@ -22,12 +23,12 @@
 	</repository>
   </repositories>
   <dependencies>
-    <!-- Pinecone Serial Monitor -->
-    <dependency>
-    	<groupId>com.10line.pinecone.platform.osgi.monitor</groupId>
-    	<artifactId>serial</artifactId>
-    	<version>0.1.0</version>
-    </dependency>
+  	<!-- Pinecone Monitor -->
+  	<dependency>
+  		<groupId>com.10line.pinecone.platform.osgi</groupId>
+  		<artifactId>monitor</artifactId>
+  		<version>0.1.0</version>
+  	</dependency>
     <!-- JUnit -->
     <dependency>
       <groupId>junit</groupId>
@@ -36,7 +37,7 @@
       <scope>test</scope>
     </dependency>
     <!-- Pax-Exam dependencies -->
-    <dependency>
+    <!--  <dependency>
     	<groupId>org.ops4j.pax.exam</groupId>
         <artifactId>pax-exam</artifactId>
         <version>1.2.0</version>
@@ -55,7 +56,7 @@
         <groupId>org.ops4j.pax.exam</groupId>
         <artifactId>pax-exam-junit-extender-impl</artifactId>
         <version>1.2.0</version>
-    </dependency>
+    </dependency> -->
   </dependencies>
   <build>
     <plugins>
@@ -75,6 +76,7 @@
             <bundleUrl>${project.distributionManagementArtifactRepository.url}${bundle.path}${pom.artifactId}-${pom.version}.jar</bundleUrl>
         	<instructions>
         		<Bundle-Name>${pom.artifactId}</Bundle-Name>
+        		<Fragment-Host>${host.bundle}</Fragment-Host>
         	</instructions>
         </configuration> 
       </plugin> 
