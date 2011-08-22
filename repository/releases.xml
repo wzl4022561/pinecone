@@ -1,4 +1,30 @@
-<repository lastmodified='20110819104351.453'>
+<repository lastmodified='20110822090345.453'>
+  <resource id='com.honking.pet.aquarium.efish/0.1.0' symbolicname='com.honking.pet.aquarium.efish' presentationname='efish' uri='https://pinecone.googlecode.com/svn/repository/com/honking/pet/aquarium/efish/0.1.0/efish-0.1.0.jar' version='0.1.0'>
+    <size>11777</size>
+    <capability name='bundle'>
+      <p n='symbolicname' v='com.honking.pet.aquarium.efish'/>
+      <p n='presentationname' v='efish'/>
+      <p n='version' t='version' v='0.1.0'/>
+      <p n='manifestversion' v='2'/>
+    </capability>
+    <capability name='fragment'>
+      <p n='host' v='com.10line.pinecone.platform.monitor'/>
+      <p n='version' t='version' v='0.0.0'/>
+    </capability>
+    <capability name='package'>
+      <p n='package' v='com.honking.pet.aquarium.efish'/>
+      <p n='version' t='version' v='0.0.0'/>
+      <p n='uses:' v='com.tenline.pinecone.platform.model,org.osgi.framework,com.tenline.pinecone.platform.monitor,org.apache.mina.core.session,org.apache.mina.core.buffer,com.tenline.pinecone.platform.monitor.mina,org.apache.mina.filter.codec'/>
+    </capability>
+    <require name='bundle' filter='(&amp;(symbolicname=com.10line.pinecone.platform.monitor))' extend='true' multiple='false' optional='false'>Required Host com.10line.pinecone.platform.monitor</require>
+    <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.model))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.model</require>
+    <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.monitor))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.monitor</require>
+    <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.monitor.mina))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.monitor.mina</require>
+    <require name='package' filter='(&amp;(package=org.apache.mina.core.buffer)(version&gt;=2.0.0)(!(version&gt;=3.0.0)))' extend='false' multiple='false' optional='false'>Import package org.apache.mina.core.buffer;version="[2.0,3)"</require>
+    <require name='package' filter='(&amp;(package=org.apache.mina.core.session)(version&gt;=2.0.0)(!(version&gt;=3.0.0)))' extend='false' multiple='false' optional='false'>Import package org.apache.mina.core.session;version="[2.0,3)"</require>
+    <require name='package' filter='(&amp;(package=org.apache.mina.filter.codec)(version&gt;=2.0.0)(!(version&gt;=3.0.0)))' extend='false' multiple='false' optional='false'>Import package org.apache.mina.filter.codec;version="[2.0,3)"</require>
+    <require name='package' filter='(&amp;(package=org.osgi.framework)(version&gt;=1.5.0)(!(version&gt;=2.0.0)))' extend='false' multiple='false' optional='false'>Import package org.osgi.framework;version="[1.5,2)"</require>
+  </resource>
   <resource id='com.10line.pinecone.platform.osgi.device.efish/0.1.0' symbolicname='com.10line.pinecone.platform.osgi.device.efish' presentationname='efish' uri='https://pinecone.googlecode.com/svn/repository/com/10line/pinecone/platform/osgi/device/efish/0.1.0/efish-0.1.0.jar' version='0.1.0'>
     <size>12320</size>
     <capability name='bundle'>
