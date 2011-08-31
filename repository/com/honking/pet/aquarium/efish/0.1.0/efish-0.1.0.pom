@@ -41,27 +41,6 @@
       <version>4.5</version>
       <scope>test</scope>
     </dependency>
-    <!-- Pax-Exam dependencies -->
-    <!--  <dependency>
-    	<groupId>org.ops4j.pax.exam</groupId>
-        <artifactId>pax-exam</artifactId>
-        <version>1.2.0</version>
-    </dependency>
-    <dependency>
-        <groupId>org.ops4j.pax.exam</groupId>
-        <artifactId>pax-exam-junit</artifactId>
-        <version>1.2.0</version>
-    </dependency>
-    <dependency>
-        <groupId>org.ops4j.pax.exam</groupId>
-        <artifactId>pax-exam-container-default</artifactId>
-        <version>1.2.0</version>
-    </dependency>
-    <dependency>
-        <groupId>org.ops4j.pax.exam</groupId>
-        <artifactId>pax-exam-junit-extender-impl</artifactId>
-        <version>1.2.0</version>
-    </dependency> -->
   </dependencies>
   <build>
     <plugins>
@@ -82,6 +61,7 @@
         	<instructions>
         		<Bundle-Name>${pom.artifactId}</Bundle-Name>
         		<Fragment-Host>${host.bundle}</Fragment-Host>
+        		<Type>Serial</Type>
         		<Port>COM1</Port>
         		<Baud-Rate>9600</Baud-Rate>
         		<Stop-Bits>1</Stop-Bits>
