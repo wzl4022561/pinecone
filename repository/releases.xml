@@ -1,22 +1,17 @@
-<repository lastmodified='20110831115457.500'>
+<repository lastmodified='20110831031004.618'>
   <resource id='com.honking.pet.aquarium.efish/0.1.0' symbolicname='com.honking.pet.aquarium.efish' presentationname='efish' uri='https://pinecone.googlecode.com/svn/repository/com/honking/pet/aquarium/efish/0.1.0/efish-0.1.0.jar' version='0.1.0'>
-    <size>11843</size>
+    <size>13004</size>
     <capability name='bundle'>
       <p n='symbolicname' v='com.honking.pet.aquarium.efish'/>
       <p n='presentationname' v='efish'/>
       <p n='version' t='version' v='0.1.0'/>
       <p n='manifestversion' v='2'/>
     </capability>
-    <capability name='fragment'>
-      <p n='host' v='com.10line.pinecone.platform.monitor'/>
-      <p n='version' t='version' v='0.0.0'/>
-    </capability>
     <capability name='package'>
       <p n='package' v='com.honking.pet.aquarium.efish'/>
       <p n='version' t='version' v='0.0.0'/>
-      <p n='uses:' v='com.tenline.pinecone.platform.model,org.osgi.framework,com.tenline.pinecone.platform.monitor,org.apache.mina.core.session,org.apache.mina.core.buffer,com.tenline.pinecone.platform.monitor.mina,org.apache.mina.filter.codec'/>
+      <p n='uses:' v='org.osgi.framework,com.tenline.pinecone.platform.monitor.mina,com.tenline.pinecone.platform.monitor,com.tenline.pinecone.platform.model,org.apache.mina.core.session,org.apache.mina.core.buffer,org.apache.mina.filter.codec'/>
     </capability>
-    <require name='bundle' filter='(&amp;(symbolicname=com.10line.pinecone.platform.monitor))' extend='true' multiple='false' optional='false'>Required Host com.10line.pinecone.platform.monitor</require>
     <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.model))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.model</require>
     <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.monitor))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.monitor</require>
     <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.monitor.mina))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.monitor.mina</require>
