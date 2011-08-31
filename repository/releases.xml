@@ -1,6 +1,6 @@
-<repository lastmodified='20110901020010.555'>
+<repository lastmodified='20110901021237.325'>
   <resource id='com.honking.pet.aquarium.efish/0.1.0' symbolicname='com.honking.pet.aquarium.efish' presentationname='efish' uri='https://pinecone.googlecode.com/svn/repository/com/honking/pet/aquarium/efish/0.1.0/efish-0.1.0.jar' version='0.1.0'>
-    <size>12969</size>
+    <size>12875</size>
     <capability name='bundle'>
       <p n='symbolicname' v='com.honking.pet.aquarium.efish'/>
       <p n='presentationname' v='efish'/>
