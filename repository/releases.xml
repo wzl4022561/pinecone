@@ -1,4 +1,4 @@
-<repository lastmodified='20110901021237.325'>
+<repository lastmodified='20110903013732.766'>
   <resource id='com.honking.pet.aquarium.efish/0.1.0' symbolicname='com.honking.pet.aquarium.efish' presentationname='efish' uri='https://pinecone.googlecode.com/svn/repository/com/honking/pet/aquarium/efish/0.1.0/efish-0.1.0.jar' version='0.1.0'>
     <size>12875</size>
     <capability name='bundle'>
@@ -18,6 +18,35 @@
     <require name='package' filter='(&amp;(package=org.apache.mina.core.buffer)(version&gt;=2.0.0)(!(version&gt;=3.0.0)))' extend='false' multiple='false' optional='false'>Import package org.apache.mina.core.buffer;version="[2.0,3)"</require>
     <require name='package' filter='(&amp;(package=org.apache.mina.core.session)(version&gt;=2.0.0)(!(version&gt;=3.0.0)))' extend='false' multiple='false' optional='false'>Import package org.apache.mina.core.session;version="[2.0,3)"</require>
     <require name='package' filter='(&amp;(package=org.apache.mina.filter.codec)(version&gt;=2.0.0)(!(version&gt;=3.0.0)))' extend='false' multiple='false' optional='false'>Import package org.apache.mina.filter.codec;version="[2.0,3)"</require>
+    <require name='package' filter='(&amp;(package=org.osgi.framework)(version&gt;=1.5.0)(!(version&gt;=2.0.0)))' extend='false' multiple='false' optional='false'>Import package org.osgi.framework;version="[1.5,2)"</require>
+  </resource>
+  <resource id='com.huishi.security.camera.huishi/0.1.0' symbolicname='com.huishi.security.camera.huishi' presentationname='huishi' uri='https://pinecone.googlecode.com/svn/repository/com/huishi/security/camera/huishi/0.1.0/huishi-0.1.0.jar' version='0.1.0'>
+    <size>12075</size>
+    <capability name='bundle'>
+      <p n='symbolicname' v='com.huishi.security.camera.huishi'/>
+      <p n='presentationname' v='huishi'/>
+      <p n='version' t='version' v='0.1.0'/>
+      <p n='manifestversion' v='2'/>
+    </capability>
+    <capability name='package'>
+      <p n='package' v='com.huishi.security.camera.huishi'/>
+      <p n='version' t='version' v='0.0.0'/>
+      <p n='uses:' v='org.osgi.framework,com.tenline.pinecone.platform.monitor.http,com.tenline.pinecone.platform.monitor,com.tenline.pinecone.platform.model,org.apache.http.client,com.huishi.security.camera.huishi.interfaces'/>
+    </capability>
+    <capability name='package'>
+      <p n='package' v='com.huishi.security.camera.huishi.interfaces'/>
+      <p n='version' t='version' v='0.0.0'/>
+      <p n='uses:' v='org.apache.http.client,com.tenline.pinecone.platform.monitor'/>
+    </capability>
+    <require name='package' filter='(&amp;(package=com.huishi.security.camera.huishi.interfaces))' extend='false' multiple='false' optional='false'>Import package com.huishi.security.camera.huishi.interfaces</require>
+    <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.model))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.model</require>
+    <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.monitor))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.monitor</require>
+    <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.monitor.http))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.monitor.http</require>
+    <require name='package' filter='(&amp;(package=javax.imageio))' extend='false' multiple='false' optional='false'>Import package javax.imageio</require>
+    <require name='package' filter='(&amp;(package=org.apache.http))' extend='false' multiple='false' optional='false'>Import package org.apache.http</require>
+    <require name='package' filter='(&amp;(package=org.apache.http.client))' extend='false' multiple='false' optional='false'>Import package org.apache.http.client</require>
+    <require name='package' filter='(&amp;(package=org.apache.http.client.methods))' extend='false' multiple='false' optional='false'>Import package org.apache.http.client.methods</require>
+    <require name='package' filter='(&amp;(package=org.apache.http.message))' extend='false' multiple='false' optional='false'>Import package org.apache.http.message</require>
     <require name='package' filter='(&amp;(package=org.osgi.framework)(version&gt;=1.5.0)(!(version&gt;=2.0.0)))' extend='false' multiple='false' optional='false'>Import package org.osgi.framework;version="[1.5,2)"</require>
   </resource>
 </repository>
