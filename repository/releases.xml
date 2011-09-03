@@ -1,4 +1,4 @@
-<repository lastmodified='20110904011844.694'>
+<repository lastmodified='20110904013458.919'>
   <resource id='com.honking.pet.aquarium.efish/0.1.0' symbolicname='com.honking.pet.aquarium.efish' presentationname='efish' uri='https://pinecone.googlecode.com/svn/repository/com/honking/pet/aquarium/efish/0.1.0/efish-0.1.0.jar' version='0.1.0'>
     <size>13101</size>
     <capability name='bundle'>
@@ -21,7 +21,7 @@
     <require name='package' filter='(&amp;(package=org.osgi.framework)(version&gt;=1.5.0)(!(version&gt;=2.0.0)))' extend='false' multiple='false' optional='false'>Import package org.osgi.framework;version="[1.5,2)"</require>
   </resource>
   <resource id='com.huishi.security.camera.huishi/0.1.0' symbolicname='com.huishi.security.camera.huishi' presentationname='huishi' uri='https://pinecone.googlecode.com/svn/repository/com/huishi/security/camera/huishi/0.1.0/huishi-0.1.0.jar' version='0.1.0'>
-    <size>9377</size>
+    <size>9281</size>
     <capability name='bundle'>
       <p n='symbolicname' v='com.huishi.security.camera.huishi'/>
       <p n='presentationname' v='huishi'/>
