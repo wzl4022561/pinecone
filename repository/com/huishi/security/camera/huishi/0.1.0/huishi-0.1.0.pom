@@ -61,7 +61,7 @@
         		<Bundle-Name>${pom.artifactId}</Bundle-Name>
         		<Bundle-Activator>${pom.groupId}.${pom.artifactId}.Activator</Bundle-Activator>
         		<Type>HttpClient</Type>
-        		<Address>192.168.1.138</Address>
+        		<Address>192.168.0.138</Address>
         		<Port>80</Port>
         		<Angle-Control>%Angle-Control</Angle-Control>
         		<Up>%Up</Up>
