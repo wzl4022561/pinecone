@@ -1,4 +1,4 @@
-<repository lastmodified='20110907094032.319'>
+<repository lastmodified='20110907101241.561'>
   <resource id='com.honking.pet.aquarium.efish/0.1.0' symbolicname='com.honking.pet.aquarium.efish' presentationname='efish' uri='https://pinecone.googlecode.com/svn/repository/com/honking/pet/aquarium/efish/0.1.0/efish-0.1.0.jar' version='0.1.0'>
     <size>12659</size>
     <capability name='bundle'>
@@ -21,7 +21,7 @@
     <require name='package' filter='(&amp;(package=org.osgi.framework)(version&gt;=1.5.0)(!(version&gt;=2.0.0)))' extend='false' multiple='false' optional='false'>Import package org.osgi.framework;version="[1.5,2)"</require>
   </resource>
   <resource id='com.huishi.security.camera.huishi/0.1.0' symbolicname='com.huishi.security.camera.huishi' presentationname='huishi' uri='https://pinecone.googlecode.com/svn/repository/com/huishi/security/camera/huishi/0.1.0/huishi-0.1.0.jar' version='0.1.0'>
-    <size>10160</size>
+    <size>10183</size>
     <capability name='bundle'>
       <p n='symbolicname' v='com.huishi.security.camera.huishi'/>
       <p n='presentationname' v='huishi'/>
@@ -31,11 +31,11 @@
     <capability name='package'>
       <p n='package' v='com.huishi.security.camera.huishi'/>
       <p n='version' t='version' v='0.0.0'/>
-      <p n='uses:' v='org.osgi.framework,com.tenline.pinecone.platform.monitor.http,com.tenline.pinecone.platform.monitor,com.tenline.pinecone.platform.model,javax.imageio,org.apache.log4j,org.apache.http'/>
+      <p n='uses:' v='org.osgi.framework,com.tenline.pinecone.platform.monitor.httpcomponents,com.tenline.pinecone.platform.monitor,com.tenline.pinecone.platform.model,javax.imageio,org.apache.log4j,org.apache.http'/>
     </capability>
     <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.model))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.model</require>
     <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.monitor))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.monitor</require>
-    <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.monitor.http))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.monitor.http</require>
+    <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.monitor.httpcomponents))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.monitor.httpcomponents</require>
     <require name='package' filter='(&amp;(package=javax.imageio))' extend='false' multiple='false' optional='false'>Import package javax.imageio</require>
     <require name='package' filter='(&amp;(package=org.apache.http))' extend='false' multiple='false' optional='false'>Import package org.apache.http</require>
     <require name='package' filter='(&amp;(package=org.apache.log4j))' extend='false' multiple='false' optional='false'>Import package org.apache.log4j</require>
