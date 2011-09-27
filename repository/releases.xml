@@ -1,6 +1,6 @@
-<repository lastmodified='20110914030909.257'>
+<repository lastmodified='20110927025322.314'>
   <resource id='com.honking.pet.aquarium.efish/0.1.0' symbolicname='com.honking.pet.aquarium.efish' presentationname='efish' uri='https://pinecone.googlecode.com/svn/repository/com/honking/pet/aquarium/efish/0.1.0/efish-0.1.0.jar' version='0.1.0'>
-    <size>12915</size>
+    <size>13029</size>
     <capability name='bundle'>
       <p n='symbolicname' v='com.honking.pet.aquarium.efish'/>
       <p n='presentationname' v='efish'/>
@@ -10,11 +10,12 @@
     <capability name='package'>
       <p n='package' v='com.honking.pet.aquarium.efish'/>
       <p n='version' t='version' v='0.0.0'/>
-      <p n='uses:' v='org.osgi.framework,com.tenline.pinecone.platform.monitor.mina,com.tenline.pinecone.platform.monitor,com.tenline.pinecone.platform.model,org.apache.mina.core.session,org.apache.mina.core.buffer,org.apache.mina.filter.codec'/>
+      <p n='uses:' v='org.osgi.framework,com.tenline.pinecone.platform.monitor.mina,com.tenline.pinecone.platform.monitor,com.tenline.pinecone.platform.model,org.apache.mina.core.session,org.apache.mina.core.buffer,org.apache.mina.filter.codec,org.apache.log4j'/>
     </capability>
     <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.model))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.model</require>
     <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.monitor))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.monitor</require>
     <require name='package' filter='(&amp;(package=com.tenline.pinecone.platform.monitor.mina))' extend='false' multiple='false' optional='false'>Import package com.tenline.pinecone.platform.monitor.mina</require>
+    <require name='package' filter='(&amp;(package=org.apache.log4j))' extend='false' multiple='false' optional='false'>Import package org.apache.log4j</require>
     <require name='package' filter='(&amp;(package=org.apache.mina.core.buffer)(version&gt;=2.0.0)(!(version&gt;=3.0.0)))' extend='false' multiple='false' optional='false'>Import package org.apache.mina.core.buffer;version="[2.0,3)"</require>
     <require name='package' filter='(&amp;(package=org.apache.mina.core.session)(version&gt;=2.0.0)(!(version&gt;=3.0.0)))' extend='false' multiple='false' optional='false'>Import package org.apache.mina.core.session;version="[2.0,3)"</require>
     <require name='package' filter='(&amp;(package=org.apache.mina.filter.codec)(version&gt;=2.0.0)(!(version&gt;=3.0.0)))' extend='false' multiple='false' optional='false'>Import package org.apache.mina.filter.codec;version="[2.0,3)"</require>
