@@ -3,7 +3,7 @@
   <groupId>com.10line.pinecone.platform</groupId>
   <artifactId>model</artifactId>
   <versioning>
-    <release>0.4</release>
+    <release>0.5</release>
     <versions>
       <version>0.1</version>
       <version>0.2</version>
@@ -11,6 +11,6 @@
       <version>0.4</version>
       <version>0.5</version>
     </versions>
-    <lastUpdated>20121014145007</lastUpdated>
+    <lastUpdated>20121021135936</lastUpdated>
   </versioning>
 </metadata>
